@@ -1,0 +1,13 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 1rem;
+}
+
+.billCardContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    gap: 1rem;
+    flex-direction: column;
+}

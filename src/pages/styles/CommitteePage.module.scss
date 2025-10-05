@@ -1,0 +1,37 @@
+.wrapper {
+    margin: 1rem;
+    padding: 1rem;
+    border: 1px solid #e6e6e6;
+    border-radius: 10px;
+}
+
+.semiTitle {
+    color: #121212;
+    font-family: Pretendard;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 18px;
+    line-height: 40px;
+    letter-spacing: 0.78px;
+}
+
+.committeeButton {
+    width: fit-content;
+    height: 41px;
+    opacity: 1;
+    font-size: 14px;
+    border-radius: 6.27px;
+    padding-top: 9px;
+    padding-right: 61px;
+    padding-bottom: 9px;
+    padding-left: 61px;
+    color: #7e7e7e;
+    border: none;
+    cursor: pointer;
+}
+
+.buttonRail {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}

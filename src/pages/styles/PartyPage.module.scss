@@ -1,0 +1,30 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 1rem;
+}
+
+.buttonGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    width: 50%;
+}
+
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 231px;
+    height: 41px;
+    background: #f7f7f7;
+    color: #7e7e7e;
+    border-radius: 6.27px;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 1;
+    text-decoration: none;
+    letter-spacing: 0;
+    padding: 0;
+}

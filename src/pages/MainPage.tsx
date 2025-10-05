@@ -1,11 +1,11 @@
 import Header from '../widgets/Header';
 import { Outlet } from 'react-router-dom';
+import style from './styles/MainPage.module.scss';
 
 function MainPage() {
     return (
-        <div>
+        <div className={style.siteContainer}>
             <Header />
-            <h1>랜딩</h1>
             <div className="body">
                 <Outlet />
             </div>

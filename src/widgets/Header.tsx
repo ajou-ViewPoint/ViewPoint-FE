@@ -1,30 +1,50 @@
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import style from './Header.module.scss';
+import { Search } from 'lucide-react';
 
 function Header() {
     const navigate = useNavigate();
 
     const headerInfo = [
-        { id: '랜딩', path: '/' },
-        { id: '정당', path: '/party' },
+        { id: '법안', path: '/billlist' },
         { id: '위원회', path: '/committee' },
-        { id: '법안 리스트', path: '/billlist' },
-        { id: '국회의원', path: '/member' },
-        { id: '우리 지역구', path: '/mydistrict' },
-        { id: 'about', path: '/about' },
+        { id: '정당', path: '/party' },
+        { id: '국회의원', path: '/members' },
+        { id: '우리 지역구 의원', path: '/mydistrict' },
+        { id: '프로젝트 소개', path: '/about' },
     ] as const;
 
     return (
-        <div>
-            <div>
-                <h2>ViewPoint</h2>
-                <input placeholder="검색바입니다"></input>
-            </div>
+        <div className={style.header}>
+            <a className={style.logo} href="/landing">
+                VIEWPOINT
+            </a>
+            <nav className={style.header__buttonRail}>
+                {headerInfo.map((item) => (
+                    <NavLink
+                        to={item.path}
+                        className={({ isActive }) =>
+                            isActive
+                                ? `${style.header__button} ${style.active}`
+                                : style.header__button
+                        }
+                        key={item.id}
+                        onClick={() => navigate(item.path)}>
+                        {item.id}
+                    </NavLink>
+                ))}
+            </nav>
 
-            {headerInfo.map((item) => (
-                <button key={item.id} onClick={() => navigate(item.path)}>
-                    {item.id}
+            <form className={style.header__searchBar}>
+                <input
+                    className={style.header__searchBar__inputArea}
+                    type="text"
+                    aria-label="검색"
+                    placeholder="검색어를 입력하세요"></input>
+                <button className={style.header__searchBar__searchButton} type="submit">
+                    <Search />
                 </button>
-            ))}
+            </form>
         </div>
     );
 }
