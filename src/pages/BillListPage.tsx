@@ -1,312 +1,41 @@
+import { useEffect } from 'react';
 import BillCard from '../features/bill/BillCard';
-import type { bill } from '../types/bill';
+
 import style from './styles/BillListPage.module.scss';
+import { useBillFilterStore, useBillStore } from '../store/billStore';
 function BillListPage() {
-    const mockBillList: bill[] = [
-        {
-            id: 16,
-            billTitle: '성별의 법적 인정에 관한 법률안(장혜영의원 등 10인)',
-            proposer: '장혜영의원 등 10인',
-            voteTcnt: 256,
-            yesTcnt: 33,
-            noTcnt: 2,
-            blankTcnt: 0,
-            billSummary:
-                '성별의 법적 인정에 관한 기준과 절차를 명확히 하여 성소수자의 권리를 보호하는 법안입니다.',
-            procResultCd: '원안가결',
-            committeeSubmitDate: '2024-05-21',
-            committeePresentDate: null,
-            committeeProcDate: null,
-            lawSubmitDate: null,
-            lawPresentDate: null,
-            lawProcDate: null,
-            rgsPresentDate: null,
-            rgsProcDate: '2024-05-29',
-        },
-        {
-            id: 15,
-            billTitle: '돌봄근로자의 지위와 권리 보장을 위한 기본법안(양경규의원 등 10인)',
-            proposer: '양경규의원 등 10인',
-            voteTcnt: null,
-            yesTcnt: null,
-            noTcnt: null,
-            blankTcnt: null,
-            billSummary:
-                '돌봄근로자의 지위와 권리를 법적으로 보장하여 근로환경 개선을 목적으로 하는 법안입니다.',
-            procResultCd: '임기만료폐기',
-            committeeSubmitDate: '2024-05-22',
-            committeePresentDate: null,
-            committeeProcDate: null,
-            lawSubmitDate: null,
-            lawPresentDate: null,
-            lawProcDate: null,
-            rgsPresentDate: null,
-            rgsProcDate: '2024-05-29',
-        },
-        {
-            id: 14,
-            billTitle: '공공기관의 운영에 관한 법률 일부개정법률안(송기헌의원 등 13인)',
-            proposer: '송기헌의원 등 13인',
-            voteTcnt: null,
-            yesTcnt: null,
-            noTcnt: null,
-            blankTcnt: null,
-            billSummary: '공공기관의 운영 효율성과 투명성을 강화하기 위한 일부 개정 법률안입니다.',
-            procResultCd: '임기만료폐기',
-            committeeSubmitDate: '2024-05-22',
-            committeePresentDate: null,
-            committeeProcDate: null,
-            lawSubmitDate: null,
-            lawPresentDate: null,
-            lawProcDate: null,
-            rgsPresentDate: null,
-            rgsProcDate: '2024-05-29',
-        },
-        {
-            id: 13,
-            billTitle: '법원조직법 일부개정법률안(이탄희의원 등 10인)',
-            proposer: '이탄희의원 등 10인',
-            voteTcnt: null,
-            yesTcnt: null,
-            noTcnt: null,
-            blankTcnt: null,
-            billSummary:
-                '법원 조직의 효율적 운영과 사법 서비스 개선을 위한 일부 개정 법률안입니다.',
-            procResultCd: '임기만료폐기',
-            committeeSubmitDate: '2024-05-24',
-            committeePresentDate: null,
-            committeeProcDate: null,
-            lawSubmitDate: null,
-            lawPresentDate: null,
-            lawProcDate: null,
-            rgsPresentDate: null,
-            rgsProcDate: '2024-05-29',
-        },
-        {
-            id: 12,
-            billTitle: '국세기본법 일부개정법률안(장혜영의원 등 10인)',
-            proposer: '장혜영의원 등 10인',
-            voteTcnt: null,
-            yesTcnt: null,
-            noTcnt: null,
-            blankTcnt: null,
-            billSummary:
-                '국세기본법의 일부 조항을 개정하여 세제 운영의 공정성과 효율성을 높이기 위한 법안입니다.',
-            procResultCd: '임기만료폐기',
-            committeeSubmitDate: '2024-05-27',
-            committeePresentDate: null,
-            committeeProcDate: null,
-            lawSubmitDate: null,
-            lawPresentDate: null,
-            lawProcDate: null,
-            rgsPresentDate: null,
-            rgsProcDate: '2024-05-29',
-        },
-        {
-            id: 11,
-            billTitle: '국회법 일부개정법률안(장혜영의원 등 10인)',
-            proposer: '장혜영의원 등 10인',
-            voteTcnt: null,
-            yesTcnt: null,
-            noTcnt: null,
-            blankTcnt: null,
-            billSummary: '국회 운영의 투명성과 효율성을 높이기 위한 국회법 일부 개정 법률안입니다.',
-            procResultCd: '임기만료폐기',
-            committeeSubmitDate: '2024-05-27',
-            committeePresentDate: null,
-            committeeProcDate: null,
-            lawSubmitDate: null,
-            lawPresentDate: null,
-            lawProcDate: null,
-            rgsPresentDate: null,
-            rgsProcDate: '2024-05-29',
-        },
-        {
-            id: 10,
-            billTitle: '공공기관의 운영에 관한 법률 전부개정법률안(장혜영의원 등 10인)',
-            proposer: '장혜영의원 등 10인',
-            voteTcnt: null,
-            yesTcnt: null,
-            noTcnt: null,
-            blankTcnt: null,
-            billSummary: '공공기관 운영 전반을 개선하기 위한 전면적인 개정 법률안입니다.',
-            procResultCd: '임기만료폐기',
-            committeeSubmitDate: '2024-05-27',
-            committeePresentDate: null,
-            committeeProcDate: null,
-            lawSubmitDate: null,
-            lawPresentDate: null,
-            lawProcDate: null,
-            rgsPresentDate: null,
-            rgsProcDate: '2024-05-29',
-        },
-        {
-            id: 9,
-            billTitle: '근로기준법 일부개정법률안(장혜영의원 등 11인)',
-            proposer: '장혜영의원 등 11인',
-            voteTcnt: null,
-            yesTcnt: null,
-            noTcnt: null,
-            blankTcnt: null,
-            billSummary:
-                '근로자의 권익 보호와 근로환경 개선을 위한 근로기준법 일부 개정 법률안입니다.',
-            procResultCd: '임기만료폐기',
-            committeeSubmitDate: '2024-05-27',
-            committeePresentDate: null,
-            committeeProcDate: null,
-            lawSubmitDate: null,
-            lawPresentDate: null,
-            lawProcDate: null,
-            rgsPresentDate: null,
-            rgsProcDate: '2024-05-29',
-        },
-        {
-            id: 8,
-            billTitle: '순환경제사회 전환 촉진법 일부개정법률안(장혜영의원 등 10인)',
-            proposer: '장혜영의원 등 10인',
-            voteTcnt: null,
-            yesTcnt: null,
-            noTcnt: null,
-            blankTcnt: null,
-            billSummary:
-                '순환경제사회로의 전환을 촉진하기 위한 법적 기반을 강화하는 일부 개정 법률안입니다.',
-            procResultCd: '임기만료폐기',
-            committeeSubmitDate: '2024-05-28',
-            committeePresentDate: null,
-            committeeProcDate: null,
-            lawSubmitDate: null,
-            lawPresentDate: null,
-            lawProcDate: null,
-            rgsPresentDate: null,
-            rgsProcDate: '2024-05-29',
-        },
-        {
-            id: 7,
-            billTitle: '전자인법안(김웅의원 등 10인)',
-            proposer: '김웅의원 등 10인',
-            voteTcnt: null,
-            yesTcnt: null,
-            noTcnt: null,
-            blankTcnt: null,
-            billSummary: '전자 인법 관련 제도를 개선하여 효율적인 운영을 도모하는 법안입니다.',
-            procResultCd: '임기만료폐기',
-            committeeSubmitDate: '2024-05-28',
-            committeePresentDate: null,
-            committeeProcDate: null,
-            lawSubmitDate: null,
-            lawPresentDate: null,
-            lawProcDate: null,
-            rgsPresentDate: null,
-            rgsProcDate: '2024-05-29',
-        },
-        {
-            id: 6,
-            billTitle: '양곡관리법 일부개정법률안(대안)(농림축산식품해양수산위원장)',
-            proposer: '농림축산식품해양수산위원장',
-            voteTcnt: null,
-            yesTcnt: null,
-            noTcnt: null,
-            blankTcnt: null,
-            billSummary: '양곡 관리 체계의 효율성을 높이기 위한 일부 개정 법률안입니다.',
-            procResultCd: '임기만료폐기',
-            committeeSubmitDate: null,
-            committeePresentDate: '2024-02-01',
-            committeeProcDate: '2024-02-01',
-            lawSubmitDate: '2024-02-01',
-            lawPresentDate: null,
-            lawProcDate: null,
-            rgsPresentDate: null,
-            rgsProcDate: '2024-05-29',
-        },
-        {
-            id: 5,
-            billTitle: '가맹사업거래의 공정화에 관한 법률 일부개정법률안(대안)(정무위원장)',
-            proposer: '정무위원장',
-            voteTcnt: null,
-            yesTcnt: null,
-            noTcnt: null,
-            blankTcnt: null,
-            billSummary:
-                '가맹사업 거래의 공정성을 강화하고 관련 제도를 개선하는 일부 개정 법률안입니다.',
-            procResultCd: '임기만료폐기',
-            committeeSubmitDate: null,
-            committeePresentDate: '2023-12-14',
-            committeeProcDate: '2023-12-14',
-            lawSubmitDate: '2023-12-14',
-            lawPresentDate: null,
-            lawProcDate: null,
-            rgsPresentDate: null,
-            rgsProcDate: '2024-05-29',
-        },
-        {
-            id: 4,
-            billTitle:
-                '농수산물 유통 및 가격안정에 관한 법률 일부개정법률안(대안)(농림축산식품해양수산위원장)',
-            proposer: '농림축산식품해양수산위원장',
-            voteTcnt: null,
-            yesTcnt: null,
-            noTcnt: null,
-            blankTcnt: null,
-            billSummary:
-                '농수산물 유통 및 가격 안정화를 위한 제도 개선을 목적으로 하는 일부 개정 법률안입니다.',
-            procResultCd: '임기만료폐기',
-            committeeSubmitDate: null,
-            committeePresentDate: '2024-02-01',
-            committeeProcDate: '2024-02-01',
-            lawSubmitDate: '2024-02-01',
-            lawPresentDate: null,
-            lawProcDate: null,
-            rgsPresentDate: null,
-            rgsProcDate: '2024-05-29',
-        },
-        {
-            id: 3,
-            billTitle:
-                '동물원 및 수족관의 관리에 관한 법률 일부개정법률안(윤미향의원 등 10인 외 1인)',
-            proposer: '윤미향의원 등 10인 외 1인',
-            voteTcnt: null,
-            yesTcnt: null,
-            noTcnt: null,
-            blankTcnt: null,
-            billSummary:
-                '동물원 및 수족관 관리 제도를 개선하여 동물 복지와 운영 효율성을 높이는 법안입니다.',
-            procResultCd: '임기만료폐기',
-            committeeSubmitDate: '2024-05-29',
-            committeePresentDate: null,
-            committeeProcDate: null,
-            lawSubmitDate: null,
-            lawPresentDate: null,
-            lawProcDate: null,
-            rgsPresentDate: null,
-            rgsProcDate: '2024-05-29',
-        },
-        {
-            id: 2,
-            billTitle:
-                '야생생물 보호 및 관리에 관한 법률 일부개정법률안(윤미향의원 등 10인 외 1인)',
-            proposer: '윤미향의원 등 10인 외 1인',
-            voteTcnt: null,
-            yesTcnt: null,
-            noTcnt: null,
-            blankTcnt: null,
-            billSummary: '야생생물 보호와 관리 체계 강화를 위한 일부 개정 법률안입니다.',
-            procResultCd: '임기만료폐기',
-            committeeSubmitDate: '2024-05-29',
-            committeePresentDate: null,
-            committeeProcDate: null,
-            lawSubmitDate: null,
-            lawPresentDate: null,
-            lawProcDate: null,
-            rgsPresentDate: null,
-            rgsProcDate: '2024-05-29',
-        },
-    ];
+    const billList = useBillStore((state) => state.billList);
+    const { getBillList } = useBillStore();
+    const filterState = useBillFilterStore((state) => state.filterState);
+    const { setFilterState } = useBillFilterStore();
+
+    // 필터 정렬
+    const handleDirectionChange = (newSortBy: string) => {
+        setFilterState({
+            ...filterState,
+            direction: newSortBy,
+            page: 0,
+        });
+    };
+
+    useEffect(() => {
+        getBillList();
+    }, [getBillList, filterState]);
+
     return (
         <div className={style.wrapper}>
-            <div className={style.filterContainer}>필터박스</div>
-            <div className={style.billCardContainer}>
-                {mockBillList.map((item) => BillCard(item))}
+            <div className={style.filterContainer}>
+                <form>
+                    <input type="text" aria-label="검색" placeholder="검색어를 입력하세요"></input>
+                </form>
+                <div className={style.filterButtonRail}>
+                    <label>내림</label>
+                    <button onClick={() => handleDirectionChange('desc')}></button>
+                    <label>오름</label>
+                    <button onClick={() => handleDirectionChange('asc')}></button>
+                </div>
             </div>
+            <div className={style.billCardContainer}>{billList.map((item) => BillCard(item))}</div>
         </div>
     );
 }
