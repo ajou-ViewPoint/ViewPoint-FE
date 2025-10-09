@@ -1,6 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import style from './Header.module.scss';
-import { Search } from 'lucide-react';
 
 function Header() {
     const navigate = useNavigate();
@@ -10,13 +9,13 @@ function Header() {
         { id: '위원회', path: '/committee' },
         { id: '정당', path: '/party' },
         { id: '국회의원', path: '/members' },
-        { id: '우리 지역구 의원', path: '/mydistrict' },
+        { id: '우리 지역구', path: '/mydistrict' },
         { id: '프로젝트 소개', path: '/about' },
     ] as const;
 
     return (
         <div className={style.header}>
-            <a className={style.logo} href="/landing">
+            <a className={style.logo} href="/">
                 VIEWPOINT
             </a>
             <nav className={style.header__buttonRail}>
@@ -35,7 +34,7 @@ function Header() {
                 ))}
             </nav>
 
-            <form className={style.header__searchBar}>
+            {/* <form className={style.header__searchBar}>
                 <input
                     className={style.header__searchBar__inputArea}
                     type="text"
@@ -44,7 +43,7 @@ function Header() {
                 <button className={style.header__searchBar__searchButton} type="submit">
                     <Search />
                 </button>
-            </form>
+            </form> */}
         </div>
     );
 }

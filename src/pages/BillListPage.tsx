@@ -20,7 +20,7 @@ function BillListPage() {
 
     useEffect(() => {
         getBillList();
-    }, [getBillList, filterState]);
+    }, [getBillList]);
 
     return (
         <div className={style.wrapper}>
@@ -35,7 +35,11 @@ function BillListPage() {
                     <button onClick={() => handleDirectionChange('asc')}></button>
                 </div>
             </div>
-            <div className={style.billCardContainer}>{billList.map((item) => BillCard(item))}</div>
+            <div className={style.billCardContainer}>
+                {billList.map((item) => (
+                    <BillCard key={item.id} {...item} />
+                ))}
+            </div>
         </div>
     );
 }

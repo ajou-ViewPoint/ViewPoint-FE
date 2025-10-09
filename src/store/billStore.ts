@@ -14,11 +14,7 @@ interface billStore {
     billList: bill[];
     isLoading: boolean;
     getBillList: () => Promise<void>;
-}
-
-interface billFilterStore {
-    filterState: billFilter;
-    setFilterState: (prev: billFilter) => void;
+    getBill: (billId: number) => Promise<bill>;
 }
 
 export const useBillStore = create<billStore>((set) => ({
@@ -30,12 +26,21 @@ export const useBillStore = create<billStore>((set) => ({
             const res = await axios.get(
                 `${SERVER_IP}/v1/bills?page=${filterState.page}&size=${filterState.size}&sortBy=${filterState.sortBy}&direction=${filterState.direction}`
             );
-            set({ billList: res.data });
+            set({ billList: res.data.content });
         } catch (error) {
             throw new Error(`법안 불러오기 에러: ${error}`);
         }
     },
+    getBill: async (billId) => {
+        const res = await axios.get(`${SERVER_IP}/v1/bills/${billId}`);
+        return res.data;
+    },
 }));
+
+interface billFilterStore {
+    filterState: billFilter;
+    setFilterState: (prev: billFilter) => void;
+}
 
 export const useBillFilterStore = create<billFilterStore>((set) => ({
     filterState: {
