@@ -1,0 +1,20 @@
+.container {
+    border: none;
+    border-radius: 24px;
+    padding: 0.35rem 0.7rem;
+    color: white;
+    font-size: 16px;
+    background-color: #c6c6c6;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: 0%;
+
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+}
