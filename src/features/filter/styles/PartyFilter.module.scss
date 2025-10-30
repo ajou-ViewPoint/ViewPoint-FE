@@ -1,0 +1,47 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 2rem;
+}
+
+.filterName {
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 30px;
+    letter-spacing: -0.16px;
+}
+
+.filterRail {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.button {
+    border: none;
+    border-radius: 8px;
+    background-color: #f0f0f0;
+    padding: 0.5rem 1rem;
+
+    // button font
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 16px;
+    letter-spacing: -0.16px;
+    color: #555555;
+
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+        background-color: #e8f2ff;
+        color: #2372eb;
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    &:focus {
+        background-color: #e8f2ff;
+        color: #2372eb;
+    }
+}

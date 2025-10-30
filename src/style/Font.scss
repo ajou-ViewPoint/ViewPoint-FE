@@ -1,0 +1,27 @@
+.header {
+    &__number {
+        font-weight: 400;
+        font-size: 20px;
+        line-height: 20px;
+        letter-spacing: 0px;
+        color: #1d1d1d;
+    }
+
+    &__title {
+        font-weight: 700;
+        font-size: 36px;
+        line-height: 48px;
+        letter-spacing: 0px;
+        color: #2d2d2d;
+        margin: 0;
+    }
+
+    &__discription {
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 20px;
+        letter-spacing: 0px;
+        color: #555555;
+        margin: 0;
+    }
+}

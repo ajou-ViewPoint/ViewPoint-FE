@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 import BillCard from '../features/bill/BillCard';
-
 import style from './styles/BillListPage.module.scss';
 import { useBillFilterStore, useBillStore } from '../store/billStore';
+import Filter from '../features/filter/Filter';
+import BillSortButtons from '../widgets/sort/BillSortButtons';
 function BillListPage() {
     const billList = useBillStore((state) => state.billList);
     const { getBillList } = useBillStore();
@@ -18,23 +19,29 @@ function BillListPage() {
         });
     };
 
+    const handleSortChange = (newSortBy: string) => {
+        setFilterState({ ...filterState, sortBy: newSortBy, page: 0 });
+    };
+
     useEffect(() => {
         getBillList();
-    }, [getBillList]);
+    }, [getBillList, filterState]);
 
     return (
         <div className={style.wrapper}>
-            <div className={style.filterContainer}>
-                <form>
-                    <input type="text" aria-label="검색" placeholder="검색어를 입력하세요"></input>
-                </form>
-                <div className={style.filterButtonRail}>
-                    <label>내림</label>
-                    <button onClick={() => handleDirectionChange('desc')}></button>
-                    <label>오름</label>
-                    <button onClick={() => handleDirectionChange('asc')}></button>
-                </div>
+            <div className={style.header}>
+                <h1 className={style.header__title}>법안 정보</h1>
+                <p className={style.header__discription}>
+                    국회에 발의된 법안의 심사 진행 상황과 표결 결과를 확인해보세요.
+                </p>
             </div>
+            <Filter />
+
+            <div className={style.resultHeader}>
+                <p className={style.resultHeader__count}>총 20건</p>
+                <BillSortButtons />
+            </div>
+
             <div className={style.billCardContainer}>
                 {billList.map((item) => (
                     <BillCard key={item.id} {...item} />

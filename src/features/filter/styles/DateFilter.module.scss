@@ -1,0 +1,45 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 0.5rem;
+}
+
+.inputSection {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 2.2rem;
+    gap: 0.5rem;
+}
+.filterName {
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 30px;
+    letter-spacing: -0.16px;
+}
+
+input[type='date'] {
+    font-family: 'Pretendard';
+    color: #cccccc;
+    background-color: white;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 21px;
+    vertical-align: middle;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px 14px;
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+    &:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 4px rgba(0, 123, 255, 0.3);
+        outline: none;
+    }
+
+    &::-webkit-calendar-picker-indicator {
+        cursor: pointer;
+        filter: invert(0.5);
+    }
+}

@@ -38,16 +38,20 @@ export const useBillStore = create<billStore>((set) => ({
 }));
 
 interface billFilterStore {
+    activeFilter: string;
     filterState: billFilter;
+    setActiveFilter: (activeFilter: string) => void;
     setFilterState: (prev: billFilter) => void;
 }
 
 export const useBillFilterStore = create<billFilterStore>((set) => ({
+    activeFilter: 'billTitle',
     filterState: {
         page: 0,
         size: 50,
         sortBy: 'committeeSubmitDate',
         direction: 'desc',
     },
+    setActiveFilter: (newActiveFilter) => set({ activeFilter: newActiveFilter }),
     setFilterState: (prev) => set({ filterState: prev }),
 }));

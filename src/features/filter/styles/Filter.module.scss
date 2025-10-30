@@ -1,0 +1,59 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 4rem;
+    border: 1px solid #e6e6e6;
+    border-radius: 16px;
+    margin-top: 2rem;
+    margin-bottom: 4rem;
+    overflow: hidden;
+}
+
+.detailSection {
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(-8px);
+    overflow: hidden;
+    transition: max-height 400ms cubic-bezier(0.25, 0.8, 0.25, 1), opacity 260ms ease,
+        transform 300ms ease;
+}
+
+.expanded .detailSection {
+    max-height: 1000px;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.moreFilterButton {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    // font
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: -6%;
+    vertical-align: middle;
+    color: #737373;
+
+    svg {
+        vertical-align: middle;
+        width: 1.1rem;
+        height: 1.1rem;
+        align-items: center;
+    }
+}
+.divider {
+    width: 100%;
+    border: none;
+    height: 1px;
+    margin: 20px 0;
+    background-color: #e0e0e0;
+}
+
+.close {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}

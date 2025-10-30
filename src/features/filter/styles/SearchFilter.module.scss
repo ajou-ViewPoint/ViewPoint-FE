@@ -1,0 +1,81 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 2rem;
+}
+
+.filterName {
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 30px;
+    letter-spacing: -0.16px;
+}
+
+.inputSection {
+    display: flex;
+    flex-direction: row;
+    height: 2.2rem;
+    gap: 1rem;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 21px;
+    letter-spacing: -1%;
+}
+
+.searchInput {
+    width: 30rem;
+    height: 100%;
+    border: 1px solid #e6e6e6;
+    border-radius: 5px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 21px;
+    letter-spacing: -1%;
+}
+
+select {
+    font-family: 'Pretendard';
+    color: #cccccc;
+    background-color: white;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 21px;
+    vertical-align: middle;
+    height: fit-content;
+    text-align-last: left;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px 14px;
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+    &:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 4px rgba(0, 123, 255, 0.3);
+        outline: none;
+    }
+}
+
+.searchInput {
+    width: 30rem;
+    height: 100%;
+    border: 1px solid #e6e6e6;
+    border-radius: 5px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 21px;
+    letter-spacing: -1%;
+}
+
+input {
+    font-family: 'Pretendard';
+    vertical-align: middle;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    &:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 4px rgba(0, 123, 255, 0.3);
+        outline: none;
+    }
+}
