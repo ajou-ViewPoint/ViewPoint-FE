@@ -57,6 +57,14 @@
         background-color: transparent;
         color: white;
     }
+
+    &__searchButtonIcon {
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        &:hover {
+            transform: scale(1.3);
+        }
+    }
 }
 
 .tagRail {
@@ -93,15 +101,15 @@
     padding: 8px;
     border-radius: 19px;
     cursor: pointer;
-    transition: background-color 0.2s, color 0.2s, transform 0.2s ease, box-shadow 0.2s ease;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s ease, box-shadow 0.3s ease;
 
     // tag font
     font-size: 1rem;
     font-weight: 600;
     // 이 부분은 수정 가능
-    white-space: nowrap; // 줄바꿈 금지
+    white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis; // 넘친 부분에 대한 표현
+    text-overflow: ellipsis;
     //
 
     &:hover {

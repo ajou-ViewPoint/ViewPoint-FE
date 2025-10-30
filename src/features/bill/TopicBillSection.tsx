@@ -19,7 +19,7 @@ function TopicBillSection() {
             </div>
             <div className={style.contents}>
                 <a className={style.contents__main}>
-                    <img className={style.topicImage} src={topicImage} alt="토픽 이미지"></img>
+                    <img className={style.topicImage} src={topicImage} alt="토픽 이미지" />
                     <p className={style.topicImage__caption}>
                         노동조합 및 노동관계조정법 일부개정법률안(대안)
                     </p>
@@ -27,10 +27,17 @@ function TopicBillSection() {
                 <div className={style.contents__list}>
                     {mockTopicList.map((item) => (
                         <div className={style.contents__item}>
-                            <h3 className={style.contents__item__title}>{item.title}</h3>
-                            <p className={style.contents__item__discription}>
-                                {item.member} | {item.date}
-                            </p>
+                            <div className={style.contents__wrapper}>
+                                <h3 className={style.contents__item__title}>{item.title}</h3>
+                                <p className={style.contents__item__discription}>
+                                    {item.member} | {item.date}
+                                </p>
+                            </div>
+                            <img
+                                className={style.listTopicImage}
+                                src={topicImage}
+                                alt="토픽 이미지"
+                            />
                         </div>
                     ))}
                 </div>

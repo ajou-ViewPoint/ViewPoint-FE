@@ -1,0 +1,123 @@
+@mixin svg {
+    vertical-align: middle;
+    margin-right: 0.4rem;
+    width: 1.1em;
+    height: 1.1em;
+    align-items: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    background-color: transparent;
+    border-radius: 32px;
+    border: 1px solid #d8d8d8;
+    padding: 2rem 2.5rem;
+    gap: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    @media (max-width: 1250px) {
+        flex-direction: column;
+    }
+
+    &__info {
+        display: flex;
+        flex-direction: row;
+        gap: 2rem;
+    }
+
+    &__title {
+        width: 53%;
+        font-weight: 600;
+        // font-size: 27px;
+        font-size: 1.6rem;
+        line-height: 32px;
+        letter-spacing: 0px;
+        color: #2d2d2d;
+        margin: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        @media (max-width: 1250px) {
+            width: 100%;
+        }
+    }
+
+    &__status {
+        padding: 2px 7px;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 1rem;
+        line-height: 32px;
+        letter-spacing: 0px;
+        color: #555555;
+        margin: 0;
+    }
+
+    &__proposer {
+        font-weight: 600;
+        font-size: 1rem;
+        line-height: 32px;
+        letter-spacing: 0px;
+        color: #555555;
+        margin: 0;
+        svg {
+            @include svg;
+        }
+    }
+
+    &__date {
+        font-weight: 600;
+        font-size: 1rem;
+        line-height: 32px;
+        letter-spacing: 0px;
+        color: #555555;
+        margin: 0;
+        svg {
+            @include svg;
+        }
+    }
+
+    &__voteResult {
+        font-weight: 600;
+        font-size: 1rem;
+        line-height: 32px;
+        letter-spacing: 0px;
+        color: #555555;
+        margin: 0;
+        svg {
+            @include svg;
+        }
+    }
+}
+
+.tagRail {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+}
+
+.summaryText {
+    margin: 0;
+    max-height: 50px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.pass {
+    color: #2f7d31;
+    background-color: #e7f5e9;
+}

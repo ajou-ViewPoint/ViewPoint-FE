@@ -4,28 +4,21 @@ import { Link } from 'react-router-dom';
 import LandingSearchBar from '../features/search/LandingSearchBar';
 import TopicBillSection from '../features/bill/TopicBillSection';
 import DonationContainer from '../features/donation/DonationContainer';
+import MatchingContainer from '../features/matching/MatchingContainer';
+import IdeologySection from '../features/ideology/IdeologySection';
+import RecentBillSection from '../features/bill/RecentBillSection';
 
 function LandingPage() {
     return (
         <div className={style.wrapper}>
             <LandingSearchBar />
             <TopicBillSection />
+            <RecentBillSection />
+            <IdeologySection />
             <div className={style.bottomSection}>
+                <MatchingContainer />
                 <DonationContainer />
             </div>
-            {/* <Link to="/" className={style.topicImageContainer}>
-                <div
-                    className={style.topicImageContainer__image}
-                    style={{ backgroundImage: `url(${topicImage})` }}></div>
-                <h1 className={style.topicImageContainer__title}>
-                    노동조합 및 노동관계조정법 일부개정법률안(대안)
-                </h1>
-                <div className={style.dots}>
-                    <button className={style.dot}></button>
-                    <button className={style.dot}></button>
-                    <button className={style.dot}></button>
-                </div>
-            </Link> */}
         </div>
     );
 }

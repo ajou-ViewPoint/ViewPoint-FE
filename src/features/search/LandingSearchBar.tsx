@@ -29,7 +29,7 @@ function LandingSearchBar() {
                     className={style.searchBar__searchButton}
                     onClick={handleSearch}
                     type="submit">
-                    <Search />
+                    <Search className={style.searchBar__searchButtonIcon} />
                 </button>
             </form>
             <div className={style.tagRail}>

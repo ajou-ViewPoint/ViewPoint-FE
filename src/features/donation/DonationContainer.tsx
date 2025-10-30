@@ -1,19 +1,19 @@
-import style from './DonationContainer.module.scss';
-import clipboardImg from '../../assets/Clipboard.png';
+import style from './SectionContainer.module.scss';
+import likeImg from '../../assets/Like.png';
 
 function DonationContainer() {
     return (
         <div className={style.container}>
-            <p className={style.number}>04.</p>
+            <p className={style.number}>05.</p>
             <div className={style.header}>
                 <div className={style.wrapper}>
-                    <h2 className={style.header__title}>나와 가까운 의원 찾기</h2>
+                    <h2 className={style.header__title}>후원하기</h2>
                     <p className={style.header__discription}>
-                        간단한 테스트를 통해 정책 선호도를 분석하여 이념적으로 가까운 국회의원을
-                        추천해드려요.
+                        ViewPoint는 국회 공개 데이터를 기반으로, 시민들에게 투명한 정치 정보를
+                        제공합니다.
                     </p>
                 </div>
-                <img className={style.img} src={clipboardImg} alt="클립보드이미지" />
+                <img className={style.img} src={likeImg} alt="클립보드이미지" />
             </div>
         </div>
     );
