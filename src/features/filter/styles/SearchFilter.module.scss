@@ -47,11 +47,10 @@ select {
     border-radius: 5px;
     padding: 10px 14px;
     cursor: pointer;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    transition: border-color 0.1s ease, box-shadow 0.1s ease;
 
     &:focus {
         border-color: #007bff;
-        box-shadow: 0 0 4px rgba(0, 123, 255, 0.3);
         outline: none;
     }
 }
@@ -72,10 +71,11 @@ input {
     vertical-align: middle;
     border-radius: 5px;
     cursor: pointer;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    transition: border-color 0.1s ease, box-shadow 0.1s ease;
     &:focus {
         border-color: #007bff;
-        box-shadow: 0 0 4px rgba(0, 123, 255, 0.3);
         outline: none;
     }
 }
+
+// 필터 선택 구간 표현하는 minus 아이콘 크기 줄이기

@@ -1,16 +1,33 @@
+.pageWrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem 4rem;
+    gap: 2rem;
+}
+
 .wrapper {
     display: flex;
     flex-direction: column;
-    width: 100%;
-    padding: 1rem;
+
+    &__info {
+        @extend .wrapper;
+        gap: 2rem;
+    }
+}
+.sectionTitle {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: Static/Display Medium/Line Height;
+    letter-spacing: 0.78px;
+    color: #8e8e8e;
 }
 
 .infoContainer {
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     width: 100%;
-    gap: 1rem;
+    gap: 3rem;
     align-items: center;
     border: 1px solid #e6e6e6;
     padding: 2rem 1rem;
@@ -27,9 +44,8 @@
 
     &__info {
         display: grid;
-        grid-template-columns: repeat(2, minmax(340px, 1fr));
+        grid-template-columns: repeat(2, minmax(200px, 1fr));
         row-gap: 1rem;
-        column-gap: 10px;
     }
 }
 
@@ -46,9 +62,75 @@
 .value {
     color: #000000;
     font-weight: 600;
-    font-style: SemiBold;
     font-size: 17.04px;
     line-height: 21.23px;
     letter-spacing: 0.48px;
     margin: 0;
+
+    &__name {
+        @extend .value;
+        font-size: 29px;
+    }
+    &__engChName {
+        @extend .value;
+        font-size: 20;
+    }
+}
+
+.snsButtonRail {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    padding: 1rem;
+}
+
+.snsButton {
+    border: none;
+    background-color: transparent;
+    margin: 0;
+    background-size: cover;
+    cursor: pointer;
+    transition: all ease 0.3s;
+
+    &:hover {
+        img {
+            transform: scale(1.1);
+        }
+    }
+}
+
+.scoreInfo {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    gap: 1rem;
+}
+
+.scoreBox {
+    display: flex;
+    flex-direction: column;
+    border-radius: 16px;
+    background-color: #f8f8f8;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 1rem 3rem;
+
+    dt {
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 20px;
+        letter-spacing: 0.78px;
+        text-align: center;
+        color: #717171;
+        margin-left: 0;
+        margin: 0;
+    }
+    dd {
+        font-weight: 500;
+        font-size: 35px;
+        line-height: 52px;
+        letter-spacing: 0.78px;
+
+        margin-left: 0;
+        margin: 0;
+    }
 }

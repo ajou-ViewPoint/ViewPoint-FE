@@ -8,7 +8,7 @@
     background-size: cover;
     border-radius: 16px;
     cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease;
     position: relative;
 
     &__caption {
@@ -24,11 +24,16 @@
         font-size: 1.5vw;
         line-height: 24px;
         letter-spacing: 0%;
+        transition: font-size 0.3s ease;
+        cursor: pointer;
+
+        .contents__main:hover & {
+            font-size: calc(1.5vw * 1.02);
+        }
     }
 
-    &:hover {
+    .contents__main:hover & {
         transform: scale(1.02);
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
     }
 }
 
@@ -40,18 +45,14 @@
     background-size: cover;
     border-radius: 16px;
     cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-
-    // &:hover {
-    //     transform: scale(1.02);
-    //     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-    // }
+    transition: transform 0.3s ease;
 }
 
 .contents {
     &__list {
         gap: 1rem;
     }
+
     &__item {
         display: flex;
         flex-direction: row;
@@ -82,8 +83,7 @@
             margin-bottom: 1rem;
         }
         &:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transform: translateY(-3px);
             background-color: rgba(0, 0, 0, 0.02);
         }
     }
@@ -95,3 +95,5 @@
         gap: 1rem;
     }
 }
+
+// 토픽 법안 이미지 위의 텍스트도 hover시 같이 커져야함
