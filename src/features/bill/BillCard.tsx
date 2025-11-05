@@ -15,7 +15,7 @@ function BillCard(billProp: bill) {
         <div className={style.container} onClick={handleViewMore}>
             <div className={style.header}>
                 <h3 className={style.header__title}>{billProp.billTitle}</h3>
-                <p className={style.header__date}>{billProp.committeePresentDate}</p>
+                <p className={style.header__date}>{billProp.proposeDt}</p>
             </div>
             <div className={style.tagRail}>
                 <BillTag text="법안 태그" />

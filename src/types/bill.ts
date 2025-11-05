@@ -16,4 +16,6 @@ export interface bill {
     lawProcDate?: string | null;
     rgsPresentDate?: string | null;
     rgsProcDate?: string | null;
+    proposeDt?: string | null;
+    age?: number | null;
 }
