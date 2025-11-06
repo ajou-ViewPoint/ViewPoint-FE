@@ -1,18 +1,34 @@
 import style from './MemberListCard.module.scss';
-import type { member } from '../../types/member';
+import type { Member, PartyMemberInfoProjection } from '../../types/member';
 import { Link } from 'react-router-dom';
 
-function MemberListCard(member: member) {
+type MemberListCardProps = {
+    member: Member | PartyMemberInfoProjection;
+};
+interface BasicMemberInfo {
+    id: number;
+    name: string;
+    party: string;
+    profileImage: string;
+}
+
+function MemberListCard({ member }: MemberListCardProps) {
+    const normalizedMember: BasicMemberInfo = {
+        id: 'id' in member ? member.id : member.memberId,
+        name: member.name,
+        party: 'partyName' in member ? member.partyName ?? '' : (member as Member).party ?? '',
+        profileImage: member.profileImage ?? '',
+    };
     return (
-        <Link to={`/members/${member.id}`} className={style.container} state={member}>
+        <Link to={`/members/${normalizedMember.id}`} className={style.container}>
             <img
                 className={style.profileImage}
-                src={member.profileImage}
-                alt={`${member.name} 의원의 프로필 사진`}
+                src={normalizedMember.profileImage}
+                alt={`${normalizedMember.name} 의원의 프로필 사진`}
             />
             <div className={style.profileInfo}>
-                <h2 className={style.name}>{member.name}</h2>
-                <h3 className={style.party}>{member.party}</h3>
+                <h2 className={style.name}>{normalizedMember.name}</h2>
+                <h3 className={style.party}>{normalizedMember.party}</h3>
             </div>
         </Link>
     );

@@ -1,227 +1,51 @@
+import { useEffect } from 'react';
 import MemberListCard from '../features/member/MemberListCard';
-import type { member } from '../types/member';
+import { useMemberFilterStore, useMemberStore } from '../store/memberStore';
 import style from './styles/MemberListPage.module.scss';
+import Filter from '../features/filter/Filter';
 
 function MemberListPage() {
-    const mockMemberList: member[] = [
-        {
-            id: 16415,
-            naasCode: 'RUW8681N',
-            profileImage: 'https://www.assembly.go.kr/static/portal/img/openassm/RUW8681N.jpg',
-            name: '황진하',
-            engName: 'HWANG Jin Ha',
-            chName: '黃震夏',
-            birthDate: '1946-08-25',
-            gender: '남',
-            phone: '',
-            eraco: '제17대, 제18대, 제19대',
-            duty: '국회의원',
-            innerDuty: null,
-            electionDistrict: '비례대표/경기 파주시/경기 파주시을',
-            attendanceRate: null,
-            loyaltyRate: 0,
-            party: '한나라당/한나라당/새누리당',
-            history: '',
-            committeeId: null,
-            partyId: null,
-        },
-        {
-            id: 16414,
-            naasCode: 'JOY4394O',
-            profileImage: 'https://www.assembly.go.kr/static/portal/img/openassm/JOY4394O.jpg',
-            name: '황주홍',
-            engName: 'HWANG JUHONG',
-            chName: '黃柱洪',
-            birthDate: '1952-02-27',
-            gender: '남',
-            phone: '',
-            eraco: '제19대, 제20대',
-            duty: '',
-            innerDuty: null,
-            electionDistrict: '전남 장흥군강진군영암군/전남 고흥군보성군장흥군강진군',
-            attendanceRate: null,
-            loyaltyRate: 0,
-            party: '민주통합당/국민의당',
-            history: '',
-            committeeId: null,
-            partyId: null,
-        },
-        {
-            id: 16413,
-            naasCode: 'WRO3417V',
-            profileImage: 'https://www.assembly.go.kr/static/portal/img/openassm/WRO3417V.jpg',
-            name: '황종율',
-            engName: '',
-            chName: '黃鍾律',
-            birthDate: '1909-09-03',
-            gender: '남',
-            phone: '',
-            eraco: '제8대',
-            duty: '',
-            innerDuty: null,
-            electionDistrict: '전국구',
-            attendanceRate: null,
-            loyaltyRate: 0,
-            party: '민주공화당',
-            history: '',
-            committeeId: null,
-            partyId: null,
-        },
-        {
-            id: 16412,
-            naasCode: 'T6A6557F',
-            profileImage:
-                'https://www.assembly.go.kr/static/portal/img/openassm/new/3fb9d9e029ee438c9ad6c9050c36feee.jpg',
-            name: '황정아',
-            engName: 'HWANG JUNGA',
-            chName: '黃靖雅',
-            birthDate: '1977-03-07',
-            gender: '여',
-            phone: '02-784-2566',
-            eraco: '제22대',
-            duty: '위원',
-            innerDuty: null,
-            electionDistrict: '대전 유성구을',
-            attendanceRate: null,
-            loyaltyRate: 0,
-            party: '더불어민주당',
-            history:
-                '(전) 한국천문연구원 책임연구원\r\n(전) 카이스트 항공우주공학과 겸직교수\r\n(전) 육군 지상작전사령부 정책자문위원\r\n(전) 육군 미사일전략사령부 자문위원\r\n(전) 과학기술정보통신부 국가우주위원회 위원\r\n(현) 제22대 국회 전반기 과학기술정보방송통신위원회 위원',
-            committeeId: null,
-            partyId: null,
-        },
-        {
-            id: 16411,
-            naasCode: 'HY464056',
-            profileImage: 'https://www.assembly.go.kr/static/portal/img/openassm/HY464056.jpg',
-            name: '황재홍',
-            engName: '',
-            chName: '黃在洪',
-            birthDate: '1931-07-27',
-            gender: '남',
-            phone: '',
-            eraco: '제9대',
-            duty: '',
-            innerDuty: null,
-            electionDistrict: '경북 문경시,예천군',
-            attendanceRate: null,
-            loyaltyRate: 0,
-            party: '민주공화당',
-            history: '',
-            committeeId: null,
-            partyId: null,
-        },
-        {
-            id: 16410,
-            naasCode: 'QF159955',
-            profileImage: 'https://www.assembly.go.kr/static/portal/img/openassm/QF159955.jpg',
-            name: '황인자',
-            engName: 'Hwang, In Ja',
-            chName: '黃仁子',
-            birthDate: '1955-10-16',
-            gender: '여',
-            phone: '',
-            eraco: '제19대',
-            duty: '',
-            innerDuty: null,
-            electionDistrict: '비례대표',
-            attendanceRate: null,
-            loyaltyRate: 0,
-            party: '새누리당',
-            history: '',
-            committeeId: null,
-            partyId: null,
-        },
-        {
-            id: 16409,
-            naasCode: 'WEP8494X',
-            profileImage: 'https://www.assembly.go.kr/static/portal/img/openassm/WEP8494X.jpg',
-            name: '황인원',
-            engName: '',
-            chName: '黃仁元',
-            birthDate: '1920-09-13',
-            gender: '남',
-            phone: '',
-            eraco: '제5대, 제6대',
-            duty: '',
-            innerDuty: null,
-            electionDistrict: '경기 파주군/경기 파주,고양군',
-            attendanceRate: null,
-            loyaltyRate: 0,
-            party: '민주당/민정당',
-            history: '',
-            committeeId: null,
-            partyId: null,
-        },
-        {
-            id: 16408,
-            naasCode: 'BEP5053G',
-            profileImage: 'https://www.assembly.go.kr/static/portal/img/openassm/BEP5053G.jpg',
-            name: '황인성',
-            engName: 'Hwang, In-sung',
-            chName: '黃寅性',
-            birthDate: '1926-01-09',
-            gender: '남',
-            phone: '',
-            eraco: '제11대, 제12대, 제14대',
-            duty: '',
-            innerDuty: null,
-            electionDistrict: '전북 진안,무주,장수/전북 진안,무주,장수',
-            attendanceRate: null,
-            loyaltyRate: 0,
-            party: '민주정의당/민주정의당/민주자유당',
-            history: '',
-            committeeId: null,
-            partyId: null,
-        },
-        {
-            id: 16407,
-            naasCode: 'HOE21077',
-            profileImage: 'https://www.assembly.go.kr/static/portal/img/openassm/HOE21077.jpg',
-            name: '황의성',
-            engName: 'Hwang Ui-sung',
-            chName: '黃義成',
-            birthDate: '1932-07-04',
-            gender: '남',
-            phone: '',
-            eraco: '제14대',
-            duty: '',
-            innerDuty: null,
-            electionDistrict: '전남 곡성,구례군',
-            attendanceRate: null,
-            loyaltyRate: 0,
-            party: '민주당',
-            history: '',
-            committeeId: null,
-            partyId: null,
-        },
-        {
-            id: 16406,
-            naasCode: '9802295A',
-            profileImage: 'https://www.assembly.go.kr/static/portal/img/openassm/9802295A.jpg',
-            name: '황은환',
-            engName: '',
-            chName: '黃銀煥',
-            birthDate: '1924-01-15',
-            gender: '남',
-            phone: '',
-            eraco: '제8대',
-            duty: '',
-            innerDuty: null,
-            electionDistrict: '경남 마산',
-            attendanceRate: null,
-            loyaltyRate: 0,
-            party: '신민당',
-            history: '',
-            committeeId: null,
-            partyId: null,
-        },
-    ];
+    const memberList = useMemberStore((state) => state.memberList);
+    const filterState = useMemberFilterStore((state) => state.filterState);
+    const { getMemberList } = useMemberStore();
+    // const { setFilterState } = useMemberFilterStore();
+
+    // const handleDirectionChange = (newDirection: string) => {
+    //     setFilterState({ ...filterState, direction: newDirection, page: 0 });
+    // };
+    // const handleSortChange = (newSortBy: string) => {
+    //     setFilterState({ ...filterState, sortBy: newSortBy, page: 0 });
+    // };
+
+    useEffect(() => {
+        getMemberList();
+    }, [getMemberList, filterState]);
     return (
         <div className={style.wrapper}>
-            <div>필터섹션</div>
+            <div className={style.header}>
+                <h1 className={style.header__title}>XX대 국회의원</h1>
+                <p className={style.header__discription}>22대 국회의원들입니다</p>
+            </div>
+            <Filter />
+            {/* <div className={style.filterContainer}>
+                <form>
+                    <input type="text" aria-label="검색" placeholder="검색어를 입력하세요"></input>
+                </form>
+                <div className={style.filterButtonRail}>
+                    <label>내림</label>
+                    <button onClick={() => handleDirectionChange('desc')}></button>
+                    <label>오름</label>
+                    <button onClick={() => handleDirectionChange('asc')}></button>
+                    <label>이름순</label>
+                    <button onClick={() => handleSortChange('name')}></button>
+                    <label>나이순</label>
+                    <button onClick={() => handleSortChange('birthDate')}></button>
+                </div>
+            </div> */}
             <div className={style.memberCardConatiner}>
-                {mockMemberList.map((member) => MemberListCard(member))}
+                {memberList.map((member) => (
+                    <MemberListCard key={member.id} member={member} />
+                ))}
             </div>
         </div>
     );
