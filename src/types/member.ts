@@ -1,4 +1,4 @@
-export interface member {
+export interface Member {
     id: number;
     naasCode: string;
     profileImage: string;
@@ -18,4 +18,14 @@ export interface member {
     history: string | null;
     committeeId: string | null;
     partyId: string | null;
+}
+
+export interface PartyMemberInfoProjection {
+    memberId: number;
+    name: string;
+    constituencyType: string | null;
+    profileImage: string | null;
+    partyName: string | null;
+    duty: string | null;
+    regionName: string | null;
 }
