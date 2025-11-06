@@ -1,15 +1,26 @@
+.pageWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0.5rem 4rem;
+    gap: 2rem;
+}
+
 .wrapper {
     display: flex;
     flex-direction: column;
-    width: 100%;
     padding: 1rem;
 }
 
 .buttonGrid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 15rem 15rem;
+    width: fit-content;
     gap: 1rem;
-    width: 50%;
+    padding: 1rem;
+    border: 1px solid #e6e6e6;
+    justify-content: center;
+    border-radius: 16px;
 }
 
 .button {
@@ -27,4 +38,12 @@
     text-decoration: none;
     letter-spacing: 0;
     padding: 0;
+
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
 }
