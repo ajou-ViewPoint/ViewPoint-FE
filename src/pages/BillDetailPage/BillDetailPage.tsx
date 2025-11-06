@@ -26,7 +26,7 @@ function BillDetailPage() {
         window.scrollTo(0, 0);
     }, []);
 
-    if (!bill) return <div>Loading...</div>;
+    if (!bill) return '';
 
     return (
         <div className={style.pageWrapper}>

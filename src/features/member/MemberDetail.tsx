@@ -32,7 +32,7 @@ function MemberDetail() {
         }
     }, [member, params.memberId, getMember]);
 
-    if (!member) return <div>Loading...</div>;
+    if (!member) return '';
 
     return (
         <div className={style.pageWrapper}>
