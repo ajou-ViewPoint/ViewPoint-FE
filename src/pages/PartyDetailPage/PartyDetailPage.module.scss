@@ -1,0 +1,100 @@
+.pageWrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem 4rem;
+    gap: 2rem;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    border: 1px solid #e4e4e4;
+    border-radius: 14px;
+
+    &__info {
+        @extend .wrapper;
+        gap: 2rem;
+    }
+    &__grid {
+        @extend .wrapper;
+        display: grid;
+        grid-template-columns: 50% 50%;
+        gap: 1rem;
+        justify-content: center;
+    }
+}
+.sectionTitle {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: Static/Display Medium/Line Height;
+    letter-spacing: 0.78px;
+    color: #8e8e8e;
+}
+
+.infoContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width: 100%;
+    gap: 3rem;
+    align-items: center;
+    border: 1px solid #e6e6e6;
+    padding: 2rem 1rem;
+
+    &__profileImage {
+        width: 205px;
+        height: 278px;
+        border-radius: 8px;
+        object-fit: cover;
+        display: block;
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    &__info {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(200px, 1fr));
+        row-gap: 1rem;
+    }
+}
+
+.resultCard {
+    display: flex;
+    flex-direction: column;
+    border-radius: 16px;
+    background-color: #f8f8f8;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 1rem 2.7rem;
+    &[data-label='찬성'] dd {
+        color: #2372eb;
+    }
+    &[data-label='반대'] dd {
+        color: #ff606d;
+    }
+    &[data-label='기권'] dd {
+        color: #717171;
+    }
+    &[data-label='불참'] dd {
+        color: #facc15;
+    }
+
+    dt {
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 20px;
+        letter-spacing: 0.78px;
+        text-align: center;
+        color: #717171;
+        margin-left: 0;
+    }
+    dd {
+        font-weight: 600;
+        font-size: 40px;
+        line-height: 52px;
+        letter-spacing: 0.78px;
+
+        margin-left: 0;
+    }
+}

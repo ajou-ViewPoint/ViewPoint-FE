@@ -1,0 +1,67 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    border: 1px solid #e6e6e6;
+    border-radius: 10px;
+    background-color: #f7f7f7;
+    gap: 1rem;
+}
+
+.searchInput {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid #e6e6e6;
+    border-radius: 6.47px;
+    width: 30rem;
+    border-radius: 6.47px;
+    border-width: 1.29px;
+    opacity: 1;
+
+    // font
+    font-weight: 400;
+    font-size: 18.12px;
+    line-height: 27.18px;
+    letter-spacing: -1%;
+}
+
+.title {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 38.82px;
+    letter-spacing: -0.2px;
+    color: #000000;
+    margin: 0;
+}
+
+.searchSection {
+    display: flex;
+    flex-direction: row;
+}
+
+input {
+    font-family: 'Pretendard';
+    vertical-align: middle;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: border-color 0.1s ease, box-shadow 0.1s ease;
+    &:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 4px rgba(0, 123, 255, 0.3);
+        outline: none;
+    }
+}
+
+.gpsButton {
+    border: none;
+    background-color: transparent;
+    border-radius: 8px;
+
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+}

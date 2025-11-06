@@ -1,0 +1,42 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.title {
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 40px;
+    letter-spacing: 0.78px;
+    color: #121212;
+}
+.tagGrid {
+    display: grid;
+    grid-template-columns: 45% 45%;
+    gap: 1rem;
+    justify-content: space-between;
+}
+
+.tag {
+    border: none;
+    border-radius: 8px;
+    padding: 1rem 2rem;
+    background-color: #89ceff;
+    color: white;
+    // font
+    font-size: 16px;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: 0%;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+        transform: translateY(-3px);
+        background-color: #ffffff;
+        color: #2ba6ff;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+}
