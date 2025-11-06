@@ -8,20 +8,6 @@ function BillListPage() {
     const billList = useBillStore((state) => state.billList);
     const { getBillList } = useBillStore();
     const filterState = useBillFilterStore((state) => state.filterState);
-    const { setFilterState } = useBillFilterStore();
-
-    // 필터 정렬
-    const handleDirectionChange = (newSortBy: string) => {
-        setFilterState({
-            ...filterState,
-            direction: newSortBy,
-            page: 0,
-        });
-    };
-
-    const handleSortChange = (newSortBy: string) => {
-        setFilterState({ ...filterState, sortBy: newSortBy, page: 0 });
-    };
 
     useEffect(() => {
         getBillList();

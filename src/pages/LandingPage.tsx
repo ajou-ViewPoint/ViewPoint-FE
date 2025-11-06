@@ -1,6 +1,4 @@
 import style from './styles/LandingPage.module.scss';
-import topicImage from '../assets/yellowEnvelope.png';
-import { Link } from 'react-router-dom';
 import LandingSearchBar from '../features/search/LandingSearchBar';
 import TopicBillSection from '../features/bill/TopicBillSection';
 import DonationContainer from '../features/donation/DonationContainer';

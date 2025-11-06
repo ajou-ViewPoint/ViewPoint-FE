@@ -1,3 +1,4 @@
+// import { useCommitteeStore } from '../../store/committeeStore';
 import style from './Schedule.module.scss';
 
 const mockData = [
@@ -34,11 +35,12 @@ const mockData = [
 ];
 
 function Schedule() {
+    // const committee = useCommitteeStore((state) => state.selectedCommittee);
     return (
         <div className={style.wrapper}>
             <h3 className={style.header}>2025년 9월 4일</h3>
             {mockData.map((item) => (
-                <div className={style.scheduleCard}>
+                <div className={style.scheduleCard} key={item.name}>
                     <div className={style.scheduleCard__header}>
                         <p className={style.scheduleCard__tag}>{item.status}</p>
                         <p className={style.scheduleCard__name}>{item.name}</p>

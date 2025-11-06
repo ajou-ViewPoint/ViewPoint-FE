@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom';
 import style from './CommitteeDetailPage.module.scss';
 import { useEffect } from 'react';
 import Schedule from './Schedule';
+import { useCommitteeStore } from '../../store/committeeStore';
 
 const mockData = {
     name: '과학기술정보방송통신위원회',
@@ -18,15 +19,22 @@ const mockData = {
 };
 
 function CommitteeDetailPage() {
+    const { getCommitteeById, clearSelectedCommittee } = useCommitteeStore();
+    const committee = useCommitteeStore((state) => state.selectedCommittee);
     const params = useParams();
 
-    useEffect(() => {}, []);
+    useEffect(() => {
+        getCommitteeById(params.committeeId ?? '');
+        return () => {
+            clearSelectedCommittee();
+        };
+    }, [getCommitteeById, params.committeeId]);
 
     return (
         <div className={style.wrapper}>
             <section className={style.section}>
                 <div className={style.header}>
-                    <h1 className={style.title}>{mockData.name}</h1>
+                    <h1 className={style.title}>{committee.committeeName}</h1>
                 </div>
                 <dl className={style.detail}>
                     <div className={style.detail__item}>

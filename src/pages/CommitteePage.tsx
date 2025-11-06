@@ -1,54 +1,68 @@
+import { useNavigate } from 'react-router-dom';
 import style from './styles/CommitteePage.module.scss';
 
 function CommitteePage() {
     const committeeList = [
-        { name: '국회운영위원회', path: 'housesteering' },
-        { name: '법제사법위원회', path: 'legislation' },
-        { name: '정무위원회', path: 'policy' },
-        { name: '기획재정위원회', path: 'finance' },
-        { name: '예산결산특별위원회', path: 'budget' },
-        { name: '교육위원회', path: 'education' },
-        { name: '과학기술정보방송통신위원회', path: 'science' },
-        { name: '외교통일위원회', path: 'diplomacy' },
-        { name: '국방위원회', path: 'defense' },
-        { name: '행정안전위원회', path: 'administration' },
-        { name: '문화체육관광위원회', path: 'culture' },
-        { name: '농림축산식품해양수산위원회', path: 'agriculture' },
-        { name: '산업통상자원중소벤처기업위원회', path: 'industry' },
-        { name: '보건복지위원회', path: 'welfare' },
-        { name: '환경노동위원회', path: 'environment' },
-        { name: '국토교통위원회', path: 'land' },
-        { name: '정보위원회', path: 'intelligence' },
-        { name: '여성가족위원회', path: 'gender' },
+        { name: '국회운영위원회', committeeId: '1' },
+        { name: '법제사법위원회', committeeId: '2' },
+        { name: '정무위원회', committeeId: '3' },
+        { name: '기획재정위원회', committeeId: '4' },
+        { name: '예산결산특별위원회', committeeId: '18' },
+        { name: '교육위원회', committeeId: '5' },
+        { name: '과학기술정보방송통신위원회', committeeId: '6' },
+        { name: '외교통일위원회', committeeId: '7' },
+        { name: '국방위원회', committeeId: '8' },
+        { name: '행정안전위원회', committeeId: '9' },
+        { name: '문화체육관광위원회', committeeId: '10' },
+        { name: '농림축산식품해양수산위원회', committeeId: '11' },
+        { name: '산업통상자원중소벤처기업위원회', committeeId: '12' },
+        { name: '보건복지위원회', committeeId: '13' },
+        { name: '환경노동위원회', committeeId: '14' },
+        { name: '국토교통위원회', committeeId: '15' },
+        { name: '정보위원회', committeeId: '16' },
+        { name: '여성가족위원회', committeeId: '17' },
     ] as const;
+
+    const navigate = useNavigate();
+
+    const navigateToCommitteeDetailPage = (committeeId: string) => {
+        navigate(`/committee/${committeeId}`);
+    };
+
     return (
         <div className={style.wrapper}>
-            <h2>상임위원회 및 상설특별위원회</h2>
-            <h3 className={style.semiTitle}>운영·조정</h3>
+            {/* <h2 className={style.title}>위원회 메뉴</h2> */}
+            <h3 className={style.sectorTitle}>운영·조정</h3>
             <div className={style.buttonRail}>
                 {committeeList
                     .filter((item) =>
                         ['국회운영위원회', '정보위원회', '예산결산특별위원회'].includes(item.name)
                     )
                     .map((item) => (
-                        <button className={style.committeeButton} key={item.path}>
+                        <button
+                            className={style.committeeButton}
+                            key={item.committeeId}
+                            onClick={() => navigateToCommitteeDetailPage(item.committeeId)}>
                             {item.name}
                         </button>
                     ))}
             </div>
-            <h3 className={style.semiTitle}>법·제도·재정</h3>
+            <h3 className={style.sectorTitle}>법·제도·재정</h3>
             <div className={style.buttonRail}>
                 {committeeList
                     .filter((item) =>
                         ['법제사법위원회', '정무위원회', '기획재정위원회'].includes(item.name)
                     )
                     .map((item) => (
-                        <button className={style.committeeButton} key={item.path}>
+                        <button
+                            className={style.committeeButton}
+                            key={item.committeeId}
+                            onClick={() => navigateToCommitteeDetailPage(item.committeeId)}>
                             {item.name}
                         </button>
                     ))}
             </div>
-            <h3 className={style.semiTitle}>사회·교육·문화</h3>
+            <h3 className={style.sectorTitle}>사회·교육·문화</h3>
             <div className={style.buttonRail}>
                 {committeeList
                     .filter((item) =>
@@ -61,12 +75,15 @@ function CommitteePage() {
                         ].includes(item.name)
                     )
                     .map((item) => (
-                        <button className={style.committeeButton} key={item.path}>
+                        <button
+                            className={style.committeeButton}
+                            key={item.committeeId}
+                            onClick={() => navigateToCommitteeDetailPage(item.committeeId)}>
                             {item.name}
                         </button>
                     ))}
             </div>
-            <h3 className={style.semiTitle}>산업·경제·과학</h3>
+            <h3 className={style.sectorTitle}>산업·경제·과학</h3>
             <div className={style.buttonRail}>
                 {committeeList
                     .filter((item) =>
@@ -78,19 +95,25 @@ function CommitteePage() {
                         ].includes(item.name)
                     )
                     .map((item) => (
-                        <button className={style.committeeButton} key={item.path}>
+                        <button
+                            className={style.committeeButton}
+                            key={item.committeeId}
+                            onClick={() => navigateToCommitteeDetailPage(item.committeeId)}>
                             {item.name}
                         </button>
                     ))}
             </div>
-            <h3 className={style.semiTitle}>외교·안보·행정</h3>
+            <h3 className={style.sectorTitle}>외교·안보·행정</h3>
             <div className={style.buttonRail}>
                 {committeeList
                     .filter((item) =>
                         ['외교통일위원회', '국방위원회', '행정안전위원회'].includes(item.name)
                     )
                     .map((item) => (
-                        <button className={style.committeeButton} key={item.path}>
+                        <button
+                            className={style.committeeButton}
+                            key={item.committeeId}
+                            onClick={() => navigateToCommitteeDetailPage(item.committeeId)}>
                             {item.name}
                         </button>
                     ))}
