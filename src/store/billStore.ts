@@ -12,13 +12,16 @@ export interface billFilter {
 
 interface billStore {
     billList: bill[];
+    recentBillList: bill[];
     isLoading: boolean;
     getBillList: () => Promise<void>;
+    getRecentBillList: () => Promise<void>;
     getBill: (billId: number) => Promise<bill>;
 }
 
 export const useBillStore = create<billStore>((set) => ({
     billList: [],
+    recentBillList: [],
     isLoading: false,
     getBillList: async () => {
         const filterState = useBillFilterStore.getState().filterState;
@@ -29,6 +32,14 @@ export const useBillStore = create<billStore>((set) => ({
             set({ billList: res.data.content });
         } catch (error) {
             throw new Error(`법안 불러오기 에러: ${error}`);
+        }
+    },
+    getRecentBillList: async () => {
+        try {
+            const res = await axios.get(`${SERVER_IP}/v1/main/recent-bills`);
+            set({ recentBillList: res.data });
+        } catch (error) {
+            throw new Error(`최근 통과된 법안 불러오기 에러: ${error}`);
         }
     },
     getBill: async (billId) => {
