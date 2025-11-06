@@ -26,7 +26,7 @@ function TopicBillSection() {
                 </a>
                 <div className={style.contents__list}>
                     {mockTopicList.map((item) => (
-                        <div className={style.contents__item}>
+                        <div className={style.contents__item} key={item.title}>
                             <div className={style.contents__wrapper}>
                                 <h3 className={style.contents__item__title}>{item.title}</h3>
                                 <p className={style.contents__item__discription}>

@@ -1,18 +1,12 @@
 import { Search } from 'lucide-react';
 import style from './LandingSearchBar.module.scss';
 
-const mockTagsBills: string[] = [
-    '조세특례제한법 개정안',
-    '공공주택 특별법',
-    '청년일자리 지원법',
-    '근로기준법 개정안',
-    '개인정보 보호법 개정안',
-    '교육개혁특별법',
+const mockTagsBills: { id: string; name: string }[] = [
+    { id: 'bill-1', name: '조세특례제한법 개정안' },
+    { id: 'bill-2', name: '공공주택 특별법' },
+    { id: 'bill-3', name: '청년일자리 지원법' },
+    { id: 'bill-4', name: '근로기준법 개정안' },
 ];
-
-const mockTagsMembers: string[] = ['김철수 의원', '오세훈 의원'];
-
-const mockTags: string[] = [...mockTagsBills, ...mockTagsMembers];
 
 const handleSearch = () => {};
 
@@ -33,8 +27,10 @@ function LandingSearchBar() {
                 </button>
             </form>
             <div className={style.tagRail}>
-                {mockTags.map((item) => (
-                    <a className={style.searchTag}>#{item}</a>
+                {mockTagsBills.map((item) => (
+                    <a className={style.searchTag} key={item.id}>
+                        #{item.name}
+                    </a>
                 ))}
             </div>
         </div>
