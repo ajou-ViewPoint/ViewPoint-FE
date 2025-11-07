@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { Committee } from '../types/committee';
+import type { Committee, CommitteeDetail } from '../types/committee';
 import axios from 'axios';
 import { SERVER_IP } from '../constants/env';
 
@@ -11,14 +11,23 @@ const DEFAULT_COMMITTEE = {
     scheduleInfo: '',
 };
 
+const DEFAULT_COMMITTEEDETAIL: CommitteeDetail = {
+    committeeId: 0,
+    committeeName: '',
+    membersByRole: {},
+    stats: {},
+};
+
 interface committeeStore {
     selectedCommittee: Committee;
+    selectedCommitteeDetail: CommitteeDetail;
     getCommitteeById: (id: string) => Promise<void>;
-    clearSelectedCommittee: () => void;
+    getCommitteeDetail: (committeeName: string) => Promise<void>;
 }
 
 export const useCommitteeStore = create<committeeStore>((set) => ({
     selectedCommittee: DEFAULT_COMMITTEE,
+    selectedCommitteeDetail: DEFAULT_COMMITTEEDETAIL,
     getCommitteeById: async (id) => {
         try {
             const res = await axios.get(`${SERVER_IP}/v1/committees/${id}`);
@@ -31,7 +40,18 @@ export const useCommitteeStore = create<committeeStore>((set) => ({
             }
         }
     },
-    clearSelectedCommittee: () => {
-        set({ selectedCommittee: DEFAULT_COMMITTEE });
+    getCommitteeDetail: async (committeeName) => {
+        try {
+            const res = await axios.get(`${SERVER_IP}/v1/committees/detail?name=${committeeName}`);
+            set({ selectedCommitteeDetail: res.data });
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                throw new Error(
+                    `위원회 상세 정보 불러오기 에러: ${
+                        error.response?.data?.message ?? error.message
+                    }`
+                );
+            }
+        }
     },
 }));
