@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import style from './CommitteeDetailPage.module.scss';
 import { useEffect } from 'react';
 import Schedule from './Schedule';
@@ -19,16 +19,19 @@ const mockData = {
 };
 
 function CommitteeDetailPage() {
-    const { getCommitteeById, clearSelectedCommittee } = useCommitteeStore();
+    const { getCommitteeById, getCommitteeDetail } = useCommitteeStore();
     const committee = useCommitteeStore((state) => state.selectedCommittee);
+    const committeeDetail = useCommitteeStore((state) => state.selectedCommitteeDetail);
+    const { state } = useLocation() as { state: { committeeName: string } };
+    const committeeName = state?.committeeName;
     const params = useParams();
 
     useEffect(() => {
-        getCommitteeById(params.committeeId ?? '');
-        return () => {
-            clearSelectedCommittee();
-        };
-    }, [getCommitteeById, params.committeeId]);
+        if (!committee) {
+            getCommitteeById(params.committeeId ?? '');
+            getCommitteeDetail(committeeName);
+        }
+    }, [getCommitteeById, getCommitteeDetail, committee, committeeName, params.committeeId]);
 
     return (
         <div className={style.wrapper}>

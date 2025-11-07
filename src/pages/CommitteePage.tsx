@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import style from './styles/CommitteePage.module.scss';
+import { useCommitteeStore } from '../store/committeeStore';
 
 function CommitteePage() {
     const committeeList = [
@@ -24,9 +25,16 @@ function CommitteePage() {
     ] as const;
 
     const navigate = useNavigate();
+    const { getCommitteeById, getCommitteeDetail } = useCommitteeStore();
 
-    const navigateToCommitteeDetailPage = (committeeId: string) => {
-        navigate(`/committee/${committeeId}`);
+    const preFetchCommitteeDetail = async (committeeId: string, committeeName: string) => {
+        await getCommitteeById(committeeId);
+        await getCommitteeDetail(committeeName);
+    };
+
+    const navigateToCommitteeDetailPage = async (committeeId: string, committeeName: string) => {
+        await preFetchCommitteeDetail(committeeId, committeeName);
+        navigate(`/committee/${committeeId}`, { state: { committeeName } });
     };
 
     return (
@@ -42,7 +50,9 @@ function CommitteePage() {
                         <button
                             className={style.committeeButton}
                             key={item.committeeId}
-                            onClick={() => navigateToCommitteeDetailPage(item.committeeId)}>
+                            onClick={() =>
+                                navigateToCommitteeDetailPage(item.committeeId, item.name)
+                            }>
                             {item.name}
                         </button>
                     ))}
@@ -57,7 +67,9 @@ function CommitteePage() {
                         <button
                             className={style.committeeButton}
                             key={item.committeeId}
-                            onClick={() => navigateToCommitteeDetailPage(item.committeeId)}>
+                            onClick={() =>
+                                navigateToCommitteeDetailPage(item.committeeId, item.name)
+                            }>
                             {item.name}
                         </button>
                     ))}
@@ -78,7 +90,9 @@ function CommitteePage() {
                         <button
                             className={style.committeeButton}
                             key={item.committeeId}
-                            onClick={() => navigateToCommitteeDetailPage(item.committeeId)}>
+                            onClick={() =>
+                                navigateToCommitteeDetailPage(item.committeeId, item.name)
+                            }>
                             {item.name}
                         </button>
                     ))}
@@ -98,7 +112,9 @@ function CommitteePage() {
                         <button
                             className={style.committeeButton}
                             key={item.committeeId}
-                            onClick={() => navigateToCommitteeDetailPage(item.committeeId)}>
+                            onClick={() =>
+                                navigateToCommitteeDetailPage(item.committeeId, item.name)
+                            }>
                             {item.name}
                         </button>
                     ))}
@@ -113,7 +129,9 @@ function CommitteePage() {
                         <button
                             className={style.committeeButton}
                             key={item.committeeId}
-                            onClick={() => navigateToCommitteeDetailPage(item.committeeId)}>
+                            onClick={() =>
+                                navigateToCommitteeDetailPage(item.committeeId, item.name)
+                            }>
                             {item.name}
                         </button>
                     ))}
