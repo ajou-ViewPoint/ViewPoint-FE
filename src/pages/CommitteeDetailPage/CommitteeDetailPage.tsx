@@ -3,6 +3,7 @@ import style from './CommitteeDetailPage.module.scss';
 import { useEffect } from 'react';
 import Schedule from './Schedule';
 import { useCommitteeStore } from '../../store/committeeStore';
+import StatsSection from './StatsSection';
 
 const mockData = {
     name: '과학기술정보방송통신위원회',
@@ -22,12 +23,16 @@ function CommitteeDetailPage() {
     const { getCommitteeById, getCommitteeDetail } = useCommitteeStore();
     const committee = useCommitteeStore((state) => state.selectedCommittee);
     const committeeDetail = useCommitteeStore((state) => state.selectedCommitteeDetail);
+
+    // committee api 수정시 삭제할 부분.
     const { state } = useLocation() as { state: { committeeName: string } };
     const committeeName = state?.committeeName;
+    //
     const params = useParams();
 
     useEffect(() => {
         if (!committee) {
+            // 수정 필요, 메모리 날라가면 committeeName 불러올 수 없음
             getCommitteeById(params.committeeId ?? '');
             getCommitteeDetail(committeeName);
         }
@@ -58,7 +63,9 @@ function CommitteeDetailPage() {
             </section>
             <section className={style.section}>
                 <h2 className={style.section__title}>정당별 의석수</h2>
-                <div className={style.section__wrapper}></div>
+                <div className={style.section__wrapper}>
+                    <StatsSection statsData={committeeDetail.stats} />
+                </div>
             </section>
             <section className={style.section}>
                 <h2 className={style.section__title}>위원회 구성 의원</h2>
