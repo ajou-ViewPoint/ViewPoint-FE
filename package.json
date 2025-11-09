@@ -10,13 +10,20 @@
         "preview": "vite preview"
     },
     "dependencies": {
+        "@svg-maps/south-korea": "^2.0.0",
+        "@types/react-simple-maps": "^3.0.6",
         "axios": "^1.12.2",
+        "d3-geo": "^3.1.1",
         "dayjs": "^1.11.18",
         "lucide-react": "^0.544.0",
+        "prop-types": "^15.8.1",
         "react": "^19.1.1",
         "react-daum-postcode": "^3.2.0",
         "react-dom": "^19.1.1",
+        "react-is": "^19.2.0",
         "react-router-dom": "^7.9.1",
+        "react-simple-maps": "^1.0.0",
+        "recharts": "^3.3.0",
         "sass": "^1.93.2",
         "zustand": "^5.0.8"
     },
