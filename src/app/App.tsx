@@ -3,7 +3,7 @@ import MemberDetail from '../features/member/MemberDetail';
 import About from '../pages/About';
 import BillListPage from '../pages/BillListPage';
 import CommitteePage from '../pages/CommitteePage';
-import LandingPage from '../pages/LandingPage';
+import LandingPage from '../pages/LandingPage/LandingPage';
 import MainPage from '../pages/MainPage';
 import MemberListPage from '../pages/MemberListPage';
 import MyDistrict from '../pages/MyDistrictPage/MyDistrict';
