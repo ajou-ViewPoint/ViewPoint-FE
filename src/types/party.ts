@@ -4,3 +4,10 @@ export interface Party {
     foundedDate: string;
     dissolvedDate: string;
 }
+
+export interface PartySeatStatus {
+    partyName: string;
+    partyId: number;
+    totalSeats: number;
+    eraco: number;
+}

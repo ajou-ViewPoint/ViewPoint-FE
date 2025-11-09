@@ -4,28 +4,35 @@ import { useLocation, useParams } from 'react-router-dom';
 import { usePartyStore } from '../../store/partyStore';
 import MemberListCard from '../../features/member/MemberListCard';
 
-const mockSeat = {
-    totalSeats: 167,
-    proportionalSeats: 14,
-    districtSeats: 153,
-    seatRatio: '56%',
-};
-
 function PartyDetailPage() {
     const param = useParams();
     const party = usePartyStore((state) => state.selectedParty);
     const members = usePartyStore((state) => state.selectedPartyMembers);
+    const seatStatus = usePartyStore((state) => state.selectedPartySeatStatus);
     const location = useLocation();
     const { partyName } = location.state || {};
-    const { getPartyByID, clearSelectedParty, getSelectedPartyMembers } = usePartyStore();
+    const {
+        getPartyByID,
+        clearSelectedParty,
+        getSelectedPartyMembers,
+        getSelectedPartySeatStatus,
+    } = usePartyStore();
 
     useEffect(() => {
         getPartyByID(param.partyId ?? '');
+        getSelectedPartySeatStatus(param.partyId ?? '');
         return () => {
-            clearSelectedParty();
+            clearSelectedParty(); // 삭제할 것, PartyPage에서 prefetch 방식으로 수정
             getSelectedPartyMembers(partyName, '제22대');
         };
-    }, [getPartyByID, clearSelectedParty, getSelectedPartyMembers, param.partyId, partyName]);
+    }, [
+        getPartyByID,
+        clearSelectedParty,
+        getSelectedPartyMembers,
+        getSelectedPartySeatStatus,
+        param.partyId,
+        partyName,
+    ]);
     return (
         <div className={style.pageWrapper}>
             <h1>{party.partyName}</h1>
@@ -42,19 +49,23 @@ function PartyDetailPage() {
 
                 <dl className={style.wrapper__grid}>
                     <div className={style.resultCard} data-label="전체 의석수">
-                        <dd>{mockSeat.totalSeats}</dd>
+                        <dd>{seatStatus.totalSeats ? seatStatus.totalSeats : '-'}</dd>
                         <dt>전체 의석수</dt>
                     </div>
                     <div className={style.resultCard} data-label="원내 의석수 비율">
-                        <dd>{mockSeat.seatRatio}</dd>
-                        <dt>원내 의석 점유 비율</dt>
+                        <dd>
+                            {seatStatus.totalSeats
+                                ? ((seatStatus.totalSeats / 300) * 100).toFixed(1) + '%'
+                                : '-'}
+                        </dd>
+                        <dt>원내 의석 비율</dt>
                     </div>
                     <div className={style.resultCard} data-label="지역구 의석수">
-                        <dd>{mockSeat.districtSeats}</dd>
+                        <dd>-</dd>
                         <dt>지역구 의석수</dt>
                     </div>
                     <div className={style.resultCard} data-label="비례대표 의석수">
-                        <dd>{mockSeat.proportionalSeats}</dd>
+                        <dd>-</dd>
                         <dt>비례대표 의석수</dt>
                     </div>
                 </dl>

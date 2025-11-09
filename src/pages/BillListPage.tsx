@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import BillCard from '../features/bill/BillCard';
 import style from './styles/BillListPage.module.scss';
 import { useBillFilterStore, useBillStore } from '../store/billStore';
@@ -6,11 +6,16 @@ import Filter from '../features/filter/Filter';
 import BillSortButtons from '../widgets/sort/BillSortButtons';
 function BillListPage() {
     const billList = useBillStore((state) => state.billList);
+    const filterRef = useRef<HTMLDivElement>(null);
     const { getBillList } = useBillStore();
     const filterState = useBillFilterStore((state) => state.filterState);
 
     useEffect(() => {
-        getBillList();
+        const filterFocused =
+            document.activeElement && filterRef.current?.contains(document.activeElement);
+        if (!filterFocused) {
+            getBillList();
+        }
     }, [getBillList, filterState]);
 
     return (
@@ -21,7 +26,9 @@ function BillListPage() {
                     국회에 발의된 법안의 심사 진행 상황과 표결 결과를 확인해보세요.
                 </p>
             </div>
-            <Filter />
+            <div ref={filterRef}>
+                <Filter />
+            </div>
 
             <div className={style.resultHeader}>
                 <p className={style.resultHeader__count}>총 20건</p>
