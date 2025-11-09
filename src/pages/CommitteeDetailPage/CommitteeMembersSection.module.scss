@@ -1,0 +1,16 @@
+.wrapper {
+    display: grid;
+    gap: 1rem;
+
+    &__single {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    &__double {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    &__triple {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}

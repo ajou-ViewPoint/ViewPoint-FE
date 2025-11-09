@@ -1,9 +1,10 @@
 import style from './MemberListCard.module.scss';
 import type { Member, PartyMemberInfoProjection } from '../../types/member';
 import { Link } from 'react-router-dom';
+import type { CommitteeMember } from '../../types/committee';
 
 type MemberListCardProps = {
-    member: Member | PartyMemberInfoProjection;
+    member: Member | PartyMemberInfoProjection | CommitteeMember;
 };
 interface BasicMemberInfo {
     id: number;
@@ -28,7 +29,7 @@ function MemberListCard({ member }: MemberListCardProps) {
             />
             <div className={style.profileInfo}>
                 <h2 className={style.name}>{normalizedMember.name}</h2>
-                <h3 className={style.party}>{normalizedMember.party}</h3>
+                <h3 className={style.party}>{normalizedMember.party.split('/').pop()}</h3>
             </div>
         </Link>
     );

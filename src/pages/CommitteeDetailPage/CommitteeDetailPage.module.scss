@@ -3,6 +3,12 @@
     flex-direction: column;
     padding: 0.5rem 4rem;
     gap: 2rem;
+
+    &__row {
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: 41% 59%;
+    }
 }
 
 .header {
@@ -36,7 +42,8 @@
         padding: 2rem 2.5rem;
     }
 
-    &:first-child {
+    &__first {
+        @extend .section;
         border: 1px solid #e4e4e4;
         border-radius: 16px;
         padding: 2rem 2.5rem;

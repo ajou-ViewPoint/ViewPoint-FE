@@ -5,23 +5,23 @@ import { useCommitteeStore } from '../store/committeeStore';
 function CommitteePage() {
     const committeeList = [
         { name: '국회운영위원회', committeeId: '1' },
-        { name: '법제사법위원회', committeeId: '2' },
-        { name: '정무위원회', committeeId: '3' },
-        { name: '기획재정위원회', committeeId: '4' },
-        { name: '예산결산특별위원회', committeeId: '18' },
-        { name: '교육위원회', committeeId: '5' },
-        { name: '과학기술정보방송통신위원회', committeeId: '6' },
-        { name: '외교통일위원회', committeeId: '7' },
-        { name: '국방위원회', committeeId: '8' },
-        { name: '행정안전위원회', committeeId: '9' },
-        { name: '문화체육관광위원회', committeeId: '10' },
-        { name: '농림축산식품해양수산위원회', committeeId: '11' },
-        { name: '산업통상자원중소벤처기업위원회', committeeId: '12' },
-        { name: '보건복지위원회', committeeId: '13' },
-        { name: '환경노동위원회', committeeId: '14' },
-        { name: '국토교통위원회', committeeId: '15' },
+        { name: '성평등가족위원회', committeeId: '335' },
         { name: '정보위원회', committeeId: '16' },
-        { name: '여성가족위원회', committeeId: '17' },
+        { name: '국토교통위원회', committeeId: '15' },
+        { name: '기후에너지환경노동위원회', committeeId: '334' },
+        { name: '보건복지위원회', committeeId: '13' },
+        { name: '산업통상자원중소벤처기업위원회', committeeId: '12' },
+        { name: '농림축산식품해양수산위원회', committeeId: '11' },
+        { name: '문화체육관광위원회', committeeId: '10' },
+        { name: '행정안전위원회', committeeId: '9' },
+        { name: '국방위원회', committeeId: '8' },
+        { name: '외교통일위원회', committeeId: '7' },
+        { name: '과학기술정보방송통신위원회', committeeId: '6' },
+        { name: '교육위원회', committeeId: '5' },
+        { name: '기획재정위원회', committeeId: '4' },
+        { name: '정무위원회', committeeId: '3' },
+        { name: '법제사법위원회', committeeId: '2' },
+        { name: '예산결산특별위원회', committeeId: '18' },
     ] as const;
 
     const navigate = useNavigate();
@@ -81,8 +81,8 @@ function CommitteePage() {
                         [
                             '교육위원회',
                             '보건복지위원회',
-                            '환경노동위원회',
-                            '여성가족위원회',
+                            '기후에너지환경노동위원회',
+                            '성평등가족위원회',
                             '문화체육관광위원회',
                         ].includes(item.name)
                     )

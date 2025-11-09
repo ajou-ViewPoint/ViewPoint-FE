@@ -4,20 +4,7 @@ import { useEffect } from 'react';
 import Schedule from './Schedule';
 import { useCommitteeStore } from '../../store/committeeStore';
 import StatsSection from './StatsSection';
-
-const mockData = {
-    name: '과학기술정보방송통신위원회',
-    chairman: '박충권',
-    schedule: '',
-    chair: [
-        ['국민의힘', 19],
-        ['더불어민주당', 12],
-        ['조국혁신당', 4],
-        ['진보당', 3],
-        ['무소속', 1],
-    ],
-    member: [],
-};
+import CommitteeMembersSection from './CommitteeMembersSection';
 
 function CommitteeDetailPage() {
     const { getCommitteeById, getCommitteeDetail } = useCommitteeStore();
@@ -40,7 +27,7 @@ function CommitteeDetailPage() {
 
     return (
         <div className={style.wrapper}>
-            <section className={style.section}>
+            <section className={style.section__first}>
                 <div className={style.header}>
                     <h1 className={style.title}>{committee.committeeName}</h1>
                 </div>
@@ -51,25 +38,32 @@ function CommitteeDetailPage() {
                     </div>
                     <div className={style.detail__item}>
                         <dt>위원장</dt>
-                        <dd>{mockData.chairman}</dd>
+                        <dd>
+                            {committeeDetail.membersByRole['위원장']?.map((member) => member.name)}
+                        </dd>
                     </div>
                 </dl>
             </section>
-            <section className={style.section}>
-                <h2 className={style.section__title}>심사 일정</h2>
-                <div className={style.section__wrapper}>
-                    <Schedule />
-                </div>
-            </section>
-            <section className={style.section}>
-                <h2 className={style.section__title}>정당별 의석수</h2>
-                <div className={style.section__wrapper}>
-                    <StatsSection statsData={committeeDetail.stats} />
-                </div>
-            </section>
+            <div className={style.wrapper__row}>
+                <section className={style.section}>
+                    <h2 className={style.section__title}>심사 일정</h2>
+                    <div className={style.section__wrapper}>
+                        <Schedule />
+                    </div>
+                </section>
+                <section className={style.section}>
+                    <h2 className={style.section__title}>정당별 의석수</h2>
+                    <div className={style.section__wrapper}>
+                        <StatsSection statsData={committeeDetail.stats} />
+                    </div>
+                </section>
+            </div>
+
             <section className={style.section}>
                 <h2 className={style.section__title}>위원회 구성 의원</h2>
-                <div className={style.section__wrapper}></div>
+                <div className={style.section__wrapper}>
+                    <CommitteeMembersSection {...committeeDetail} />
+                </div>
             </section>
         </div>
     );
