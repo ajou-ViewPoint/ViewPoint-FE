@@ -1,4 +1,5 @@
 import ExampleDistricts from './ExampleDistricts';
+import KoreaAdministrativeMap from './KoreaAdministrativeMap';
 import style from './MyDistrict.module.scss';
 import SearchSection from './SearchSection';
 function MyDistrict() {
@@ -9,8 +10,8 @@ function MyDistrict() {
                 <SearchSection />
                 <ExampleDistricts />
             </div>
-            <div className={style.wrapper}>
-                <h1 className={style.title}>지역구 리스트</h1>
+            <div className={style.mapWrapper}>
+                <KoreaAdministrativeMap />
             </div>
         </div>
     );

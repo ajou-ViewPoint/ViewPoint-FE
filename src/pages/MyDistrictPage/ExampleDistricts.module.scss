@@ -21,8 +21,8 @@
     border: none;
     border-radius: 8px;
     padding: 1rem 2rem;
-    background-color: #89ceff;
-    color: white;
+    background-color: #f0f0f0;
+    color: #8e8e8e;
     // font
     font-size: 16px;
     font-weight: 600;
@@ -31,12 +31,11 @@
     letter-spacing: 0%;
     text-align: center;
     cursor: pointer;
-    transition: background-color 0.3s, color 0.3s, transform 0.3s ease, box-shadow 0.3s ease;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s ease;
 
     &:hover {
         transform: translateY(-3px);
-        background-color: #ffffff;
-        color: #2ba6ff;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        color: white;
+        background-color: #c6c6c6;
     }
 }
