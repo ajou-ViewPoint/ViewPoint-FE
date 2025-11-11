@@ -47,7 +47,7 @@ function PartyDetailPage() {
             <section className={style.section}>
                 <h2 className={style.sectionTitle}>의석 현황</h2>
 
-                <dl className={style.wrapper__grid}>
+                <dl className={style.wrapper__grid4}>
                     <div className={style.resultCard} data-label="전체 의석수">
                         <dd>{seatStatus.totalSeats ? seatStatus.totalSeats : '-'}</dd>
                         <dt>전체 의석수</dt>
@@ -72,7 +72,7 @@ function PartyDetailPage() {
             </section>
             <section>
                 <h2 className={style.sectionTitle}>구성 의원</h2>
-                <div className={style.wrapper__grid}>
+                <div className={style.wrapper__grid5}>
                     {members.map((member) => (
                         <MemberListCard key={member.memberId} member={member} />
                     ))}

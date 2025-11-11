@@ -11,6 +11,7 @@ interface BasicMemberInfo {
     name: string;
     party: string;
     profileImage: string;
+    district: string;
 }
 
 function MemberListCard({ member }: MemberListCardProps) {
@@ -19,17 +20,38 @@ function MemberListCard({ member }: MemberListCardProps) {
         name: member.name,
         party: 'partyName' in member ? member.partyName ?? '' : (member as Member).party ?? '',
         profileImage: member.profileImage ?? '',
+        district:
+            'region' in member
+                ? (member as PartyMemberInfoProjection).regionName ?? ''
+                : (member as Member).electionDistrict ?? '',
     };
     return (
+        // <Link to={`/members/${normalizedMember.id}`} className={style.container}>
+        //     <img
+        //         className={style.profileImage}
+        //         src={normalizedMember.profileImage}
+        //         alt={`${normalizedMember.name} 의원의 프로필 사진`}
+        //     />
+        //     <div className={style.profileInfo}>
+        //         <h2 className={style.name}>{normalizedMember.name}</h2>
+        //         <h3 className={style.party}>{normalizedMember.party.split('/').pop()}</h3>
+        //     </div>
+        // </Link>
         <Link to={`/members/${normalizedMember.id}`} className={style.container}>
-            <img
-                className={style.profileImage}
-                src={normalizedMember.profileImage}
-                alt={`${normalizedMember.name} 의원의 프로필 사진`}
-            />
+            <div className={style.imageWrapper}>
+                <img
+                    className={style.profileImage}
+                    src={normalizedMember.profileImage}
+                    alt={`${normalizedMember.name} 의원의 프로필 사진`}
+                />
+            </div>
             <div className={style.profileInfo}>
-                <h2 className={style.name}>{normalizedMember.name}</h2>
-                <h3 className={style.party}>{normalizedMember.party.split('/').pop()}</h3>
+                <div className={style.rowWrapper}>
+                    <h2 className={style.name}>{normalizedMember.name}</h2>
+                    <h3 className={style.party}>{normalizedMember.party.split('/').pop()}</h3>
+                </div>
+
+                <h3 className={style.district}>{normalizedMember.district.split('/').pop()}</h3>
             </div>
         </Link>
     );

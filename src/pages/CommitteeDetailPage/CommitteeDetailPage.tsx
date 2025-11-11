@@ -31,10 +31,15 @@ function CommitteeDetailPage() {
                 <div className={style.header}>
                     <h1 className={style.title}>{committee.committeeName}</h1>
                 </div>
+
                 <dl className={style.detail}>
                     <div className={style.detail__item}>
                         <dt>위원회 구성</dt>
-                        <dd>위원장 1인, 간사 2인, 위원회 20인</dd>
+                        <dd>
+                            위원장 {`${committeeDetail.membersByRole['위원장'].length}`}인, 간사{' '}
+                            {`${committeeDetail.membersByRole['간사'].length}`}인, 위원{' '}
+                            {`${committeeDetail.membersByRole['위원'].length}`}인
+                        </dd>
                     </div>
                     <div className={style.detail__item}>
                         <dt>위원장</dt>

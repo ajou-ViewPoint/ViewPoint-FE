@@ -16,10 +16,17 @@
         @extend .wrapper;
         gap: 2rem;
     }
-    &__grid {
+    &__grid4 {
         @extend .wrapper;
         display: grid;
-        grid-template-columns: 50% 50%;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1rem;
+        justify-content: center;
+    }
+    &__grid5 {
+        @extend .wrapper;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
         gap: 1rem;
         justify-content: center;
     }
