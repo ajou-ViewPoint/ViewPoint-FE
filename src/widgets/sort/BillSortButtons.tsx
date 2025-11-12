@@ -7,17 +7,6 @@ interface BillSortType {
     direction: 'asc' | 'desc';
     sortBy: string;
 }
-
-interface MemberSortType {
-    name: string;
-    direction: 'asc' | 'desc';
-    sortBy: string;
-}
-
-interface SortButtonProp {
-    selector: '의안' | '의원';
-}
-
 const buttonData: BillSortType[] = [
     { name: '찬성 순', direction: 'desc', sortBy: 'yesTcnt' },
     { name: '반대 순', direction: 'desc', sortBy: 'noTcnt' },
@@ -25,14 +14,7 @@ const buttonData: BillSortType[] = [
     { name: '발의일자 순', direction: 'desc', sortBy: 'proposeDt' },
 ];
 
-const memberButtonData: MemberSortType[] = [
-    { name: '이름 순', direction: 'desc', sortBy: 'name' },
-    { name: '정당충성도 순', direction: 'desc', sortBy: 'loyaltyRate' },
-    { name: '출석률 순', direction: 'desc', sortBy: 'attendanceRate' },
-    { name: '나이 순', direction: 'desc', sortBy: 'birthDate' },
-];
-
-function SortButtons(prop: SortButtonProp) {
+function BillSortButtons() {
     const { setPage } = useBillStore();
     const pageState = useBillStore((state) => state.billListPagination);
 
@@ -48,7 +30,7 @@ function SortButtons(prop: SortButtonProp) {
     };
     return (
         <div className={style.buttonRail}>
-            {(prop.selector === '의안' ? buttonData : memberButtonData).map((item) => (
+            {buttonData.map((item) => (
                 <button
                     className={`${style.button} ${
                         pageState.sortBy === item.sortBy ? style.isActive : ''
@@ -71,4 +53,4 @@ function SortButtons(prop: SortButtonProp) {
     );
 }
 
-export default SortButtons;
+export default BillSortButtons;

@@ -10,27 +10,84 @@ export interface billFilter {
     direction: string;
 }
 
+export interface BillListPagination {
+    totalElements: number;
+    totalPages: number;
+    pageNumber: number; // 현재 페이지 번호(0 베이스)
+    pageSize: number;
+    first: boolean;
+    last: boolean;
+    // 정렬 기준
+    sortBy: string;
+    direction: 'desc' | 'asc';
+}
+
+const DEFAULT_PAGINATION: BillListPagination = {
+    totalElements: 0,
+    totalPages: 0,
+    pageNumber: 0,
+    pageSize: 15,
+    first: false,
+    last: false,
+    sortBy: 'proposeDt',
+    direction: 'desc',
+};
+
+const DEFAULT_BILL: bill = {
+    id: 0,
+    billTitle: '',
+    proposer: null,
+    voteTcnt: null,
+    yesTcnt: null,
+    noTcnt: null,
+    blankTcnt: null,
+    billSummary: null,
+    procResultCd: null,
+    committeeSubmitDate: null,
+    committeePresentDate: null,
+    committeeProcDate: null,
+    lawSubmitDate: null,
+    lawPresentDate: null,
+    lawProcDate: null,
+    rgsPresentDate: null,
+    rgsProcDate: null,
+    proposeDt: null,
+    age: null,
+};
+
 interface billStore {
+    selectedBill: bill;
     billList: bill[];
+    billListPagination: BillListPagination;
     recentBillList: bill[];
     isLoading: boolean;
+    setPage: (newPageState: BillListPagination) => void;
     getRecentBillList: () => Promise<void>; // 랜딩페이지
     getBillListByKeyword: (keyword: string) => Promise<void>; // 법안 리스트 페이지 필터 기능
     getBillListByDate: (startDate: string, endDate: string) => Promise<void>; // 법안 리스트 페이지 필터 기능
     getBillList: () => Promise<void>;
-    getBill: (billId: number) => Promise<bill>;
+    getSelectedBill: (billId: number) => Promise<void>;
 }
 
 export const useBillStore = create<billStore>((set) => ({
+    selectedBill: DEFAULT_BILL,
     billList: [],
+    billListPagination: DEFAULT_PAGINATION,
     recentBillList: [],
     isLoading: false,
+    setPage: (newPageState) => set({ billListPagination: newPageState }),
     getRecentBillList: async () => {
         try {
             const res = await axios.get(`${SERVER_IP}/v1/main/home`);
             set({ recentBillList: res.data.recentBills });
         } catch (error) {
-            throw new Error(`최근 통과된 법안 불러오기 에러: ${error}`);
+            if (axios.isAxiosError(error)) {
+                throw new Error(
+                    `필터 검색 법안 불러오기 에러: ${
+                        error.response?.data?.message ?? error.message
+                    }`
+                );
+            }
         }
     },
     getBillListByKeyword: async (keyword) => {
@@ -38,7 +95,13 @@ export const useBillStore = create<billStore>((set) => ({
             const res = await axios.get(`${SERVER_IP}/v1/bills/search?keyword=${keyword}`);
             set({ billList: res.data });
         } catch (error) {
-            throw new Error(`필터 검색 법안 불러오기 에러: ${error}`);
+            if (axios.isAxiosError(error)) {
+                throw new Error(
+                    `필터 검색 법안 불러오기 에러: ${
+                        error.response?.data?.message ?? error.message
+                    }`
+                );
+            }
         }
     },
     getBillListByDate: async (startDate, endDate) => {
@@ -48,23 +111,55 @@ export const useBillStore = create<billStore>((set) => ({
             );
             set({ billList: res.data });
         } catch (error) {
-            throw new Error(`필터 검색 법안 불러오기 에러: ${error}`);
+            if (axios.isAxiosError(error)) {
+                throw new Error(
+                    `필터 검색 법안 불러오기 에러: ${
+                        error.response?.data?.message ?? error.message
+                    }`
+                );
+            }
         }
     },
     getBillList: async () => {
-        const filterState = useBillFilterStore.getState().filterState;
+        const paginationState = useBillStore.getState().billListPagination;
         try {
             const res = await axios.get(
-                `${SERVER_IP}/v1/bills?page=${filterState.page}&size=${filterState.size}&sortBy=${filterState.sortBy}&direction=${filterState.direction}`
+                `${SERVER_IP}/v1/bills?page=${paginationState.pageNumber}&size=${paginationState.pageSize}&sortBy=${paginationState.sortBy}&direction=${paginationState.direction}`
             );
-            set({ billList: res.data.content });
+            set({
+                billList: res.data.content,
+                billListPagination: {
+                    totalElements: res.data.totalElements,
+                    totalPages: res.data.totalPages,
+                    pageNumber: res.data.pageable.pageNumber,
+                    pageSize: res.data.pageable.pageSize,
+                    first: res.data.first,
+                    last: res.data.last,
+                    sortBy: paginationState.sortBy,
+                    direction: paginationState.direction,
+                },
+            });
         } catch (error) {
-            throw new Error(`법안 불러오기 에러: ${error}`);
+            if (axios.isAxiosError(error)) {
+                throw new Error(
+                    `법안 리스트 불러오기 에러: ${error.response?.data?.message ?? error.message}`
+                );
+            }
         }
     },
-    getBill: async (billId) => {
-        const res = await axios.get(`${SERVER_IP}/v1/bills/${billId}`);
-        return res.data;
+    getSelectedBill: async (billId) => {
+        try {
+            const res = await axios.get(`${SERVER_IP}/v1/bills/${billId}`);
+            set({ selectedBill: res.data });
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                throw new Error(
+                    `법안 상세 정보 불러오기 에러: ${
+                        error.response?.data?.message ?? error.message
+                    }`
+                );
+            }
+        }
     },
 }));
 

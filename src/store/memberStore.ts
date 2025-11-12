@@ -3,14 +3,39 @@ import axios from 'axios';
 import { SERVER_IP } from '../constants/env';
 import type { Member } from '../types/member';
 
+const DEFAULT_PAGINATION: MemberListPagination = {
+    totalElements: 0,
+    totalPages: 0,
+    pageNumber: 0,
+    pageSize: 15,
+    first: false,
+    last: false,
+    sortBy: 'age',
+    direction: 'desc',
+};
+
 export interface memberFilter {
     page: number;
     size: number;
     sortBy: string;
     direction: string;
 }
+
+export interface MemberListPagination {
+    totalElements: number;
+    totalPages: number;
+    pageNumber: number; // 현재 페이지 번호(0 베이스)
+    pageSize: number;
+    first: boolean;
+    last: boolean;
+    // 정렬 기준
+    sortBy: string;
+    direction: 'desc' | 'asc';
+}
 interface memberStore {
     memberList: Member[];
+    memberListPagination: MemberListPagination;
+    setMemberListPage: (newPageState: MemberListPagination) => void;
     getMemberList: () => Promise<void>;
     getMember: (memberId: number) => Promise<Member>;
 }
@@ -22,13 +47,27 @@ interface memberFilterStore {
 
 export const useMemberStore = create<memberStore>((set) => ({
     memberList: [],
+    memberListPagination: DEFAULT_PAGINATION,
+    setMemberListPage: (newPageState) => set({ memberListPagination: newPageState }),
     getMemberList: async () => {
         try {
-            const state = useMemberFilterStore.getState().filterState;
+            const pageState = useMemberStore.getState().memberListPagination;
             const res = await axios.get(
-                `${SERVER_IP}/v1/assemblymembers?page=${state.page}&size=${state.size}&sortBy=${state.sortBy}&direction=${state.direction}`
+                `${SERVER_IP}/v1/assemblymembers?page=${pageState.pageNumber}&size=${pageState.pageSize}&sortBy=${pageState.sortBy}&direction=${pageState.direction}`
             );
-            set({ memberList: res.data.content });
+            set({
+                memberList: res.data.content,
+                memberListPagination: {
+                    totalElements: res.data.totalElements,
+                    totalPages: res.data.totalPages,
+                    pageNumber: res.data.pageable.pageNumber,
+                    pageSize: res.data.pageable.pageSize,
+                    first: res.data.first,
+                    last: res.data.last,
+                    sortBy: pageState.sortBy,
+                    direction: pageState.direction,
+                },
+            });
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 throw new Error(
