@@ -7,7 +7,7 @@ const DEFAULT_PAGINATION: MemberListPagination = {
     totalElements: 0,
     totalPages: 0,
     pageNumber: 0,
-    pageSize: 15,
+    pageSize: 40,
     first: false,
     last: false,
     sortBy: 'age',
