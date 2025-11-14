@@ -1,372 +1,209 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { memo, useState, useEffect, useCallback, useMemo } from 'react';
-import { ComposableMap, Geographies, Geography } from 'react-simple-maps';
+import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simple-maps';
+import { useState } from 'react';
 import style from './KoreaAdministrativeMap.module.scss';
+import { Minus, Plus } from 'lucide-react';
 
-const provincesUrl = new URL('../../assets/map/skorea-provinces-2018-geo.json', import.meta.url)
-    .href;
-const municipalitiesUrl = new URL(
-    '../../assets/map/skorea-municipalities-2018-geo.json',
-    import.meta.url
-).href;
-const submunicipalitiesUrl = new URL(
-    '../../assets/map/skorea-submunicipalities-2018-geo.json',
-    import.meta.url
-).href;
+const SIDO_GEO_URL = '/src/assets/map/map_provinces.json';
+const SIGUNGU_GEO_URL = '/src/assets/map/map_municipalities.json';
+const EUPMYEONDONG_GEO_URL = '/src/assets/map/map_submunicipalities.json';
 
-type GeoFeature = Record<string, any>;
-type MapLevel = 'provinces' | 'municipalities' | 'submunicipalities';
-
-const DEFAULT_CENTER: [number, number] = [127.5, 36];
-const DEFAULT_SCALE = 4500;
-const BASE_WIDTH = 8;
-const BASE_HEIGHT = 6;
-const MAX_SCALE = 150000;
-
-type Bounds = {
-    minLng: number;
-    maxLng: number;
-    minLat: number;
-    maxLat: number;
+const ZOOM_LEVELS: Record<string, number> = {
+    province: 3,
+    municipality: 20,
 };
 
-const computeFeatureBounds = (feature: GeoFeature): Bounds | null => {
-    const geometry = feature?.geometry;
-    if (!geometry?.coordinates) return null;
-
-    const bounds: Bounds = {
-        minLng: Infinity,
-        maxLng: -Infinity,
-        minLat: Infinity,
-        maxLat: -Infinity,
+function getFeatureCenter(geo: any): [number, number] {
+    const coordsRoot = geo?.geometry?.coordinates;
+    if (!coordsRoot) return [127.8, 36.2];
+    const points: [number, number][] = [];
+    const collect = (c: any) => {
+        if (!Array.isArray(c)) return;
+        if (typeof c[0] === 'number') {
+            if (c.length >= 2) points.push([c[0], c[1]]);
+        } else {
+            for (const sub of c) collect(sub);
+        }
     };
-
-    const processCoordinates = (coordinates: any[]): void => {
-        coordinates.forEach((entry) => {
-            if (!Array.isArray(entry)) return;
-            if (typeof entry[0] === 'number' && typeof entry[1] === 'number') {
-                const [lng, lat] = entry;
-                if (Number.isFinite(lng) && Number.isFinite(lat)) {
-                    bounds.minLng = Math.min(bounds.minLng, lng);
-                    bounds.maxLng = Math.max(bounds.maxLng, lng);
-                    bounds.minLat = Math.min(bounds.minLat, lat);
-                    bounds.maxLat = Math.max(bounds.maxLat, lat);
-                }
-            } else {
-                processCoordinates(entry);
-            }
-        });
-    };
-
-    processCoordinates(geometry.coordinates);
-
-    return bounds.minLng === Infinity ? null : bounds;
-};
-
-const mergeBounds = (current: Bounds | null, next: Bounds | null): Bounds | null => {
-    if (!next) return current;
-    if (!current) return next;
-    return {
-        minLng: Math.min(current.minLng, next.minLng),
-        maxLng: Math.max(current.maxLng, next.maxLng),
-        minLat: Math.min(current.minLat, next.minLat),
-        maxLat: Math.max(current.maxLat, next.maxLat),
-    };
-};
-
-// 지도 확대 정도를 계산
-const computeProjectionConfig = (features: GeoFeature[]) => {
-    if (!features.length) {
-        return { scale: DEFAULT_SCALE, center: DEFAULT_CENTER };
+    collect(coordsRoot);
+    if (!points.length) return [127.8, 36.2];
+    let minX = Infinity,
+        maxX = -Infinity,
+        minY = Infinity,
+        maxY = -Infinity;
+    for (const [x, y] of points) {
+        if (x < minX) minX = x;
+        if (x > maxX) maxX = x;
+        if (y < minY) minY = y;
+        if (y > maxY) maxY = y;
     }
+    return [(minX + maxX) / 2, (minY + maxY) / 2];
+}
 
-    const bounds = features.reduce<Bounds | null>(
-        (acc, feature) => mergeBounds(acc, computeFeatureBounds(feature)),
-        null
-    );
-
-    if (!bounds) {
-        return { scale: DEFAULT_SCALE, center: DEFAULT_CENTER };
-    }
-
-    const width = Math.max(bounds.maxLng - bounds.minLng, 0.01);
-    const height = Math.max(bounds.maxLat - bounds.minLat, 0.01);
-    const center: [number, number] = [
-        (bounds.minLng + bounds.maxLng) / 2,
-        (bounds.minLat + bounds.maxLat) / 2,
+function getRegionName(props: Record<string, any> | undefined, fallback: string) {
+    if (!props) return fallback;
+    const keys = [
+        'name',
+        'NAME',
+        'NAME_KOR',
+        'NAME_ENG',
+        'adm_nm',
+        'ADM_NM',
+        'SIG_KOR_NM',
+        'SIG_ENG_NM',
+        'CTP_KOR_NM',
+        'CTP_ENG_NM',
+        'sido',
+        'sigungu',
+        'SIG_CD',
+        'CTPRVN_NM',
     ];
+    for (const k of keys) {
+        const v = props[k];
+        if (typeof v === 'string' && v.trim()) return v.trim();
+    }
 
-    const widthRatio = BASE_WIDTH / width;
-    const heightRatio = BASE_HEIGHT / height;
-    const scaleMultiplier = Math.max(1, Math.min(widthRatio, heightRatio));
-    const scale = Math.min(DEFAULT_SCALE * scaleMultiplier, MAX_SCALE);
-
-    return { scale, center };
-};
+    for (const k of Object.keys(props)) {
+        const v = props[k];
+        if (typeof v === 'string' && v.trim()) return v.trim();
+    }
+    return fallback;
+}
 
 function KoreaAdministrativeMap() {
-    const [hoveredRegion, setHoveredRegion] = useState<string | null>(null);
-    const [currentLevel, setCurrentLevel] = useState<MapLevel>('provinces');
-    const [features, setFeatures] = useState<GeoFeature[]>([]);
-    const [geoCache, setGeoCache] = useState<{
-        provinces: GeoFeature[] | null;
-        municipalities: GeoFeature[] | null;
-        submunicipalities: GeoFeature[] | null;
-    }>({
-        provinces: null,
-        municipalities: null,
-        submunicipalities: null,
+    const [hoverName, setHoverName] = useState<string | null>(null);
+    const [tooltip, setTooltip] = useState<{ x: number; y: number } | null>(null);
+    const [map, setMap] = useState<any>(SIDO_GEO_URL);
+
+    // 대한민국 중심 좌표로 초기화
+    const [position, setPosition] = useState({
+        coordinates: [127.8, 36.2] as [number, number],
+        zoom: 1,
     });
 
-    const [selectedCodes, setSelectedCodes] = useState<{
-        province?: string;
-        municipality?: string;
-    }>({});
+    //선택된 행정단위 코드 상태
+    const [selectedProvinceCode, setSelectedProvinceCode] = useState<string | null>(null);
+    const [selectedMunicipalityCode, setSelectedMunicipalityCode] = useState<string | null>(null);
 
-    const sanitizeFeature = useCallback((feature: any) => {
-        const geometry = feature?.geometry;
-        if (!geometry || !geometry.type || !geometry.coordinates) return null;
+    const handleAdministrativeLevelChange = (geo: any) => {
+        const level = geo?.properties?.level;
+        const center = getFeatureCenter(geo);
 
-        if (geometry.type === 'Polygon') {
-            const rings = Array.isArray(geometry.coordinates)
-                ? geometry.coordinates.filter((ring: any) => Array.isArray(ring) && ring.length > 3)
-                : [];
-            if (rings.length === 0) return null;
-            return { ...feature, geometry: { ...geometry, coordinates: rings } };
-        }
-
-        if (geometry.type === 'MultiPolygon') {
-            const polygons = Array.isArray(geometry.coordinates)
-                ? geometry.coordinates
-                      .map((polygon: any) =>
-                          Array.isArray(polygon)
-                              ? polygon.filter(
-                                    (ring: any) => Array.isArray(ring) && ring.length > 3
-                                )
-                              : []
-                      )
-                      .filter((polygon: any) => polygon.length > 0)
-                : [];
-            if (polygons.length === 0) return null;
-            return { ...feature, geometry: { ...geometry, coordinates: polygons } };
-        }
-
-        return null;
-    }, []);
-
-    const sanitizeCollection = useCallback(
-        (collection: any) => {
-            if (!collection?.features) return [];
-            return collection.features
-                .map(sanitizeFeature)
-                .filter(
-                    (feature: any) =>
-                        feature &&
-                        feature.geometry &&
-                        Array.isArray(feature.geometry.coordinates) &&
-                        feature.geometry.coordinates.length > 0
-                );
-        },
-        [sanitizeFeature]
-    );
-
-    const fetchAndSanitize = useCallback(
-        async (url: string, label: string) => {
-            try {
-                const response = await fetch(url);
-                const data = await response.json();
-                return sanitizeCollection(data);
-            } catch (error) {
-                console.error(`Error fetching ${label} GeoJSON data:`, error);
-                return [];
-            }
-        },
-        [sanitizeCollection]
-    );
-
-    const ensureMunicipalities = useCallback(async () => {
-        if (geoCache.municipalities) return geoCache.municipalities;
-        const sanitized = await fetchAndSanitize(municipalitiesUrl, 'municipalities');
-        setGeoCache((prev) => ({ ...prev, municipalities: sanitized }));
-        return sanitized;
-    }, [geoCache.municipalities, fetchAndSanitize]);
-
-    const ensureSubMunicipalities = useCallback(async () => {
-        if (geoCache.submunicipalities) return geoCache.submunicipalities;
-        const sanitized = await fetchAndSanitize(submunicipalitiesUrl, 'submunicipalities');
-        setGeoCache((prev) => ({ ...prev, submunicipalities: sanitized }));
-        return sanitized;
-    }, [geoCache.submunicipalities, fetchAndSanitize]);
-
-    const ensureProvinces = useCallback(async () => {
-        if (geoCache.provinces) return geoCache.provinces;
-        const sanitized = await fetchAndSanitize(provincesUrl, 'provinces');
-        setGeoCache((prev) => ({ ...prev, provinces: sanitized }));
-        return sanitized;
-    }, [geoCache.provinces, fetchAndSanitize]);
-
-    const filterByParentCode = useCallback((collection: GeoFeature[], parentCode: string) => {
-        if (!parentCode) return [];
-        return collection.filter((feature) => {
-            const code = String(feature?.properties?.code ?? '');
-            return code.startsWith(parentCode);
-        });
-    }, []);
-
-    const handleRegionClick = useCallback(
-        async (geo: any) => {
-            const code = String(geo?.properties?.code ?? '');
-            if (!code) return;
-
-            if (currentLevel === 'provinces') {
-                const municipalities = await ensureMunicipalities();
-                const filtered = filterByParentCode(municipalities, code);
-                if (filtered.length === 0) {
-                    console.warn(`No municipalities found for province code ${code}`);
-                    return;
-                }
-                setSelectedCodes({ province: code });
-                setFeatures(filtered);
-                setCurrentLevel('municipalities');
-                setHoveredRegion(null);
-                return;
-            }
-
-            if (currentLevel === 'municipalities') {
-                const submunicipalities = await ensureSubMunicipalities();
-                const filtered = filterByParentCode(submunicipalities, code);
-                if (filtered.length === 0) {
-                    console.warn(`No submunicipalities found for municipality code ${code}`);
-                    return;
-                }
-                setSelectedCodes((prev) => ({ ...prev, municipality: code }));
-                setFeatures(filtered);
-                setCurrentLevel('submunicipalities');
-                setHoveredRegion(null);
-                return;
-            }
-
-            console.log('Selected region:', {
-                code,
-                name: geo?.properties?.name,
-                level: currentLevel,
-                parentCodes: selectedCodes,
-            });
-        },
-        [
-            currentLevel,
-            ensureMunicipalities,
-            ensureSubMunicipalities,
-            filterByParentCode,
-            selectedCodes,
-        ]
-    );
-
-    const projectionConfig = useMemo(() => computeProjectionConfig(features), [features]);
-
-    const handleBackClick = useCallback(async () => {
-        if (currentLevel === 'submunicipalities') {
-            const provinceCode = selectedCodes.province;
-            const municipalities = await ensureMunicipalities();
-            if (provinceCode) {
-                const filtered = filterByParentCode(municipalities, provinceCode);
-                setFeatures(filtered);
-                setCurrentLevel('municipalities');
-                setSelectedCodes({ province: provinceCode });
-            } else {
-                const provinces = await ensureProvinces();
-                setFeatures(provinces);
-                setCurrentLevel('provinces');
-                setSelectedCodes({});
-            }
-            setHoveredRegion(null);
+        if (level === 'province') {
+            const provinceCode = String(geo?.properties?.code ?? geo?.properties?.sido ?? '');
+            setSelectedProvinceCode(provinceCode);
+            setSelectedMunicipalityCode(null);
+            setMap(SIGUNGU_GEO_URL);
+            setPosition({ coordinates: center, zoom: ZOOM_LEVELS.province });
             return;
         }
-
-        if (currentLevel === 'municipalities') {
-            const provinces = await ensureProvinces();
-            setFeatures(provinces);
-            setCurrentLevel('provinces');
-            setSelectedCodes({});
-            setHoveredRegion(null);
+        if (level === 'municipality') {
+            const municipalityCode = String(geo?.properties?.code ?? geo?.properties?.sgg ?? '');
+            setSelectedMunicipalityCode(municipalityCode);
+            setMap(EUPMYEONDONG_GEO_URL);
+            setPosition({ coordinates: center, zoom: ZOOM_LEVELS.municipality });
+            return;
         }
-    }, [
-        currentLevel,
-        ensureMunicipalities,
-        ensureProvinces,
-        filterByParentCode,
-        selectedCodes.province,
-    ]);
+    };
 
-    useEffect(() => {
-        let isMounted = true;
+    const handleZoomIn = () => {
+        if (position.zoom >= 20) return;
+        setPosition((pos) => ({ ...pos, zoom: pos.zoom * 2 }));
+    };
 
-        fetchAndSanitize(provincesUrl, 'provinces').then((sanitized) => {
-            if (!isMounted) return;
-            setGeoCache((prev) => ({ ...prev, provinces: sanitized }));
-            setFeatures(sanitized);
-            setCurrentLevel('provinces');
-            setSelectedCodes({});
-            setHoveredRegion(null);
-        });
-
-        return () => {
-            isMounted = false;
-        };
-    }, [fetchAndSanitize]);
+    const handleZoomOut = () => {
+        if (position.zoom <= 1) return;
+        setPosition((pos) => ({ ...pos, zoom: pos.zoom / 2 }));
+    };
 
     return (
-        <div className={style.wrapper}>
-            <button
-                type="button"
-                onClick={() => {
-                    void handleBackClick();
-                }}
-                disabled={currentLevel === 'provinces'}>
-                뒤로가기
-            </button>
-            <ComposableMap projection="geoMercator" projectionConfig={projectionConfig}>
-                {features.length > 0 && (
-                    <Geographies
-                        key={`${currentLevel}-${selectedCodes.province ?? ''}-${
-                            selectedCodes.municipality ?? ''
-                        }`}
-                        geography={features as any}>
-                        {({ geographies }) =>
-                            geographies.map((geoItem) => {
-                                const regionName = geoItem?.properties?.name;
-                                const isHovered = hoveredRegion === regionName;
+        <>
+            <ComposableMap
+                projection="geoMercator"
+                projectionConfig={{ scale: 6000, center: [127.8, 36.2] }}
+                width={800}
+                height={800}
+                className={style.map}>
+                <ZoomableGroup center={position.coordinates} zoom={position.zoom} maxZoom={2000}>
+                    <Geographies geography={map}>
+                        {({ geographies }) => {
+                            // 선택된 상위 행정단위에 해당하는 feature만 필터
+                            const filteredGeos = geographies.filter((g: any) => {
+                                const p = g.properties || {};
+                                // 시군구 지도에서는 선택된 시도 내부만 노출
+                                if (map === SIGUNGU_GEO_URL) {
+                                    if (!selectedProvinceCode) return false;
+                                    const provinceCode = String(p.provinceCode ?? p.sido ?? '');
+                                    return provinceCode === selectedProvinceCode;
+                                }
+                                // 읍면동 지도에서는 선택된 시군구(우선) 또는 시도 기준으로 노출
+                                if (map === EUPMYEONDONG_GEO_URL) {
+                                    if (selectedMunicipalityCode) {
+                                        return String(p.sgg ?? '') === selectedMunicipalityCode;
+                                    }
+                                    if (selectedProvinceCode) {
+                                        return String(p.sido ?? '') === selectedProvinceCode;
+                                    }
+                                    return false;
+                                }
+                                // 시도 지도는 전체 출력
+                                return true;
+                            });
+
+                            return filteredGeos.map((geo: any) => {
+                                const id = geo.properties?.name || geo.rsmKey;
+                                const regionName = getRegionName(geo.properties, String(id));
+                                const isHovered = hoverName === regionName;
+
                                 return (
                                     <Geography
-                                        key={geoItem.rsmKey}
-                                        geography={geoItem}
-                                        onMouseEnter={() => setHoveredRegion(regionName)}
-                                        onMouseLeave={() => setHoveredRegion(null)}
-                                        onClick={() => {
-                                            void handleRegionClick(geoItem);
+                                        key={geo.rsmKey}
+                                        geography={geo}
+                                        fill={isHovered ? '#7FC5E0' : '#DDD'}
+                                        stroke="#999"
+                                        strokeWidth="0.1px"
+                                        onMouseEnter={() => setHoverName(regionName)}
+                                        onMouseMove={(e) =>
+                                            setTooltip({ x: e.clientX, y: e.clientY })
+                                        }
+                                        onMouseLeave={() => {
+                                            setHoverName(null);
+                                            setTooltip(null);
                                         }}
+                                        onClick={() => handleAdministrativeLevelChange(geo)}
                                         style={{
-                                            default: {
-                                                fill: isHovered ? '#3b82f6' : '#e5e7eb',
-                                                stroke: '#9ca3af',
-                                                strokeWidth: 0.5,
-                                                outline: 'none',
-                                            },
-                                            hover: { fill: '#2563eb', cursor: 'pointer' },
-                                            pressed: { fill: '#1d4ed8' },
+                                            default: { transition: 'fill 0.2s' },
+                                            hover: { transition: 'fill 0.2s' },
+                                            pressed: { transition: 'fill 0.2s' },
                                         }}
                                     />
                                 );
-                            })
-                        }
+                            });
+                        }}
                     </Geographies>
-                )}
+                </ZoomableGroup>
             </ComposableMap>
-            <p className={style.hoveredRegion ?? ''}>
-                {hoveredRegion ? `${hoveredRegion}` : '지도 위에 마우스를 올려보세요.'}
-            </p>
-        </div>
+
+            {hoverName && tooltip && (
+                <div
+                    className={style.districtHoverName}
+                    style={{
+                        top: tooltip.y + 12,
+                        left: tooltip.x + 12,
+                    }}>
+                    {hoverName}
+                </div>
+            )}
+            <div className={style.zoomButtonWrapper}>
+                <button onClick={handleZoomIn} className={style.zoomButton}>
+                    <Plus />
+                </button>
+                <button onClick={handleZoomOut} className={style.zoomButton}>
+                    <Minus />
+                </button>
+            </div>
+        </>
     );
 }
 
-export default memo(KoreaAdministrativeMap);
+export default KoreaAdministrativeMap;
