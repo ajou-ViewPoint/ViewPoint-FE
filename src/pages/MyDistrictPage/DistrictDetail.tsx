@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import style from './DistrictDetail.module.scss';
 import { useEffect } from 'react';
-import { useMyDistrictStore } from '../../store/myDistrictStore';
+import { DEFAULT_DISTRICT_MEMBER, useMyDistrictStore } from '../../store/myDistrictStore';
 import DistrictMemberCard from './DistrictMemberCard';
 function DistrictDetail() {
     const { getDistrictMembers } = useMyDistrictStore();
@@ -10,8 +10,10 @@ function DistrictDetail() {
     const params = useParams();
 
     useEffect(() => {
-        getDistrictMembers('', '', params.regionCd);
-    }, [getDistrictMembers, params.regionCd]);
+        if (districtMembers[0] === DEFAULT_DISTRICT_MEMBER) {
+            getDistrictMembers('', '', params.regionCd);
+        }
+    }, [getDistrictMembers, params.regionCd, districtMembers]);
 
     return (
         <div className={style.pageWrapper}>
