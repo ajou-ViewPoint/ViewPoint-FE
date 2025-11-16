@@ -1,0 +1,95 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    width: 35rem;
+    height: 200px;
+    border-radius: 0.75rem;
+    justify-content: space-between;
+    text-decoration: none;
+    //color
+    background: linear-gradient(
+        86.16deg,
+        rgba(255, 255, 255, 0.485) 11.14%,
+        rgba(255, 255, 255, 0.05) 113.29%
+    );
+    backdrop-filter: blur(67.16px);
+    box-shadow: 0 0.84px 20.99px 0 rgba(69, 42, 124, 0.1);
+
+    transition: all ease 0.3s;
+    &:hover {
+        transform: translateY(-3px);
+    }
+}
+.infoSection {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+}
+
+.rowWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.name {
+    font-weight: 700;
+    font-size: 34px;
+    letter-spacing: 0.37px;
+    color: #2d2d2d;
+    margin: 0;
+}
+
+.party {
+    font-weight: 500;
+    font-size: 15px;
+    letter-spacing: -0.24px;
+    color: #717171;
+    margin: 0;
+}
+.eraco {
+    font-weight: 500;
+    font-size: 15px;
+    letter-spacing: -0.24px;
+    color: #696868;
+    margin: 0;
+}
+.district {
+    font-weight: 500;
+    font-size: 15px;
+    letter-spacing: -0.24px;
+    color: #717171;
+    margin: 0;
+}
+
+.voteRate {
+    font-weight: 600;
+    font-size: 17px;
+    letter-spacing: -0.41px;
+    color: #2d2d2d;
+    margin: 0;
+}
+.low {
+    color: #e74c3c;
+}
+.medium {
+    color: #f1c40f;
+}
+.high {
+    color: #27ae60;
+}
+.veryHigh {
+    color: #2980ef;
+}
+
+.profileImg {
+    height: 100%;
+    width: 150px;
+    border-radius: 0px 8px 8px 0px;
+    object-fit: cover;
+    display: block;
+    transition: all ease 0.3s;
+}

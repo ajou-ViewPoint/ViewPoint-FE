@@ -29,7 +29,7 @@ interface MyDistrictStore {
     selectedDistrict: District;
     selectedDistrictMembers: DistrictMember[];
     getAllDistrict: () => Promise<void>;
-    getDistrictMembers: (sido: string, sigungu: string, regionCd: string) => Promise<void>;
+    getDistrictMembers: (sido?: string, sigungu?: string, regionCd?: string) => Promise<void>;
     getDistrictMembersByCoordinaite: (longitude: number, latitude: number) => Promise<void>;
 }
 
