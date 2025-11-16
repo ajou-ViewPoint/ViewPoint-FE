@@ -56,6 +56,7 @@ const DEFAULT_BILL: bill = {
 };
 
 interface billStore {
+    totalBillNumber: number;
     selectedBill: bill;
     billList: bill[];
     billListPagination: BillListPagination;
@@ -70,6 +71,7 @@ interface billStore {
 }
 
 export const useBillStore = create<billStore>((set) => ({
+    totalBillNumber: 0,
     selectedBill: DEFAULT_BILL,
     billList: [],
     billListPagination: DEFAULT_PAGINATION,
@@ -131,7 +133,7 @@ export const useBillStore = create<billStore>((set) => ({
                 billListPagination: {
                     totalElements: res.data.totalElements,
                     totalPages: res.data.totalPages,
-                    pageNumber: res.data.pageable.pageNumber,
+                    pageNumber: res.data.pageable.pageNumber, // 페이지네이션 계산과 관련된 것들은 로컬에서 바꾸어야하나?
                     pageSize: res.data.pageable.pageSize,
                     first: res.data.first,
                     last: res.data.last,

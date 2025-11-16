@@ -10,7 +10,7 @@ export interface Member {
     phone: string;
     eraco: string; // ex '제17대, 제18대, 제19대'
     duty: string; // ex 국회의원
-    innerDuty: string | null; // ??
+    innerDuty: string | null; // 관리자 지정
     electionDistrict: string; // '비례대표/경기 파주시/경기 파주시을';
     attendanceRate: number | null;
     loyaltyRate: number;
