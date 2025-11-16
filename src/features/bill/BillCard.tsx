@@ -3,11 +3,14 @@ import { ChevronRight } from 'lucide-react';
 import type { bill } from '../../types/bill';
 import { useNavigate } from 'react-router-dom';
 import BillTag from '../../widgets/BillTag';
+import { useBillStore } from '../../store/billStore';
 
 function BillCard(billProp: bill) {
     const navigate = useNavigate();
+    const { getSelectedBill } = useBillStore();
 
-    const handleViewMore = () => {
+    const handleViewMore = async () => {
+        await getSelectedBill(billProp.id);
         navigate(`/billlist/${billProp.id}`, { state: billProp });
     };
 

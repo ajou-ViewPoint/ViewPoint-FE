@@ -3,6 +3,7 @@ import type { bill } from '../../types/bill';
 import BillTag from '../../widgets/BillTag';
 import style from './RecentBillCard.module.scss';
 import { Landmark, Calendar, User } from 'lucide-react';
+import { useBillStore } from '../../store/billStore';
 
 function RecentBillCard({
     billTitle,
@@ -16,10 +17,11 @@ function RecentBillCard({
     id,
 }: bill) {
     const navigate = useNavigate();
+    const { getSelectedBill } = useBillStore();
 
-    const moveToBillDetailPage = () => {
+    const moveToBillDetailPage = async () => {
+        await getSelectedBill(id);
         navigate(`/billlist/${id}`);
-        // state로 billprop 전달하는 방향으로 수정
     };
     return (
         <div className={style.container} onClick={moveToBillDetailPage}>
