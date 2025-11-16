@@ -76,7 +76,7 @@ function KoreaAdministrativeMap() {
     const [hoverName, setHoverName] = useState<string | null>(null);
     const [tooltip, setTooltip] = useState<{ x: number; y: number } | null>(null);
     const [map, setMap] = useState<any>(SIDO_GEO_URL);
-    const navigation = useNavigate();
+    const navigate = useNavigate();
     const { getDistrictMembers } = useMyDistrictStore();
 
     // 대한민국 중심 좌표로 초기화
@@ -86,8 +86,8 @@ function KoreaAdministrativeMap() {
     });
 
     const handleNavigateToDistrictDetailPage = async (regionCd: string) => {
-        getDistrictMembers('', '', regionCd);
-        await navigation(`/mydistrict/${regionCd}`);
+        await getDistrictMembers('', '', regionCd);
+        navigate(`/mydistrict/${regionCd}`);
     };
 
     //선택된 행정단위 코드 상태

@@ -1,86 +1,52 @@
-// import { useState } from 'react';
 import style from './SearchSection.module.scss';
 import { Locate } from 'lucide-react';
-// import DaumPostcodeEmbed from 'react-daum-postcode';
+import DaumPostcodeEmbed, { type Address } from 'react-daum-postcode';
+import { useMyDistrictStore } from '../../store/myDistrictStore';
+import { useNavigate } from 'react-router-dom';
 function SearchSection() {
-    // const [loading, setLoading] = useState(false);
-    // const [address, setAddress] = useState('');
+    const { getDistrictMembers, getDistrictMembersByCoordinaite } = useMyDistrictStore();
+    const regionCd = useMyDistrictStore((state) => state.selectedDistrictMembers[0].regionCd);
+    const navigate = useNavigate();
 
-    // const Postcode = () => {
-    //     const handleComplete = (data) => {
-    //         let fullAddress = data.address;
-    //         let extraAddress = '';
+    const handleNavigateToDistrictDetailPage = async (longitude: number, latitude: number) => {
+        await getDistrictMembersByCoordinaite(longitude, latitude).then(() =>
+            navigate(`/mydistrict/${regionCd}`)
+        );
+    };
 
-    //         if (data.addressType === 'R') {
-    //             if (data.bname !== '') {
-    //                 extraAddress += data.bname;
-    //             }
-    //             if (data.buildingName !== '') {
-    //                 extraAddress +=
-    //                     extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName;
-    //             }
-    //             fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
-    //         }
+    const Postcode = () => {
+        const handleComplete = async (data: Address) => {
+            await getDistrictMembers('', '', data.sigunguCode);
+            navigate(`/mydistrict/${data.sigunguCode}`);
+        };
 
-    //         console.log(fullAddress); // e.g. '서울 성동구 왕십리로2길 20 (성수동1가)'
-    //     };
+        return (
+            <DaumPostcodeEmbed
+                style={{ width: '100%', height: '500px' }}
+                onComplete={handleComplete}
+            />
+        );
+    };
 
-    //     return <DaumPostcodeEmbed onComplete={handleComplete} {...props} />;
-    // };
-    // const handleGeoLoaction = () => {
-    //     if (!navigator.geolocation) {
-    //         alert('이 브라우저에서는 위치 정보가 지원되지 않습니다.');
-    //         return;
-    //     }
-    //     navigator.geolocation.getCurrentPosition(
-    //         async (position) => {
-    //             const { latitude, longitude } = position.coords;
+    const handleGeoLoaction = () => {
+        if (!navigator.geolocation) {
+            alert('이 브라우저에서는 위치 정보가 지원되지 않습니다.');
+            return;
+        }
+        navigator.geolocation.getCurrentPosition(async (position) => {
+            await handleNavigateToDistrictDetailPage(
+                position.coords.longitude,
+                position.coords.latitude
+            );
+        });
+    };
 
-    //             try {
-    //                 // 주소 변환 (OpenStreetMap Nominatim API 예시)
-    //                 // const res = await fetch(
-    //                 //     `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
-    //                 // );
-
-    //                 alert(`${latitude}, ${longitude}`);
-
-    //                 setAddress('fullAddress');
-
-    //                 // // 서버에 주소 전송
-    //                 // await fetch('/api/location', {
-    //                 //     method: 'POST',
-    //                 //     headers: { 'Content-Type': 'application/json' },
-    //                 //     body: JSON.stringify({ address: fullAddress }),
-    //                 // });
-    //             } catch (error) {
-    //                 console.error(error);
-    //                 alert('주소 변환 중 오류가 발생했습니다.');
-    //             } finally {
-    //                 setLoading(false);
-    //             }
-    //         },
-    //         (error) => {
-    //             console.error(error);
-    //             alert('위치 정보를 가져올 수 없습니다.');
-    //             setLoading(false);
-    //         }
-    //     );
-    // };
     return (
         <div className={style.wrapper}>
-            <h2 className={style.title}>주소를 입력하거나 현재 위치를 불러오세요</h2>
-            <section className={style.searchSection}>
-                <form>
-                    <input
-                        placeholder="예시: 경기도 수원시 영통구 월드컵로 206"
-                        className={style.searchInput}
-                    />
-                </form>
-
-                <button className={style.gpsButton} onClick={() => {}}>
-                    <Locate />
-                </button>
-            </section>
+            <Postcode />
+            <button className={style.gpsButton} onClick={handleGeoLoaction}>
+                <Locate />
+            </button>
         </div>
     );
 }

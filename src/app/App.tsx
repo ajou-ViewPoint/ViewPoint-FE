@@ -12,6 +12,7 @@ import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import CommitteeDetailPage from '../pages/CommitteeDetailPage/CommitteeDetailPage';
 import PartyDetailPage from '../pages/PartyDetailPage/PartyDetailPage';
+import DistrictDetailPage from '../pages/MyDistrictPage/DistrictDetail';
 
 function App() {
     return (
@@ -29,6 +30,7 @@ function App() {
                         <Route path="/committee" element={<CommitteePage />} />
                         <Route path="/committee/:committeeId" element={<CommitteeDetailPage />} />
                         <Route path="/mydistrict" element={<MyDistrict />} />
+                        <Route path="/mydistrict/:regionCd" element={<DistrictDetailPage />} />
                         <Route path="/about" element={<About />} />
                     </Route>
                 </Routes>

@@ -3,14 +3,14 @@ import type { District, DistrictMember } from '../types/district';
 import axios from 'axios';
 import { SERVER_IP } from '../constants/env';
 
-const DEFAULT_DISTRICT = {
+export const DEFAULT_DISTRICT = {
     regionCd: '',
     electionDistrict: '',
     sidoName: '',
     sggName: '',
 };
 
-const DEFAULT_DISTRICT_MEMBER = {
+export const DEFAULT_DISTRICT_MEMBER = {
     memberName: '',
     partyName: '',
     normalizedPartyName: '',

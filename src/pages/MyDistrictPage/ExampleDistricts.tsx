@@ -1,26 +1,34 @@
+import { useNavigate } from 'react-router-dom';
 import style from './ExampleDistricts.module.scss';
+import { useMyDistrictStore } from '../../store/myDistrictStore';
 
-const mockDistricts: string[] = [
-    '수원시 정',
-    '서울특별시 강남구 갑',
-    '서울특별시 종로구',
-    '부산광역시 해운대구 을',
-    '대구광역시 수성구 갑',
-    '인천광역시 연수구 을',
-    '광주광역시 서구 갑',
-    '대전광역시 유성구 을',
-    '울산광역시 남구 갑',
-    '경기도 고양시 일산동구',
+interface MOCKTYPE {
+    name: string;
+    regionCd: string;
+}
+
+const mockDistricts: MOCKTYPE[] = [
+    { name: '수원시 정', regionCd: '41117' },
+    { name: '서울특별시 종로구', regionCd: '11110' },
 ];
 
 function ExampleDistricts() {
+    const nevigate = useNavigate();
+    const { getDistrictMembers } = useMyDistrictStore();
+
+    const handleNavigation = async (regionCd: string) => {
+        await getDistrictMembers('', '', regionCd);
+        nevigate(`/mydistrict/${regionCd}`);
+    };
     return (
         <div className={style.wrapper}>
-            <h1 className={style.title}>예시 지역구</h1>
             <div className={style.tagGrid}>
                 {mockDistricts.map((district) => (
-                    <div className={style.tag} key={district}>
-                        {district}
+                    <div
+                        className={style.tag}
+                        key={district.regionCd}
+                        onClick={() => handleNavigation(district.regionCd)}>
+                        {district.name}
                     </div>
                 ))}
             </div>

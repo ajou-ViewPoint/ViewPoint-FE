@@ -1,6 +1,6 @@
 .pageWrapper {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 40% 60%;
     padding: 0.5rem 4rem;
     gap: 2rem;
 }
@@ -8,11 +8,6 @@
 .wrapper {
     display: flex;
     flex-direction: column;
-}
-
-.mapWrapper {
-    width: 100%;
-    height: auto;
 }
 
 .title {

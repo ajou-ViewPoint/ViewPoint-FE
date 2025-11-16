@@ -7,8 +7,8 @@ function MyDistrict() {
         <div className={style.pageWrapper}>
             <div className={style.wrapper}>
                 <h1 className={style.title}>우리 지역구는 지금</h1>
-                <SearchSection />
                 <ExampleDistricts />
+                <SearchSection />
             </div>
             <div className={style.mapWrapper}>
                 <KoreaAdministrativeMap />
