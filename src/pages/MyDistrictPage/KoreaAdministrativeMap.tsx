@@ -3,6 +3,8 @@ import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simp
 import { useState } from 'react';
 import style from './KoreaAdministrativeMap.module.scss';
 import { Minus, Plus } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { useMyDistrictStore } from '../../store/myDistrictStore';
 
 const SIDO_GEO_URL = '/src/assets/map/map_provinces.json';
 const SIGUNGU_GEO_URL = '/src/assets/map/map_municipalities.json';
@@ -74,12 +76,19 @@ function KoreaAdministrativeMap() {
     const [hoverName, setHoverName] = useState<string | null>(null);
     const [tooltip, setTooltip] = useState<{ x: number; y: number } | null>(null);
     const [map, setMap] = useState<any>(SIDO_GEO_URL);
+    const navigation = useNavigate();
+    const { getDistrictMembers } = useMyDistrictStore();
 
     // 대한민국 중심 좌표로 초기화
     const [position, setPosition] = useState({
         coordinates: [127.8, 36.2] as [number, number],
         zoom: 1,
     });
+
+    const handleNavigateToDistrictDetailPage = async (regionCd: string) => {
+        getDistrictMembers('', '', regionCd);
+        await navigation(`/mydistrict/${regionCd}`);
+    };
 
     //선택된 행정단위 코드 상태
     const [selectedProvinceCode, setSelectedProvinceCode] = useState<string | null>(null);
@@ -88,7 +97,9 @@ function KoreaAdministrativeMap() {
     const handleAdministrativeLevelChange = (geo: any) => {
         const level = geo?.properties?.level;
         const center = getFeatureCenter(geo);
-
+        if (!level) {
+            handleNavigateToDistrictDetailPage(geo.properties.sgg);
+        }
         if (level === 'province') {
             const provinceCode = String(geo?.properties?.code ?? geo?.properties?.sido ?? '');
             setSelectedProvinceCode(provinceCode);
