@@ -68,6 +68,7 @@ interface billStore {
     getBillListByDate: (startDate: string, endDate: string) => Promise<void>; // 법안 리스트 페이지 필터 기능
     getBillList: () => Promise<void>;
     getSelectedBill: (billId: number) => Promise<void>;
+    getBill: (billId: number) => Promise<bill>;
 }
 
 export const useBillStore = create<billStore>((set) => ({
@@ -162,6 +163,10 @@ export const useBillStore = create<billStore>((set) => ({
                 );
             }
         }
+    },
+    getBill: async (billId) => {
+        const res = await axios.get(`${SERVER_IP}/v1/bills/${billId}`);
+        return res.data;
     },
 }));
 

@@ -4,7 +4,7 @@ import style from './styles/BillListPage.module.scss';
 import { useBillStore } from '../store/billStore';
 import Filter from '../features/filter/Filter';
 import BillSortButtons from '../widgets/sort/BillSortButtons';
-import Pagination from '../widgets/Pagination';
+// import Pagination from '../widgets/Pagination';
 function BillListPage() {
     const billList = useBillStore((state) => state.billList);
     const filterRef = useRef<HTMLDivElement>(null);
@@ -47,7 +47,7 @@ function BillListPage() {
                     <BillCard key={item.id} {...item} />
                 ))}
             </div>
-            <Pagination />
+            {/* <Pagination /> */}
         </div>
     );
 }
