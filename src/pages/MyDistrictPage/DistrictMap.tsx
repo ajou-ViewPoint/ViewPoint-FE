@@ -35,7 +35,7 @@ function getRegionName(props: Record<string, any> | undefined, fallback: string)
 }
 
 function DistrictMap() {
-    const map = '/src/assets/map/map_submunicipalities.json';
+    const map = '/assets/map/map_submunicipalities.json';
     const [hoverName, setHoverName] = useState<string | null>(null);
     const [tooltip, setTooltip] = useState<{ x: number; y: number } | null>(null);
     const [center, setCenter] = useState<[number, number]>([127.05, 37.27]);
@@ -43,21 +43,22 @@ function DistrictMap() {
     const param = useParams();
 
     useEffect(() => {
-        import('../../assets/map/center.json').then((module) => {
-            const centers = module.default as unknown as Record<string, [number, number, number]>;
-            const c = centers?.[param.regionCd as string];
-            if (Array.isArray(c) && c.length >= 2) {
-                setCenter([c[0], c[1]]);
-                if (c.length >= 3 && Number.isFinite(c[2])) {
-                    setScale(c[2] as number);
+        fetch('/map/center.json')
+            .then((res) => res.json())
+            .then((centers: Record<string, [number, number, number]>) => {
+                const c = centers?.[param.regionCd as string];
+                if (Array.isArray(c) && c.length >= 2) {
+                    setCenter([c[0], c[1]]);
+                    if (c.length >= 3 && Number.isFinite(c[2])) {
+                        setScale(c[2] as number);
+                    } else {
+                        setScale(30000);
+                    }
                 } else {
+                    setCenter([127.05, 37.27]);
                     setScale(30000);
                 }
-            } else {
-                setCenter([127.05, 37.27]);
-                setScale(30000);
-            }
-        });
+            });
     }, [param.regionCd]);
 
     return (
