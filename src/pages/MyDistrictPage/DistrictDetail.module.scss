@@ -1,6 +1,6 @@
 .pageWrapper {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 50% 50%;
     gap: 1rem;
     padding: 0.5rem 4rem;
 }
@@ -10,6 +10,7 @@
     line-height: 40px;
     letter-spacing: 0.78px;
     margin: 0;
+    margin-bottom: 2rem;
 }
 .sectionTitle {
     font-weight: 600;

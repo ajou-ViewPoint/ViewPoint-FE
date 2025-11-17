@@ -21,22 +21,11 @@ function MemberListCard({ member }: MemberListCardProps) {
         party: 'partyName' in member ? member.partyName ?? '' : (member as Member).party ?? '',
         profileImage: member.profileImage ?? '',
         district:
-            'region' in member
+            'regionName' in member
                 ? (member as PartyMemberInfoProjection).regionName ?? ''
                 : (member as Member).electionDistrict ?? '',
     };
     return (
-        // <Link to={`/members/${normalizedMember.id}`} className={style.container}>
-        //     <img
-        //         className={style.profileImage}
-        //         src={normalizedMember.profileImage}
-        //         alt={`${normalizedMember.name} 의원의 프로필 사진`}
-        //     />
-        //     <div className={style.profileInfo}>
-        //         <h2 className={style.name}>{normalizedMember.name}</h2>
-        //         <h3 className={style.party}>{normalizedMember.party.split('/').pop()}</h3>
-        //     </div>
-        // </Link>
         <Link to={`/members/${normalizedMember.id}`} className={style.container}>
             <div className={style.imageWrapper}>
                 <img
@@ -50,7 +39,6 @@ function MemberListCard({ member }: MemberListCardProps) {
                     <h2 className={style.name}>{normalizedMember.name}</h2>
                     <h3 className={style.party}>{normalizedMember.party.split('/').pop()}</h3>
                 </div>
-
                 <h3 className={style.district}>{normalizedMember.district.split('/').pop()}</h3>
             </div>
         </Link>

@@ -1,0 +1,36 @@
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 2.2rem;
+}
+
+.badge {
+    color: #c6c6c6;
+    background-color: #ffffff;
+    padding: 0.3rem 1rem;
+
+    // font
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 25.54px;
+    letter-spacing: 0%;
+    text-align: center;
+    vertical-align: middle;
+
+    // default border
+    border-radius: 74.63px;
+    border: 1px solid #c6c6c6;
+}
+
+.passed {
+    color: #2372eb;
+    border: none;
+    background-color: #e8f2ff;
+}
+.current {
+    color: #ffffff;
+    border: none;
+    background-color: #2372eb;
+}

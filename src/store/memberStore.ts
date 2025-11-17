@@ -34,12 +34,15 @@ export interface MemberListPagination {
 }
 interface memberStore {
     memberList: Member[];
+    randomMemberList: Member[];
     memberListPagination: MemberListPagination;
+    getRandomMember: () => Promise<void>;
     setMemberListPage: (newPageState: MemberListPagination) => void;
     getMemberList: () => Promise<void>;
     getMember: (memberId: number) => Promise<Member>;
 }
 
+// home 화면 무작위 의원 객체 출력 다시 구현해야함
 interface memberFilterStore {
     filterState: memberFilter;
     setFilterState: (state: memberFilter) => void;
@@ -47,8 +50,22 @@ interface memberFilterStore {
 
 export const useMemberStore = create<memberStore>((set) => ({
     memberList: [],
+    randomMemberList: [],
     memberListPagination: DEFAULT_PAGINATION,
     setMemberListPage: (newPageState) => set({ memberListPagination: newPageState }),
+    getRandomMember: async () => {
+        try {
+            const res = await axios.get(`${SERVER_IP}/v1/main/home`);
+            set({ randomMemberList: res.data.members });
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                throw new Error(
+                    `의원 정보 불러오기 에러: ${error.response?.data?.message ?? error.message}`
+                );
+            }
+            throw error;
+        }
+    },
     getMemberList: async () => {
         try {
             const pageState = useMemberStore.getState().memberListPagination;

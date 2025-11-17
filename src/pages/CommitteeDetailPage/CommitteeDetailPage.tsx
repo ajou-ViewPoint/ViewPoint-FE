@@ -58,8 +58,11 @@ function CommitteeDetailPage() {
                 </section>
                 <section className={style.section}>
                     <h2 className={style.section__title}>정당별 의석수</h2>
-                    <div className={style.section__wrapper}>
-                        <StatsSection statsData={committeeDetail.stats} />
+                    <div className={style.section__statsWrapper}>
+                        <StatsSection
+                            statsData={committeeDetail.stats}
+                            committeeName={committeeDetail.committeeName}
+                        />
                     </div>
                 </section>
             </div>

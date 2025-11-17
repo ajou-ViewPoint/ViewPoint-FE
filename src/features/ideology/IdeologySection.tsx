@@ -1,3 +1,4 @@
+import NominateScatterPlot from '../../widgets/NominateScatterPlot';
 import style from './IdeologySection.module.scss';
 
 function IdeologySection() {
@@ -10,7 +11,9 @@ function IdeologySection() {
                     국회의원들의 이념 점수를 한눈에 확인하세요.
                 </p>
             </div>
-            <div className={style.contents}></div>
+            <div className={style.contents}>
+                <NominateScatterPlot />
+            </div>
         </div>
     );
 }

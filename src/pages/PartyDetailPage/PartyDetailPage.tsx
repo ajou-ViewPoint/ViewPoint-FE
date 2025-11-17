@@ -3,6 +3,7 @@ import style from './PartyDetailPage.module.scss';
 import { useLocation, useParams } from 'react-router-dom';
 import { usePartyStore } from '../../store/partyStore';
 import MemberListCard from '../../features/member/MemberListCard';
+import NominateScatterPlot from '../../widgets/NominateScatterPlot';
 
 function PartyDetailPage() {
     const param = useParams();
@@ -38,7 +39,9 @@ function PartyDetailPage() {
             <h1>{party.partyName}</h1>
             <section>
                 <h2 className={style.sectionTitle}>의원 이념 분포</h2>
-                <div className={style.wrapper}></div>
+                <div className={style.wrapper__chart}>
+                    <NominateScatterPlot />
+                </div>
             </section>
             <section>
                 <h2 className={style.sectionTitle}>정당 정보</h2>

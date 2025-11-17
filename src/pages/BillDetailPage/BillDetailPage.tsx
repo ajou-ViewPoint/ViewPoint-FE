@@ -1,26 +1,25 @@
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import style from './BillDetailPage.module.scss';
-import type { bill } from '../../types/bill';
 import { useBillStore } from '../../store/billStore';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import BillTag from '../../widgets/BillTag';
+import BillProgress from './BillProgress';
 
 function BillDetailPage() {
-    const { state } = useLocation() as { state: bill };
     const params = useParams();
-    const { getBill } = useBillStore();
-    const [bill, setBill] = useState<bill | null>(state ?? null);
+    const bill = useBillStore((state) => state.selectedBill);
+    const { getSelectedBill } = useBillStore();
 
     useEffect(() => {
-        if (!bill && params.billId) {
+        // 메모리에 없는데??
+        if (!bill) {
             const numericBillId = Number(params.billId);
             const fetchBill = async () => {
-                const res = await getBill(numericBillId);
-                setBill(res);
+                await getSelectedBill(numericBillId);
             };
             fetchBill();
         }
-    }, [bill, params.billId, getBill]);
+    }, [bill, params.billId, getSelectedBill]);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -53,10 +52,9 @@ function BillDetailPage() {
                             <dt>대표발의</dt>
                             <dd>{bill.proposer}</dd>
                         </div>
-                        {/* 발의 일자 수정 필요 */}
                         <div className={style.detail__item}>
                             <dt>발의일자</dt>
-                            <dd>{bill.lawSubmitDate}</dd>
+                            <dd>{bill.proposeDt?.replaceAll('-', '.')}</dd>
                         </div>
                         {/* 처리일자 수정 필요. 날짜 존재하는 필드 중에 가장 나중의 것을 선택하는 로직 필요*/}
                         <div className={style.detail__item}>
@@ -68,14 +66,10 @@ function BillDetailPage() {
             </section>
             <section className={style.section}>
                 <h3 className={style.sectionTitle}>심사 진행 단계</h3>
-                <div className={style.wrapper}></div>
-            </section>
-            <section className={style.section}>
-                <h3 className={style.sectionTitle}>법안 내용 요약</h3>
                 <div className={style.wrapper}>
-                    <pre className={style.billSummaryText}>{bill.billSummary}</pre>
+                    <BillProgress />
                 </div>
-            </section>
+            </section>{' '}
             <section className={style.section}>
                 <h3 className={style.sectionTitle}>찬반 현황</h3>
                 {bill.yesTcnt ? (
@@ -107,6 +101,12 @@ function BillDetailPage() {
             <section className={style.section}>
                 <h3 className={style.sectionTitle}>국회의원 이념공간</h3>
                 <div className={style.wrapper}></div>
+            </section>
+            <section className={style.section}>
+                <h3 className={style.sectionTitle}>법안 내용 요약</h3>
+                <div className={style.wrapper}>
+                    <pre className={style.billSummaryText}>{bill.billSummary}</pre>
+                </div>
             </section>
         </div>
     );

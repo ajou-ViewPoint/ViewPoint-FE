@@ -16,6 +16,11 @@
         @extend .wrapper;
         gap: 2rem;
     }
+
+    &__chart {
+        @extend .wrapper;
+        min-height: 300px;
+    }
     &__grid4 {
         @extend .wrapper;
         display: grid;

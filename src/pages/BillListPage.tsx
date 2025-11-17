@@ -4,26 +4,25 @@ import style from './styles/BillListPage.module.scss';
 import { useBillStore } from '../store/billStore';
 import Filter from '../features/filter/Filter';
 import BillSortButtons from '../widgets/sort/BillSortButtons';
-// import Pagination from '../widgets/Pagination';
+import BillPagination from '../widgets/BillPagination';
 function BillListPage() {
     const billList = useBillStore((state) => state.billList);
     const filterRef = useRef<HTMLDivElement>(null);
-    const billCardContainerRef = useRef<HTMLDivElement>(null);
+    const billListRef = useRef<HTMLDivElement>(null);
     const { getBillList } = useBillStore();
 
+    const totalBillElements = useBillStore((state) => state.billListPagination.totalElements);
     const pageNumberState = useBillStore((state) => state.billListPagination.pageNumber);
     const sortDirectionState = useBillStore((state) => state.billListPagination.direction);
     const sortByState = useBillStore((state) => state.billListPagination.sortBy);
 
     useEffect(() => {
-        const filterFocused =
-            document.activeElement && filterRef.current?.contains(document.activeElement);
-        if (!filterFocused) {
-            getBillList();
-        }
-        window.scroll(0, 0);
-        // billCardContainerRef.current?.scrollIntoView({ behavior: 'smooth' });
+        getBillList();
     }, [getBillList, pageNumberState, sortDirectionState, sortByState]);
+
+    useEffect(() => {
+        billListRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, [pageNumberState]);
 
     return (
         <div className={style.wrapper}>
@@ -37,17 +36,17 @@ function BillListPage() {
                 <Filter />
             </div>
 
-            <div className={style.resultHeader}>
-                <p className={style.resultHeader__count}>총 20건</p>
+            <div className={style.resultHeader} ref={billListRef}>
+                <p className={style.resultHeader__count}>총 {totalBillElements}건</p>
                 <BillSortButtons />
             </div>
 
-            <div className={style.billCardContainer} ref={billCardContainerRef}>
+            <div className={style.billCardContainer}>
                 {billList.map((item) => (
                     <BillCard key={item.id} {...item} />
                 ))}
             </div>
-            {/* <Pagination /> */}
+            <BillPagination />
         </div>
     );
 }

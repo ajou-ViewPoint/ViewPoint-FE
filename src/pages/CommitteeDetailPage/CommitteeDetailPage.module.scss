@@ -48,11 +48,18 @@
         padding: 2rem 2.5rem;
     }
 
+    &__statsWrapper {
+        border: 1px solid #e4e4e4;
+        border-radius: 16px;
+        padding: 2rem 2.5rem;
+    }
+
     &__first {
         @extend .section;
         border: 1px solid #e4e4e4;
         border-radius: 16px;
         padding: 2rem 2.5rem;
+        gap: 1rem;
     }
 }
 .detail {

@@ -90,7 +90,7 @@ function KoreaAdministrativeMap() {
         navigate(`/mydistrict/${regionCd}`);
     };
 
-    //선택된 행정단위 코드 상태
+    // 선택된 행정단위 코드 상태
     const [selectedProvinceCode, setSelectedProvinceCode] = useState<string | null>(null);
     const [selectedMunicipalityCode, setSelectedMunicipalityCode] = useState<string | null>(null);
 
@@ -98,6 +98,7 @@ function KoreaAdministrativeMap() {
         const level = geo?.properties?.level;
         const center = getFeatureCenter(geo);
         if (!level) {
+            console.log(geo?.properties?.sgg);
             handleNavigateToDistrictDetailPage(geo.properties.sgg);
         }
         if (level === 'province') {
@@ -170,7 +171,7 @@ function KoreaAdministrativeMap() {
                                     <Geography
                                         key={geo.rsmKey}
                                         geography={geo}
-                                        fill={isHovered ? '#7FC5E0' : '#DDD'}
+                                        fill={isHovered ? '#2ba6ff' : '#DDD'}
                                         stroke="#999"
                                         strokeWidth="0.1px"
                                         onMouseEnter={() => setHoverName(regionName)}
@@ -218,3 +219,5 @@ function KoreaAdministrativeMap() {
 }
 
 export default KoreaAdministrativeMap;
+
+// 중구 등 sub 단위까지 안 들어가는 곳에 대한 처리 필요
