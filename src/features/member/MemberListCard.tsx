@@ -2,9 +2,10 @@ import style from './MemberListCard.module.scss';
 import type { Member, PartyMemberInfoProjection } from '../../types/member';
 import { Link } from 'react-router-dom';
 import type { CommitteeMember } from '../../types/committee';
+import type { VoteMember } from '../../store/BillVoteResultStore';
 
 type MemberListCardProps = {
-    member: Member | PartyMemberInfoProjection | CommitteeMember;
+    member: Member | PartyMemberInfoProjection | CommitteeMember | VoteMember; // 추후 삭제할 것, 백이 정보 다 쏴줘야함
 };
 interface BasicMemberInfo {
     id: number;

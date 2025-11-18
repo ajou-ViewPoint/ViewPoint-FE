@@ -33,7 +33,7 @@ const DEFAULT_PAGINATION: BillListPagination = {
     direction: 'desc',
 };
 
-const DEFAULT_BILL: bill = {
+export const DEFAULT_BILL: bill = {
     id: 0,
     billTitle: '',
     proposer: null,

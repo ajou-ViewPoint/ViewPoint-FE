@@ -28,7 +28,7 @@ function BillProgress() {
 
         <div className={style.wrapper}>
             {steps.map((step, idx) => (
-                <>
+                <div className={style.rowWrapper} key={idx}>
                     <p
                         className={`${style.badge} ${step.passed ? style.passed : ''} ${
                             idx === lastPassedIndex && step.passed ? style.current : ''
@@ -36,7 +36,7 @@ function BillProgress() {
                         {step.label}
                     </p>
                     <ChevronRight />
-                </>
+                </div>
             ))}
             <p className={style.badge}>정부 이송</p>
             <ChevronRight />

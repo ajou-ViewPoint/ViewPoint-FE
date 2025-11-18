@@ -7,6 +7,8 @@ function NominateScatterPlot() {
         <ResponsiveScatterPlot
             data={MOCKDATA}
             margin={{ top: 10, right: 10, bottom: 10, left: 10 }}
+            xScale={{ type: 'linear', min: -1, max: 1 }}
+            yScale={{ type: 'linear', min: -1, max: 1 }}
             enableGridX={false}
             enableGridY={false}
             axisBottom={null}

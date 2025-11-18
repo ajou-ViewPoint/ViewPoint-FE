@@ -18,6 +18,13 @@
         gap: 1rem;
         justify-content: center;
     }
+
+    &__chart {
+        @extend .wrapper;
+        display: flex;
+        flex-direction: column;
+        height: 500px;
+    }
 }
 
 .header {

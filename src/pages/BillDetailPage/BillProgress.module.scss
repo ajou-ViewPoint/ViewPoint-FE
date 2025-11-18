@@ -5,6 +5,12 @@
     align-items: center;
     gap: 2.2rem;
 }
+.rowWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 2.2rem;
+}
 
 .badge {
     color: #c6c6c6;
