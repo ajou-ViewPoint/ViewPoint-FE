@@ -12,11 +12,9 @@ function BillDetailPage() {
     const { getSelectedBill } = useBillStore();
 
     useEffect(() => {
-        // 메모리에 없는데??
         if (!bill || bill === DEFAULT_BILL) {
-            const numericBillId = Number(params.billId);
             const fetchBill = async () => {
-                await getSelectedBill(numericBillId);
+                await getSelectedBill(params.billId ?? '');
             };
             fetchBill();
         }

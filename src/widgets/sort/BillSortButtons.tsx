@@ -19,9 +19,10 @@ function BillSortButtons() {
     const pageState = useBillStore((state) => state.billListPagination);
 
     const handleSortChange = (item: BillSortType) => {
+        // 빠르게 두번 누르면 에러 발생 => prev로 이전 상태값 참조해서 하는게 나을듯
         // 정렬 방향을 바꾸는 경우
         if (pageState.sortBy === item.sortBy) {
-            const newDirection = item.direction === 'asc' ? 'desc' : 'asc';
+            const newDirection = pageState.direction === 'asc' ? 'desc' : 'asc';
             setPage({ ...pageState, direction: newDirection });
             return;
         }
