@@ -35,6 +35,7 @@ const DEFAULT_PAGINATION: BillListPagination = {
 
 export const DEFAULT_BILL: bill = {
     id: 0,
+    billId: '',
     billTitle: '',
     proposer: null,
     voteTcnt: null,
@@ -67,8 +68,8 @@ interface billStore {
     getBillListByKeyword: (keyword: string) => Promise<void>; // 법안 리스트 페이지 필터 기능
     getBillListByDate: (startDate: string, endDate: string) => Promise<void>; // 법안 리스트 페이지 필터 기능
     getBillList: () => Promise<void>;
-    getSelectedBill: (billId: number) => Promise<void>;
-    getBill: (billId: number) => Promise<bill>;
+    getSelectedBill: (billId: string) => Promise<void>;
+    getBill: (billId: string) => Promise<bill>;
 }
 
 export const useBillStore = create<billStore>((set) => ({

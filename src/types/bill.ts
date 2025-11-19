@@ -1,5 +1,6 @@
 export interface bill {
     id: number;
+    billId: string;
     billTitle: string;
     proposer?: string | null;
     voteTcnt?: number | null;

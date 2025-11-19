@@ -14,14 +14,14 @@ function RecentBillCard({
     procResultCd,
     rgsProcDate,
     billSummary,
-    id,
+    billId,
 }: bill) {
     const navigate = useNavigate();
     const { getSelectedBill } = useBillStore();
 
     const moveToBillDetailPage = async () => {
-        await getSelectedBill(id);
-        navigate(`/billlist/${id}`);
+        await getSelectedBill(billId);
+        navigate(`/billlist/${billId}`);
     };
     return (
         <div className={style.container} onClick={moveToBillDetailPage}>

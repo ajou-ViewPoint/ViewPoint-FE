@@ -10,8 +10,8 @@ function BillCard(billProp: bill) {
     const { getSelectedBill } = useBillStore();
 
     const handleViewMore = async () => {
-        await getSelectedBill(billProp.id);
-        navigate(`/billlist/${billProp.id}`, { state: billProp });
+        await getSelectedBill(billProp.billId);
+        navigate(`/billlist/${billProp.billId}`, { state: billProp });
     };
 
     return (
