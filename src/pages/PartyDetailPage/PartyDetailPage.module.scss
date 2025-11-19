@@ -19,7 +19,12 @@
 
     &__chart {
         @extend .wrapper;
-        min-height: 300px;
+        display: flex;
+        flex-direction: column;
+        padding: 0.5rem;
+        border: 1px solid #e4e4e4;
+        height: 500px;
+        border-radius: 50%;
     }
     &__grid4 {
         @extend .wrapper;

@@ -1,6 +1,7 @@
 .pageWrapper {
     display: flex;
     flex-direction: column;
+    align-items: center;
     padding: 0.5rem 4rem;
     gap: 2rem;
 }
@@ -8,6 +9,7 @@
 .wrapper {
     display: flex;
     flex-direction: column;
+    width: 100%;
     gap: 1rem;
 
     &__info {
@@ -15,19 +17,27 @@
         gap: 2rem;
     }
 }
+
+.columnWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
 .sectionTitle {
+    align-self: flex-start;
     font-weight: 600;
     font-size: 18px;
-    line-height: Static/Display Medium/Line Height;
     letter-spacing: 0.78px;
+    margin: 0;
     color: #8e8e8e;
 }
 
 .infoContainer {
     display: flex;
     flex-direction: row;
-    flex-wrap: nowrap;
     width: 100%;
+    box-sizing: border-box;
+    flex-wrap: nowrap;
     gap: 3rem;
     align-items: center;
     border: 1px solid #e6e6e6;
@@ -40,13 +50,12 @@
         border-radius: 8px;
         object-fit: cover;
         display: block;
-        max-width: 100%;
-        max-height: 100%;
     }
 
     &__info {
         display: grid;
-        grid-template-columns: repeat(2, minmax(200px, 1fr));
+        width: 70%;
+        grid-template-columns: repeat(2, 1fr);
         row-gap: 1rem;
     }
 }
@@ -102,6 +111,7 @@
 
 .scoreInfo {
     display: grid;
+    width: 100%; // 추가: 부모의 content 영역 100% 차지
     grid-template-columns: 50% 50%;
     gap: 1rem;
 }

@@ -7,14 +7,7 @@
     justify-content: space-between;
     text-decoration: none;
     //color
-    background: linear-gradient(
-        86.16deg,
-        rgba(255, 255, 255, 0.485) 11.14%,
-        rgba(255, 255, 255, 0.05) 113.29%
-    );
-    backdrop-filter: blur(67.16px);
     box-shadow: 0 0.84px 20.99px 0 rgba(69, 42, 124, 0.1);
-
     transition: all ease 0.3s;
     &:hover {
         transform: translateY(-3px);
