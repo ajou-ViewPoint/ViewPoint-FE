@@ -36,9 +36,8 @@ function MemberDetail() {
 
     return (
         <div className={style.pageWrapper}>
-            <h2 className={style.sectionTitle}>의원 정보</h2>
             <div className={style.infoContainer}>
-                <div className={style.wrapper}>
+                <div className={style.columnWrapper}>
                     <img
                         className={style.infoContainer__profileImage}
                         src={member.profileImage}

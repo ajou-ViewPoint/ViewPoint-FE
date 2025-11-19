@@ -54,10 +54,10 @@ function BillDetailPage() {
                             <dd>{bill.proposeDt?.replaceAll('-', '.')}</dd>
                         </div>
                         {/* 처리일자 수정 필요. 날짜 존재하는 필드 중에 가장 나중의 것을 선택하는 로직 필요*/}
-                        <div className={style.detail__item}>
+                        {/* <div className={style.detail__item}>
                             <dt>처리일자</dt>
                             <dd>어떤 처리일자???</dd>
-                        </div>
+                        </div> */}
                     </dl>
                 </div>
             </section>

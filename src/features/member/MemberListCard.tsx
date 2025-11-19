@@ -32,6 +32,7 @@ function MemberListCard({ member }: MemberListCardProps) {
                 <img
                     className={style.profileImage}
                     src={normalizedMember.profileImage}
+                    loading="lazy"
                     alt={`${normalizedMember.name} 의원의 프로필 사진`}
                 />
             </div>
