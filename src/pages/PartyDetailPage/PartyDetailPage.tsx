@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import style from './PartyDetailPage.module.scss';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { usePartyStore } from '../../store/partyStore';
 import MemberListCard from '../../features/member/MemberListCard';
 import NominateScatterPlot from '../../widgets/NominateScatterPlot';
@@ -10,8 +10,7 @@ function PartyDetailPage() {
     const party = usePartyStore((state) => state.selectedParty);
     const members = usePartyStore((state) => state.selectedPartyMembers);
     const seatStatus = usePartyStore((state) => state.selectedPartySeatStatus);
-    const location = useLocation();
-    const { partyName } = location.state || {};
+
     const {
         getPartyByID,
         clearSelectedParty,
@@ -20,19 +19,20 @@ function PartyDetailPage() {
     } = usePartyStore();
 
     useEffect(() => {
-        getPartyByID(param.partyId ?? '');
-        getSelectedPartySeatStatus(param.partyId ?? '');
-        return () => {
-            clearSelectedParty(); // 삭제할 것, PartyPage에서 prefetch 방식으로 수정
-            getSelectedPartyMembers(partyName, '제22대');
-        };
+        const partyId = Number(param.partyId);
+        if (Number(partyId) !== party.id) {
+            getPartyByID(partyId ?? '');
+            getSelectedPartySeatStatus(partyId ?? '');
+        }
+
+        // 여기에 메모리에 데이터 없을 때의 getSelectedPartyMembers 호출 작성
     }, [
         getPartyByID,
         clearSelectedParty,
         getSelectedPartyMembers,
         getSelectedPartySeatStatus,
         param.partyId,
-        partyName,
+        party.id,
     ]);
     return (
         <div className={style.pageWrapper}>
@@ -76,7 +76,7 @@ function PartyDetailPage() {
             <section>
                 <h2 className={style.sectionTitle}>구성 의원</h2>
                 <div className={style.wrapper__grid5}>
-                    {members.map((member) => (
+                    {members?.map((member) => (
                         <MemberListCard key={member.memberId} member={member} />
                     ))}
                 </div>

@@ -29,9 +29,9 @@ interface PartyStore {
     selectedPartySeatStatus: PartySeatStatus;
     clearSelectedParty: () => void;
     getAllPartyList: () => Promise<void>;
-    getPartyByID: (id: string) => Promise<void>;
+    getPartyByID: (id: number) => Promise<void>;
     getSelectedPartyMembers: (partyName: string, term: string) => Promise<void>;
-    getSelectedPartySeatStatus: (id: string) => Promise<void>;
+    getSelectedPartySeatStatus: (id: number) => Promise<void>;
 }
 
 export const usePartyStore = create<PartyStore>((set) => ({
@@ -94,7 +94,7 @@ export const usePartyStore = create<PartyStore>((set) => ({
         try {
             const res = await axios.get(`${SERVER_IP}/v1/parties/seats?eraco=제22대`);
             const selectedPartySeat = res.data.partySeatStats.find(
-                (seat: PartySeatStatus) => seat.partyId === Number(id)
+                (seat: PartySeatStatus) => seat.partyId === id
             );
             set({ selectedPartySeatStatus: selectedPartySeat ?? DEFAULT_SEATSTATUS });
         } catch (error) {

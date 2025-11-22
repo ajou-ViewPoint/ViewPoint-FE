@@ -1,5 +1,6 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import style from './styles/PartyPage.module.scss';
+import { usePartyStore } from '../store/partyStore';
 
 const currentPartyList = [
     { partyName: '더불어민주당', path: 25 },
@@ -12,19 +13,24 @@ const currentPartyList = [
     { partyName: '무소속', path: 45 },
 ];
 function PartyPage() {
+    const navigate = useNavigate();
+    const { getSelectedPartyMembers } = usePartyStore();
+    const handleNavigateToPartyDetailPage = async (partyName: string, path: number) => {
+        await getSelectedPartyMembers(partyName, '제22대');
+        navigate(`/party/${path}`);
+    };
     return (
         <div className={style.pageWrapper}>
             <section className={style.wrapper}>
                 <h2>정당</h2>
                 <div className={style.buttonGrid}>
                     {currentPartyList.map(({ partyName, path }) => (
-                        <Link
+                        <button
                             key={path}
-                            to={`/party/${path}`}
                             className={style.button}
-                            state={{ partyName: partyName }}>
+                            onClick={() => handleNavigateToPartyDetailPage(partyName, path)}>
                             {partyName}
-                        </Link>
+                        </button>
                     ))}
                 </div>
                 <div className={style.infographic}></div>

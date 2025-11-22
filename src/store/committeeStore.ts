@@ -21,16 +21,16 @@ const DEFAULT_COMMITTEEDETAIL: CommitteeDetail = {
 interface committeeStore {
     selectedCommittee: Committee;
     selectedCommitteeDetail: CommitteeDetail;
-    getCommitteeById: (id: string) => Promise<void>;
-    getCommitteeDetail: (committeeName: string) => Promise<void>;
+    getCommitteeById: (committeeId: number) => Promise<void>;
+    getCommitteeDetail: (committeeId: number) => Promise<void>;
 }
 
 export const useCommitteeStore = create<committeeStore>((set) => ({
     selectedCommittee: DEFAULT_COMMITTEE,
     selectedCommitteeDetail: DEFAULT_COMMITTEEDETAIL,
-    getCommitteeById: async (id) => {
+    getCommitteeById: async (committeeId) => {
         try {
-            const res = await axios.get(`${SERVER_IP}/v1/committees/${id}`);
+            const res = await axios.get(`${SERVER_IP}/v1/committees/${committeeId}`);
             set({ selectedCommittee: res.data });
         } catch (error) {
             if (axios.isAxiosError(error)) {
@@ -40,9 +40,9 @@ export const useCommitteeStore = create<committeeStore>((set) => ({
             }
         }
     },
-    getCommitteeDetail: async (committeeName) => {
+    getCommitteeDetail: async (committeeId) => {
         try {
-            const res = await axios.get(`${SERVER_IP}/v1/committees/detail?name=${committeeName}`);
+            const res = await axios.get(`${SERVER_IP}/v1/committees/detail?id=${committeeId}`);
             set({ selectedCommitteeDetail: res.data });
         } catch (error) {
             if (axios.isAxiosError(error)) {
