@@ -27,7 +27,10 @@ function MemberListPage() {
     return (
         <div className={style.wrapper}>
             <div className={style.header}>
-                <h1 className={style.header__title}>XX대 국회의원</h1>
+                <h1 className={style.header__title}>대한민국 국회의원 모두보기</h1>
+                <p className={style.header__discription}>
+                    제22대 국회부터 제헌국회까지의 모든 국회의원 정보를 확인해보세요.
+                </p>
             </div>
             <Filter />
             <div className={style.resultHeader} ref={memberListRef}>

@@ -10,9 +10,7 @@ function MyDistrict() {
                 <ExampleDistricts />
                 <SearchSection />
             </div>
-            <div className={style.mapWrapper}>
-                <KoreaAdministrativeMap />
-            </div>
+            <KoreaAdministrativeMap />
         </div>
     );
 }

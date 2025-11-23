@@ -13,8 +13,6 @@
 
 body {
     margin: 0;
-    min-height: 100vh; /* 구형 브라우저 대응*/
-    min-height: 100dvh;
     background: #ffffff;
 }
 

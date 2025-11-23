@@ -31,7 +31,7 @@ function RecentBillCard({
             <div className={style.header__info}>
                 <p
                     className={`${style.header__status} ${
-                        procResultCd?.includes('가결') ? style.pass : ''
+                        procResultCd?.includes('가결') ? style.pass : style.failed
                     }`}>
                     {procResultCd}
                 </p>

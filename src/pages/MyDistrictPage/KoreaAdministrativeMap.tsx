@@ -133,8 +133,6 @@ function KoreaAdministrativeMap() {
             <ComposableMap
                 projection="geoMercator"
                 projectionConfig={{ scale: 6000, center: [127.8, 36.2] }}
-                width={800}
-                height={800}
                 className={style.map}>
                 <ZoomableGroup center={position.coordinates} zoom={position.zoom} maxZoom={2000}>
                     <Geographies geography={map}>

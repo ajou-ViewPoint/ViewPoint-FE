@@ -27,9 +27,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    border: none;
     width: 231px;
     height: 41px;
-    background: #f7f7f7;
+    background-color: #f7f7f7;
     color: #7e7e7e;
     border-radius: 6.27px;
     font-weight: 600;
@@ -40,10 +41,10 @@
     padding: 0;
 
     cursor: pointer;
-    transition: background-color 0.3s, color 0.3s, transform 0.3s ease, box-shadow 0.3s ease;
+    transition: all ease 0.3s;
 
     &:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        color: #f7f7f7;
+        background-color: #7e7e7e;
     }
 }

@@ -13,6 +13,7 @@ function NominateScatterPlot() {
             enableGridY={false}
             axisBottom={null}
             axisLeft={null}
+            nodeSize={10}
             legends={[]}
         />
     );
