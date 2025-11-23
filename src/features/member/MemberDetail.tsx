@@ -40,7 +40,7 @@ function MemberDetail() {
                 <div className={style.columnWrapper}>
                     <img
                         className={style.infoContainer__profileImage}
-                        src={member.profileImage}
+                        src={member.profileImage ?? ''}
                         alt={`${member.name} 의원의 프로필 사진`}
                     />
                     <div className={style.snsButtonRail}>
@@ -67,10 +67,11 @@ function MemberDetail() {
                         <p className={style.label}>소속위원회</p>
 
                         <p className={style.value}>
-                            {member.committeeId ? member.committeeId : '현직의원이 아닙니다'}
+                            {/* {member.committeeId ? member.committeeId : '현직의원이 아닙니다'} */}
+                            소속 위원회는 추후 추가 예정입니다.
                         </p>
                         <p className={style.label}>나이</p>
-                        <p className={style.value}>{calculateAge(member.birthDate)}</p>
+                        <p className={style.value}>{calculateAge(member.birthDate ?? '')}</p>
                         <p className={style.label}>정당</p>
                         <p className={style.value}>
                             {member.party.includes('/')
@@ -79,12 +80,13 @@ function MemberDetail() {
                         </p>
                         <p className={style.label}>당선 횟수</p>
                         <p className={style.value}>
-                            {member.eraco.split(',').length === 1
+                            n선
+                            {/* {member.eraco.split(',').length === 1
                                 ? '초선'
-                                : member.eraco.split(',').length + '선'}
+                                : member.eraco.split(',').length + '선'} */}
                         </p>
                         <p className={style.label}>선거구</p>
-                        <p className={style.value}>{member.electionDistrict}</p>
+                        <p className={style.value}>{member.district}</p>
                     </div>
                 </div>
             </div>

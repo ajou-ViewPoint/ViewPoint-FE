@@ -25,11 +25,11 @@ function DistrictDetail() {
                 <section className={style.currentMember}>
                     <h2 className={style.sectionTitle}>현직 의원</h2>
                     <DistrictMemberCard
-                        name={districtMembers[0].memberName}
+                        name={districtMembers[0].name}
                         memberId={districtMembers[0].memberId}
-                        district={districtMembers[0].electionDistrict}
-                        eraco={districtMembers[0].eraco}
-                        party={districtMembers[0].partyName}
+                        district={districtMembers[0].district}
+                        age={districtMembers[0].age}
+                        party={districtMembers[0].party}
                         voteRate={districtMembers[0].voteRate}
                         profileImg={districtMembers[0].profileImage}
                     />
@@ -37,15 +37,14 @@ function DistrictDetail() {
                 <section className={style.previousMembers}>
                     <h2 className={style.sectionTitle}>전직 의원</h2>
                     {districtMembers
-                        .filter((member) => member.eraco != '제22대')
+                        .filter((member) => member.age != 22)
                         .map((member) => (
                             <DistrictMemberCard
-                                key={member.memberName}
-                                name={member.memberName}
+                                name={member.name}
                                 memberId={member.memberId}
-                                district={member.electionDistrict}
-                                eraco={member.eraco}
-                                party={member.partyName}
+                                district={member.district}
+                                age={member.age}
+                                party={member.party}
                                 voteRate={member.voteRate}
                                 profileImg={member.profileImage}
                             />

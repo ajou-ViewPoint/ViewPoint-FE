@@ -36,7 +36,7 @@ function MemberListPage() {
             </div>
             <div className={style.memberCardConatiner}>
                 {memberList.map((member) => (
-                    <MemberListCard key={member.id} member={member} />
+                    <MemberListCard key={member.memberId} member={member} />
                 ))}
             </div>
             <MemberListPagination />

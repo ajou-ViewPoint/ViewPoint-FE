@@ -6,15 +6,15 @@ export interface District {
 }
 
 export interface DistrictMember {
-    memberName: string;
-    partyName: string;
-    normalizedPartyName: string;
-    eraco: string; // 국회 대수
-    electionDistrict: string; // 당선 선거구
+    memberId: number;
+    name: string;
+    party: string;
+    age: number;
+    duty: string;
+    profileImage: string;
+    district: string;
     sidoName: string;
     sggName: string;
     regionCd: string;
     voteRate: number;
-    memberId: number;
-    profileImage: string;
 }

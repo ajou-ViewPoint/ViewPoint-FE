@@ -24,7 +24,7 @@ function MemberListCard({ member }: MemberListCardProps) {
         district:
             'regionName' in member
                 ? (member as PartyMemberInfoProjection).regionName ?? ''
-                : (member as Member).electionDistrict ?? '',
+                : (member as Member).district ?? '',
     };
     return (
         <Link to={`/members/${normalizedMember.id}`} className={style.container}>

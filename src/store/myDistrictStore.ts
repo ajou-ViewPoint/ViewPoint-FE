@@ -11,17 +11,17 @@ export const DEFAULT_DISTRICT = {
 };
 
 export const DEFAULT_DISTRICT_MEMBER = {
-    memberName: '',
-    partyName: '',
-    normalizedPartyName: '',
-    eraco: '',
-    electionDistrict: '',
+    memberId: 0,
+    name: '',
+    party: '',
+    age: 0,
+    duty: '',
+    profileImage: '',
+    district: '',
     sidoName: '',
     sggName: '',
     regionCd: '',
     voteRate: 0,
-    memberId: 0,
-    profileImage: '',
 };
 
 interface MyDistrictStore {
