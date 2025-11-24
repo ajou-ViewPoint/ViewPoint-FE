@@ -20,7 +20,7 @@ function DistrictDetail() {
         <div className={style.pageWrapper}>
             <section>
                 <h1 className={style.header}>
-                    {district.electionDistrict} | {district.sidoName} {district.sggName}
+                    {district.district} | {district.sidoName} {district.sggName}
                 </h1>
                 <section className={style.currentMember}>
                     <h2 className={style.sectionTitle}>현직 의원</h2>
@@ -52,7 +52,7 @@ function DistrictDetail() {
                 </section>
             </section>
             <section>
-                <h2 className={style.sectionTitle}>{district.electionDistrict} </h2>
+                <h2 className={style.sectionTitle}>{district.district} </h2>
                 <DistrictMap />
             </section>
         </div>

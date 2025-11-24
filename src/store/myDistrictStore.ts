@@ -5,7 +5,7 @@ import { SERVER_IP } from '../constants/env';
 
 export const DEFAULT_DISTRICT = {
     regionCd: '',
-    electionDistrict: '',
+    district: '',
     sidoName: '',
     sggName: '',
 };
@@ -28,6 +28,7 @@ interface MyDistrictStore {
     districtList: District[];
     selectedDistrict: District;
     selectedDistrictMembers: DistrictMember[];
+    getRandomDistrict: () => Promise<number>;
     getAllDistrict: () => Promise<void>;
     getDistrictMembers: (sido?: string, sigungu?: string, regionCd?: string) => Promise<void>;
     getDistrictMembersByCoordinaite: (longitude: number, latitude: number) => Promise<void>;
@@ -37,6 +38,19 @@ export const useMyDistrictStore = create<MyDistrictStore>((set) => ({
     districtList: [],
     selectedDistrict: DEFAULT_DISTRICT,
     selectedDistrictMembers: [DEFAULT_DISTRICT_MEMBER],
+    getRandomDistrict: async () => {
+        try {
+            const res = await axios.get(`${SERVER_IP}/v1/constituencies/random-district-code`);
+            return res.data;
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                throw new Error(
+                    `랜덤 지역구 불러오기 에러: ${error.response?.data?.message ?? error.message}`
+                );
+            }
+            throw error;
+        }
+    },
     getAllDistrict: async () => {
         try {
             const res = await axios.get(
@@ -73,7 +87,7 @@ export const useMyDistrictStore = create<MyDistrictStore>((set) => ({
                 selectedDistrictMembers: res.data,
                 selectedDistrict: {
                     regionCd: res.data[0].regionCd,
-                    electionDistrict: res.data[0].electionDistrict,
+                    district: res.data[0].district,
                     sidoName: res.data[0].sidoName,
                     sggName: res.data[0].sggName,
                 },
@@ -98,7 +112,7 @@ export const useMyDistrictStore = create<MyDistrictStore>((set) => ({
                 selectedDistrictMembers: res.data,
                 selectedDistrict: {
                     regionCd: res.data[0].regionCd,
-                    electionDistrict: res.data[0].electionDistrict,
+                    district: res.data[0].electionDistrict,
                     sidoName: res.data[0].sidoName,
                     sggName: res.data[0].sggName,
                 },

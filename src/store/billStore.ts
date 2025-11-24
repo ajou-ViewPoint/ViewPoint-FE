@@ -187,6 +187,7 @@ export const useBillStore = create<billStore>((set) => ({
     },
 }));
 
+// 의안 필터
 interface billFilterStore {
     activeFilter: string;
     filterState: billFilter;

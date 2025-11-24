@@ -1,6 +1,6 @@
 export interface District {
     regionCd: string; // 선거구 지역 코드
-    electionDistrict: string; // 선거구 이름 ex. 수원시을
+    district: string; // 선거구 이름 ex. 수원시을
     sidoName: string; // 시,도
     sggName: string; // 시,군,구
 }
