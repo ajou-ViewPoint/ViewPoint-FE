@@ -35,7 +35,7 @@ function getRegionName(props: Record<string, any> | undefined, fallback: string)
 }
 
 function DistrictMap() {
-    const map = '/map/map_submunicipalities.json';
+    const map = '/assets/map/map_submunicipalities.json';
     const [hoverName, setHoverName] = useState<string | null>(null);
     const [tooltip, setTooltip] = useState<{ x: number; y: number } | null>(null);
     const [center, setCenter] = useState<[number, number]>([127.05, 37.27]);
@@ -43,7 +43,7 @@ function DistrictMap() {
     const param = useParams();
 
     useEffect(() => {
-        fetch('/map/center.json')
+        fetch('/assets/map/center.json')
             .then((res) => res.json())
             .then((centers: Record<string, [number, number, number]>) => {
                 const c = centers?.[param.regionCd as string];

@@ -22,7 +22,7 @@ function PartyPage() {
     return (
         <div className={style.pageWrapper}>
             <section className={style.wrapper}>
-                <h2 className={style.header__title}>제22대 국회 원내정당</h2>
+                <h1 className={style.header__title}>제22대 국회 원내정당</h1>
                 <div className={style.buttonGrid}>
                     {currentPartyList.map(({ partyName, path }) => (
                         <button

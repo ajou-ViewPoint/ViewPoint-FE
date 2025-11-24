@@ -7,7 +7,17 @@
     &__row {
         display: grid;
         gap: 1rem;
-        grid-template-columns: 41% 59%;
+        grid-template-columns: repeat(2, 1fr);
+    }
+    &__chart {
+        @extend .wrapper;
+        display: flex;
+        flex-direction: column;
+        height: 150px;
+        border-radius: 50%;
+        border: 1px solid #e4e4e4;
+        border-radius: 16px;
+        padding: 2rem 2.5rem;
     }
 }
 .rowWrapper {

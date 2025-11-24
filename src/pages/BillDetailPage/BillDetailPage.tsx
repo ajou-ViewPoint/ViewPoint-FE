@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import BillTag from '../../widgets/BillTag';
 import BillProgress from './BillProgress';
 import NominateScatterPlot from '../../widgets/NominateScatterPlot';
+import VotingGroupsSection from './VotingGroupsSection';
 
 function BillDetailPage() {
     const params = useParams();
@@ -109,7 +110,7 @@ function BillDetailPage() {
             </section>
             <section className={style.section}>
                 <h3 className={style.sectionTitle}>의안 투표 현황</h3>
-                <div className={style.wrapper}></div>
+                <VotingGroupsSection billId={bill.billId} />
             </section>
         </div>
     );

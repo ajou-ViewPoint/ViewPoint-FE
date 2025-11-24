@@ -1,0 +1,76 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.buttonRail {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.button {
+    border: none;
+    border-radius: 8px;
+    padding: 0.35rem 0.7rem;
+    font-size: 16px;
+    background-color: #e8f2ff;
+    color: #0088ff;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: 0%;
+
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+        color: #e8f2ff;
+        background-color: #0088ff;
+    }
+}
+
+.grid {
+    display: grid;
+    place-items: center;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.6rem;
+
+    @media (max-width: 1230px) {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    @media (max-width: 1038px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.disagree {
+    background-color: #ffe8e8;
+    color: #ff3b30;
+
+    &:hover {
+        background-color: #ff3b30;
+        color: #ffe8e8;
+    }
+}
+
+.abstain {
+    background-color: #fffbe8;
+    color: #ffb800;
+
+    &:hover {
+        background-color: #ffb800;
+        color: #fffbe8;
+    }
+}
+
+.absent {
+    background-color: #f0f0f0;
+    color: #8e8e93;
+
+    &:hover {
+        background-color: #8e8e93;
+        color: #f0f0f0;
+    }
+}

@@ -8,11 +8,11 @@ interface VotingGroupsSectionProps {
     billId: string;
 }
 
-const buttons: { name: string; value: string }[] = [
-    { name: '찬성', value: 'agree' },
-    { name: '반대', value: 'disagree' },
-    { name: '기권', value: 'abstain' },
-    { name: '불참', value: 'absent' },
+const buttons: { name: string; value: string; style: string }[] = [
+    { name: '찬성', value: 'agree', style: style.agree },
+    { name: '반대', value: 'disagree', style: style.disagree },
+    { name: '기권', value: 'abstain', style: style.abstain },
+    { name: '불참', value: 'absent', style: style.absent },
 ];
 function VotingGroupsSection(props: VotingGroupsSectionProps) {
     const { getVoteResult } = useBillVoteResultStore();
@@ -27,7 +27,11 @@ function VotingGroupsSection(props: VotingGroupsSectionProps) {
         return (
             <div className={style.buttonRail}>
                 {buttons.map((button) => (
-                    <button onClick={() => setMemberVoteState(button.value)}>{button.name}</button>
+                    <button
+                        className={`${style.button} ${button.style}`}
+                        onClick={() => setMemberVoteState(button.value)}>
+                        {button.name}
+                    </button>
                 ))}
             </div>
         );

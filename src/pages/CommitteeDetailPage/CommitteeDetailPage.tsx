@@ -5,6 +5,7 @@ import Schedule from './Schedule';
 import { useCommitteeStore } from '../../store/committeeStore';
 import StatsSection from './StatsSection';
 import CommitteeMembersSection from './CommitteeMembersSection';
+import WordFishChart from './WordFishChart';
 
 function CommitteeDetailPage() {
     const { getCommitteeById, getCommitteeDetail } = useCommitteeStore();
@@ -47,6 +48,13 @@ function CommitteeDetailPage() {
                     </div>
                 </dl>
             </section>
+            <section className={style.section}>
+                <h2 className={style.section__title}>위원회 내 이념거리</h2>
+                <div className={style.wrapper__chart}>
+                    <WordFishChart />
+                </div>
+            </section>
+
             <div className={style.wrapper__row}>
                 <section className={style.section}>
                     <h2 className={style.section__title}>심사 일정</h2>

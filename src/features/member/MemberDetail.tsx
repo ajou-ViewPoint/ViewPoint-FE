@@ -36,7 +36,7 @@ function MemberDetail() {
 
     return (
         <div className={style.pageWrapper}>
-            <div className={style.infoContainer}>
+            <section className={style.infoContainer}>
                 <div className={style.columnWrapper}>
                     <img
                         className={style.infoContainer__profileImage}
@@ -89,8 +89,8 @@ function MemberDetail() {
                         <p className={style.value}>{member.district}</p>
                     </div>
                 </div>
-            </div>
-            <div className={style.scoreInfo}>
+            </section>
+            <section className={style.wrapper__score}>
                 <div className={style.scoreBox}>
                     <dd>99%</dd>
                     <dt>출석률</dt>
@@ -107,16 +107,18 @@ function MemberDetail() {
                     <dd>82</dd>
                     <dt>소속 정당 의원 충성도 중앙값</dt>
                 </div>
-            </div>
-            <div className={style.wrapper}>
+            </section>
+
+            <section className={style.section}>
                 <h2 className={style.sectionTitle}>
                     {member.name} 의원과 이념거리가 가까운 의원들
                 </h2>
-            </div>
-            <div className={style.wrapper}>
+                <div className={style.wrapper}></div>
+            </section>
+            <section className={style.section}>
                 <h2 className={style.sectionTitle}>의안 투표 현황</h2>
-                <div className={style.billContainer}></div>
-            </div>
+                <div className={style.wrapper}></div>
+            </section>
         </div>
     );
 }

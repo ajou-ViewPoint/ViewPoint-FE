@@ -1,17 +1,27 @@
 .wrapper {
     display: grid;
+
     gap: 1rem;
 
     &__single {
         grid-template-columns: repeat(5, 1fr);
+        place-items: end;
     }
 
     &__double {
         grid-template-columns: repeat(5, 1fr);
+        place-items: center;
     }
 
     &__triple {
         grid-template-columns: repeat(5, 1fr);
+        place-items: center;
+        @media (max-width: 1400px) {
+            grid-template-columns: repeat(4, 1fr);
+        }
+        @media (max-width: 1150px) {
+            grid-template-columns: repeat(3, 1fr);
+        }
     }
 }
 .rowWrapper {
