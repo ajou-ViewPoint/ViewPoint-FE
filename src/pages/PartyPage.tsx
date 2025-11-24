@@ -29,7 +29,7 @@ function PartyPage() {
                             key={path}
                             className={style.button}
                             style={{
-                                backgroundImage: `url(/src/assets/partyLogo/${path}.svg)`,
+                                backgroundImage: `url(/assets/partyLogo/${path}.svg)`,
                             }}
                             onClick={() => handleNavigateToPartyDetailPage(partyName, path)}>
                             {partyName}

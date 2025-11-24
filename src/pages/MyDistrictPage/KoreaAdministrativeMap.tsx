@@ -6,9 +6,9 @@ import { Minus, Plus } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useMyDistrictStore } from '../../store/myDistrictStore';
 
-const SIDO_GEO_URL = '/map/map_provinces.json';
-const SIGUNGU_GEO_URL = '/map/map_municipalities.json';
-const EUPMYEONDONG_GEO_URL = '/map/map_submunicipalities.json';
+const SIDO_GEO_URL = '/assets/map/map_provinces.json';
+const SIGUNGU_GEO_URL = '/assets/map/map_municipalities.json';
+const EUPMYEONDONG_GEO_URL = '/assets/map/map_submunicipalities.json';
 
 const ZOOM_LEVELS: Record<string, number> = {
     province: 3,
