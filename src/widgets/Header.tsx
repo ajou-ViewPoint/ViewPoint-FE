@@ -1,5 +1,6 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import style from './Header.module.scss';
+import logo from '../assets/ViewPoint.png';
 
 function Header() {
     const navigate = useNavigate();
@@ -16,7 +17,7 @@ function Header() {
     return (
         <div className={style.header}>
             <a className={style.logo} href="/">
-                VIEWPOINT
+                <img src={logo} alt="ViewPoint Logo" className={style.logoImage} />
             </a>
             <nav className={style.header__buttonRail}>
                 {headerInfo.map((item) => (
