@@ -128,21 +128,37 @@ export const useBillStore = create<billStore>((set) => ({
         const paginationState = useBillStore.getState().billListPagination;
         try {
             const res = await axios.get(
-                `${SERVER_IP}/v1/bills?page=${paginationState.pageNumber}&size=${paginationState.pageSize}&sortBy=${paginationState.sortBy}&direction=${paginationState.direction}`
+                `${SERVER_IP}/v1/bills?page=${paginationState?.pageNumber}&size=${paginationState.pageSize}&sortBy=${paginationState.sortBy}&direction=${paginationState.direction}`
             );
-            set({
-                billList: res.data.content,
-                billListPagination: {
-                    totalElements: res.data.totalElements,
-                    totalPages: res.data.totalPages,
-                    pageNumber: res.data.pageable.pageNumber, // 페이지네이션 계산과 관련된 것들은 로컬에서 바꾸어야하나?
-                    pageSize: res.data.pageable.pageSize,
-                    first: res.data.first,
-                    last: res.data.last,
-                    sortBy: paginationState.sortBy,
-                    direction: paginationState.direction,
-                },
-            });
+            const newPagination = {
+                totalElements: res.data.totalElements,
+                totalPages: res.data.totalPages,
+                pageNumber: res.data.pageable.pageNumber,
+                pageSize: res.data.pageable.pageSize,
+                first: res.data.first,
+                last: res.data.last,
+                sortBy: paginationState.sortBy,
+                direction: paginationState.direction,
+            };
+            const prevPagination = useBillStore.getState().billListPagination;
+            // 이전 페이지와 다를 때만 set
+            if (
+                prevPagination.totalElements !== newPagination.totalElements ||
+                prevPagination.totalPages !== newPagination.totalPages ||
+                prevPagination.pageNumber !== newPagination.pageNumber ||
+                prevPagination.pageSize !== newPagination.pageSize ||
+                prevPagination.first !== newPagination.first ||
+                prevPagination.last !== newPagination.last
+            ) {
+                set({
+                    billList: res.data.content,
+                    billListPagination: newPagination,
+                });
+            } else {
+                set({
+                    billList: res.data.content,
+                });
+            }
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 throw new Error(

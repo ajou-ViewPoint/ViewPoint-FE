@@ -2,7 +2,11 @@ import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Ellipsis } from
 import style from './BillPagination.module.scss';
 import { useBillStore } from '../store/billStore';
 
-function BillPagination() {
+interface BillPaginationProps {
+    setScrollUp: () => void;
+}
+
+function BillPagination({ setScrollUp }: BillPaginationProps) {
     const pageState = useBillStore((state) => state.billListPagination);
     const { setPage } = useBillStore();
     const MAX_PAGE = 10;
@@ -17,6 +21,7 @@ function BillPagination() {
     const handlePagination = (nextPage: number) => {
         if (nextPage < 0 || nextPage > pageState.totalPages) return;
         setPage({ ...pageState, pageNumber: nextPage });
+        setScrollUp();
     };
 
     return (

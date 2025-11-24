@@ -19,11 +19,6 @@ function MemberListPage() {
         getMemberList();
     }, [getMemberList, pageNumberState, sortDirectionState, sortByState]);
 
-    // 페이지 넘어갈 때 스크롤 위로 올리는 처리
-    useEffect(() => {
-        memberListRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, [pageNumberState, sortDirectionState, sortByState]);
-
     return (
         <div className={style.wrapper}>
             <div className={style.header}>
@@ -42,7 +37,11 @@ function MemberListPage() {
                     <MemberListCard key={member.memberId} member={member} />
                 ))}
             </div>
-            <MemberListPagination />
+            <MemberListPagination
+                setScrollUp={() => {
+                    memberListRef.current?.scrollIntoView({ behavior: 'smooth' });
+                }}
+            />
         </div>
     );
 }

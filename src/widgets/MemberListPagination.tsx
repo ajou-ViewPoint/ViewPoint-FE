@@ -2,7 +2,11 @@ import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Ellipsis } from
 import style from './BillPagination.module.scss';
 import { useMemberStore } from '../store/memberStore';
 
-function MemberListPagination() {
+interface MemberListPaginationProps {
+    setScrollUp: () => void;
+}
+
+function MemberListPagination({ setScrollUp }: MemberListPaginationProps) {
     const pageState = useMemberStore((state) => state.memberListPagination);
     const { setMemberListPage } = useMemberStore();
     const MAX_PAGE = 10;
@@ -18,6 +22,7 @@ function MemberListPagination() {
     const handlePagination = (nextPage: number) => {
         if (nextPage < 0 || nextPage > pageState.totalPages) return;
         setMemberListPage({ ...pageState, pageNumber: nextPage });
+        setScrollUp();
     };
 
     return (

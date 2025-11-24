@@ -5,11 +5,12 @@ import { useBillStore } from '../store/billStore';
 import Filter from '../features/filter/Filter';
 import BillSortButtons from '../widgets/sort/BillSortButtons';
 import BillPagination from '../widgets/BillPagination';
+
 function BillListPage() {
     const billList = useBillStore((state) => state.billList);
     const filterRef = useRef<HTMLDivElement>(null);
     const billListRef = useRef<HTMLDivElement>(null);
-    const { getBillList } = useBillStore();
+    const getBillList = useBillStore((state) => state.getBillList);
 
     const totalBillElements = useBillStore((state) => state.billListPagination.totalElements);
     const pageNumberState = useBillStore((state) => state.billListPagination.pageNumber);
@@ -19,10 +20,6 @@ function BillListPage() {
     useEffect(() => {
         getBillList();
     }, [getBillList, pageNumberState, sortDirectionState, sortByState]);
-
-    useEffect(() => {
-        billListRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, [pageNumberState]);
 
     return (
         <div className={style.wrapper}>
@@ -46,7 +43,9 @@ function BillListPage() {
                     <BillCard key={item.id} {...item} />
                 ))}
             </div>
-            <BillPagination />
+            <BillPagination
+                setScrollUp={() => billListRef.current?.scrollIntoView({ behavior: 'smooth' })}
+            />
         </div>
     );
 }
