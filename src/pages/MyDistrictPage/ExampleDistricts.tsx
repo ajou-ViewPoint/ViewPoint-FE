@@ -13,13 +13,58 @@ const mockDistricts: MOCKTYPE[] = [
 ];
 
 function ExampleDistricts() {
-    const nevigate = useNavigate();
-    const { getDistrictMembers } = useMyDistrictStore();
+    const navigate = useNavigate();
+    const { getDistrictMembers, getRandomDistrict, getDistrictMembersByCoordinaite } =
+        useMyDistrictStore();
+    const regionCd = useMyDistrictStore((state) => state.selectedDistrictMembers[0].regionCd);
 
     const handleNavigation = async (regionCd: string) => {
         await getDistrictMembers('', '', regionCd);
-        nevigate(`/mydistrict/${regionCd}`);
+        navigate(`/mydistrict/${regionCd}`);
     };
+
+    const handleRandomNavigation = async () => {
+        const randomDistrictID = await getRandomDistrict();
+        await getDistrictMembers('', '', randomDistrictID.toString());
+        navigate(`/mydistrict/${randomDistrictID}`);
+    };
+
+    const handleNavigateToDistrictDetailPage = async (longitude: number, latitude: number) => {
+        await getDistrictMembersByCoordinaite(longitude, latitude).then(() =>
+            navigate(`/mydistrict/${regionCd}`)
+        );
+    };
+    const handleGeoLoaction = () => {
+        if (!navigator.geolocation) {
+            alert('이 브라우저에서는 위치 정보가 지원되지 않습니다.');
+            return;
+        }
+        navigator.geolocation.getCurrentPosition(async (position) => {
+            await handleNavigateToDistrictDetailPage(
+                position.coords.longitude,
+                position.coords.latitude
+            );
+        });
+    };
+
+    const RandomDistrictButton = () => {
+        return (
+            <div
+                className={`${style.tag} ${style.randomButton}`}
+                onClick={() => handleRandomNavigation()}>
+                랜덤
+            </div>
+        );
+    };
+
+    const MyLocationDistrictButton = () => {
+        return (
+            <div className={`${style.tag} ${style.locationButton}`} onClick={handleGeoLoaction}>
+                내 위치
+            </div>
+        );
+    };
+
     return (
         <div className={style.wrapper}>
             <div className={style.tagGrid}>
@@ -31,6 +76,8 @@ function ExampleDistricts() {
                         {district.name}
                     </div>
                 ))}
+                <RandomDistrictButton />
+                <MyLocationDistrictButton />
             </div>
         </div>
     );
