@@ -6,6 +6,7 @@ import BillTag from '../../widgets/tag/BillTag';
 import BillProgress from './BillProgress';
 import NominateScatterPlot from '../../widgets/NominateScatterPlot';
 import VotingGroupsSection from './VotingGroupsSection';
+import VoteResultSection from './VoteResultSection';
 
 function BillDetailPage() {
     const params = useParams();
@@ -67,34 +68,9 @@ function BillDetailPage() {
                 <div className={style.wrapper}>
                     <BillProgress />
                 </div>
-            </section>{' '}
+            </section>
             <section className={style.section}>
-                <h3 className={style.sectionTitle}>찬반 현황</h3>
-                {bill.yesTcnt ? (
-                    <dl className={style.wrapper__grid}>
-                        <div className={style.resultCard} data-label="찬성">
-                            <dd>{bill.yesTcnt ? bill.yesTcnt : 0}</dd>
-                            <dt>찬성</dt>
-                        </div>
-                        <div className={style.resultCard} data-label="반대">
-                            <dd>{bill.noTcnt ? bill.noTcnt : 0}</dd>
-                            <dt>반대</dt>
-                        </div>
-                        <div className={style.resultCard} data-label="기권">
-                            <dd>{bill.blankTcnt ? bill.blankTcnt : 0}</dd>
-                            <dt>기권</dt>
-                        </div>
-                        <div className={style.resultCard} data-label="불참">
-                            {/* 추후 불참 데이터로 바꿔야함 */}
-                            <dd>{bill.blankTcnt ? bill.blankTcnt : 0}</dd>
-                            <dt>불참</dt>
-                        </div>
-                    </dl>
-                ) : (
-                    <div className={style.resultCard}>
-                        <dt>아직 본회의 표결이 진행되지 않았습니다.</dt>
-                    </div>
-                )}
+                <VoteResultSection />
             </section>
             <section className={style.section}>
                 <h3 className={style.sectionTitle}>국회의원 이념공간</h3>
