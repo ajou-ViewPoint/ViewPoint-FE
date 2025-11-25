@@ -4,7 +4,7 @@ import style from './styles/BillListPage.module.scss';
 import { useBillStore } from '../store/billStore';
 import Filter from '../features/filter/Filter';
 import BillSortButtons from '../widgets/sort/BillSortButtons';
-import BillPagination from '../widgets/BillPagination';
+import BillPagination from '../widgets/pagination/BillPagination';
 
 function BillListPage() {
     const billList = useBillStore((state) => state.billList);

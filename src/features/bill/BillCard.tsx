@@ -2,7 +2,7 @@ import style from './BillCard.module.scss';
 import { ChevronRight } from 'lucide-react';
 import type { bill } from '../../types/bill';
 import { useNavigate } from 'react-router-dom';
-import BillTag from '../../widgets/BillTag';
+import BillTag from '../../widgets/tag/BillTag';
 import { useBillStore } from '../../store/billStore';
 
 function BillCard(billProp: bill) {

@@ -1,6 +1,6 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import style from './Header.module.scss';
-import logo from '../assets/ViewPoint.png';
+import logo from '../../assets/ViewPoint.png';
 
 function Header() {
     const navigate = useNavigate();

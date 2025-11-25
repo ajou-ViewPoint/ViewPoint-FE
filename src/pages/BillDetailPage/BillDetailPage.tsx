@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import style from './BillDetailPage.module.scss';
 import { DEFAULT_BILL, useBillStore } from '../../store/billStore';
 import { useEffect } from 'react';
-import BillTag from '../../widgets/BillTag';
+import BillTag from '../../widgets/tag/BillTag';
 import BillProgress from './BillProgress';
 import NominateScatterPlot from '../../widgets/NominateScatterPlot';
 import VotingGroupsSection from './VotingGroupsSection';

@@ -1,6 +1,6 @@
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Ellipsis } from 'lucide-react';
 import style from './BillPagination.module.scss';
-import { useBillStore } from '../store/billStore';
+import { useBillStore } from '../../store/billStore';
 
 interface BillPaginationProps {
     setScrollUp: () => void;

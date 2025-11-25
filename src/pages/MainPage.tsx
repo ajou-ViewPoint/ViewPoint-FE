@@ -1,4 +1,4 @@
-import Header from '../widgets/Header';
+import Header from '../widgets/header/Header';
 import { Outlet, useLocation } from 'react-router-dom';
 import style from './styles/MainPage.module.scss';
 

@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import type { bill } from '../../types/bill';
-import BillTag from '../../widgets/BillTag';
+import BillTag from '../../widgets/tag/BillTag';
 import style from './RecentBillCard.module.scss';
 import { Landmark, Calendar, User } from 'lucide-react';
 import { useBillStore } from '../../store/billStore';

@@ -4,7 +4,7 @@ import { useMemberStore } from '../store/memberStore';
 import style from './styles/MemberListPage.module.scss';
 import Filter from '../features/filter/Filter';
 import MemberSortButtons from '../widgets/sort/MemberSortButtons';
-import MemberListPagination from '../widgets/MemberListPagination';
+import MemberListPagination from '../widgets/pagination/MemberListPagination';
 
 function MemberListPage() {
     const memberList = useMemberStore((state) => state.memberList);
