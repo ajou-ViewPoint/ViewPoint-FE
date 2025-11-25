@@ -7,6 +7,9 @@
     border: 1px solid #e6e6e6;
     border-radius: 10px;
 }
+.map :focus {
+    outline: none;
+}
 .zoomButtonWrapper {
     display: flex;
     flex-direction: row;
