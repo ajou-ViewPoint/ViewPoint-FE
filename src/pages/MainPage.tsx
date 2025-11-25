@@ -8,7 +8,7 @@ function MainPage() {
     return (
         <div className={`${style.siteContainer} ${isLanding ? style.landingBackground : ''}`}>
             <Header />
-            <div className="body">
+            <div className={style.contents}>
                 <Outlet />
             </div>
         </div>

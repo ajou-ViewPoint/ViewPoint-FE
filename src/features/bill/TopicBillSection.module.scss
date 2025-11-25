@@ -21,19 +21,31 @@
         box-sizing: border-box;
 
         font-weight: 700;
-        font-size: 1.5vw;
+        font-size: 1.2rem;
         line-height: 24px;
         letter-spacing: 0%;
         transition: font-size 0.3s ease;
         cursor: pointer;
 
         .contents__main:hover & {
-            font-size: calc(1.5vw * 1.02);
+            font-size: calc(1.2rem * 1.02);
+        }
+
+        @media (max-width: 1200px) {
+            top: 75%;
+            font-size: 1.5rem;
+            .contents__main:hover & {
+                font-size: calc(1.5rem * 1.02);
+            }
         }
     }
-
     .contents__main:hover & {
         transform: scale(1.02);
+    }
+
+    @media (max-width: 1200px) {
+        width: 100%;
+        background-position: center 100%;
     }
 }
 
@@ -51,6 +63,9 @@
 .contents {
     &__list {
         gap: 1rem;
+        @media (max-width: 1200px) {
+            display: none;
+        }
     }
 
     &__item {
@@ -93,6 +108,10 @@
         flex-direction: column;
         justify-content: center;
         gap: 1rem;
+    }
+    @media (max-width: 1200px) {
+        display: flex;
+        flex-direction: row;
     }
 }
 

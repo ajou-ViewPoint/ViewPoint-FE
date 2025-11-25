@@ -11,6 +11,7 @@
     align-items: center;
     transition: all 0.3s ease;
     position: relative;
+    box-shadow: 0 0.84px 20.99px 0 rgba(69, 42, 124, 0.1);
 
     &:hover {
         &::after {

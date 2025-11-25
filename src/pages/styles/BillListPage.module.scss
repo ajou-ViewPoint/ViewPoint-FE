@@ -1,19 +1,9 @@
+@use '../../style/Header.scss';
+
 .wrapper {
     display: flex;
     flex-direction: column;
     padding: 0.5rem 4rem;
-}
-
-.header {
-    margin-bottom: 1rem;
-
-    &__title {
-        margin: 1rem auto;
-    }
-
-    &__header__discription {
-        margin: 1rem auto;
-    }
 }
 
 .resultHeader {

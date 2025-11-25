@@ -38,7 +38,6 @@ function PartyDetailPage() {
         <div className={style.pageWrapper}>
             <h1>{party.partyName}</h1>
             <section>
-                <h2 className={style.sectionTitle}>의원 이념 분포</h2>
                 <div className={style.wrapper__chart}>
                     <NominateScatterPlot />
                 </div>

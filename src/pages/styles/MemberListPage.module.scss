@@ -1,26 +1,15 @@
+@use '../../style//Header.scss';
 .wrapper {
     display: flex;
     flex-direction: column;
     padding: 0.5rem 4rem;
 }
 
-.header {
-    margin-bottom: 1rem;
-
-    &__title {
-        margin: 1rem auto;
-    }
-
-    &__header__discription {
-        margin: 1rem auto;
-    }
-}
-
 .memberCardConatiner {
     display: grid;
     place-items: center;
     grid-template-columns: repeat(5, 1fr);
-    gap: 0.6rem;
+    grid-gap: 0.6rem;
 
     @media (max-width: 1230px) {
         grid-template-columns: repeat(4, 1fr);

@@ -1,10 +1,12 @@
+@use '../../style//Header.scss';
 .wrapper {
     display: flex;
     flex-direction: column;
-    margin: 0rem 1rem;
-    border: 1px solid #e6e6e6;
+    // border: 1px solid #e6e6e6;
+    // box-shadow: 0 0.84px 20.99px 0 rgba(69, 42, 124, 0.1);
     border-radius: 10px;
-    padding: 1rem 4rem;
+    padding: 0.5rem 4rem;
+    gap: 1rem;
 }
 
 .sectorTitle {

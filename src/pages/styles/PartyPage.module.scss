@@ -1,51 +1,27 @@
+@use '../../style/Header.scss';
 .pageWrapper {
     display: flex;
     flex-direction: column;
-    height: 100%;
-    justify-content: center;
-    align-items: center;
     padding: 0.5rem 4rem;
     gap: 2rem;
-}
-
-.wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 1rem;
-    gap: 1rem;
-}
-
-.header {
-    &__title {
-        align-self: flex-start;
-        margin: 0;
-        margin-bottom: 1rem;
-    }
 }
 
 .buttonGrid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    width: fit-content;
-    gap: 1rem;
-    justify-content: center;
-    align-items: center;
+    grid-template-rows: repeat(3, minmax(7rem, auto));
+    grid-gap: 1rem;
     border-radius: 16px;
 }
 
 .button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     border: none;
-    width: 30dvw;
-    height: 20dvh;
     box-shadow: 0 0.84px 20.99px 0 rgba(69, 42, 124, 0.1);
-
+    // 무소속 스타일
     &:not(:last-child) {
         color: transparent;
     }
+
     border-radius: 6.27px;
     font-weight: 600;
     font-size: 18px;

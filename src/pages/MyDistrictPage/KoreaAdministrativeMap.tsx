@@ -2,7 +2,7 @@
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simple-maps';
 import { useState } from 'react';
 import style from './KoreaAdministrativeMap.module.scss';
-import { Minus, Plus } from 'lucide-react';
+import { Minus, Plus, Undo2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useMyDistrictStore } from '../../store/myDistrictStore';
 
@@ -94,11 +94,10 @@ function KoreaAdministrativeMap() {
     const [selectedProvinceCode, setSelectedProvinceCode] = useState<string | null>(null);
     const [selectedMunicipalityCode, setSelectedMunicipalityCode] = useState<string | null>(null);
 
-    const handleAdministrativeLevelChange = (geo: any) => {
+    const handleAdministrativeLevelDown = (geo: any) => {
         const level = geo?.properties?.level;
         const center = getFeatureCenter(geo);
         if (!level) {
-            console.log(geo?.properties?.sgg);
             handleNavigateToDistrictDetailPage(geo.properties.sgg);
         }
         if (level === 'province') {
@@ -112,11 +111,25 @@ function KoreaAdministrativeMap() {
         if (level === 'municipality') {
             const municipalityCode = String(geo?.properties?.code ?? geo?.properties?.sgg ?? '');
             setSelectedMunicipalityCode(municipalityCode);
+            setSelectedProvinceCode(null);
             setMap(EUPMYEONDONG_GEO_URL);
             setPosition({ coordinates: center, zoom: ZOOM_LEVELS.municipality });
             return;
         }
     };
+
+    // 행정단위 뒤로가기 구현
+
+    // const handleAdministrativeLevelUp = () => {
+    //     if (selectedMunicipalityCode) {
+    //         setMap(SIGUNGU_GEO_URL);
+    //         return;
+    //     }
+    //     if (selectedProvinceCode) {
+    //         setMap(SIDO_GEO_URL);
+    //         return;
+    //     }
+    // };
 
     const handleZoomIn = () => {
         if (position.zoom >= 20) return;
@@ -129,7 +142,7 @@ function KoreaAdministrativeMap() {
     };
 
     return (
-        <>
+        <div className={style.wrapper}>
             <ComposableMap
                 projection="geoMercator"
                 projectionConfig={{ scale: 6000, center: [127.8, 36.2] }}
@@ -180,7 +193,7 @@ function KoreaAdministrativeMap() {
                                             setHoverName(null);
                                             setTooltip(null);
                                         }}
-                                        onClick={() => handleAdministrativeLevelChange(geo)}
+                                        onClick={() => handleAdministrativeLevelDown(geo)}
                                         style={{
                                             default: { transition: 'fill 0.2s' },
                                             hover: { transition: 'fill 0.2s' },
@@ -212,7 +225,12 @@ function KoreaAdministrativeMap() {
                     <Minus />
                 </button>
             </div>
-        </>
+            <div className={style.prevButtonWrapper}>
+                <button onClick={() => {}} className={style.zoomButton}>
+                    <Undo2 />
+                </button>
+            </div>
+        </div>
     );
 }
 

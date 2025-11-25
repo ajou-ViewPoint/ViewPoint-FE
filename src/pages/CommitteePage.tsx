@@ -39,7 +39,12 @@ function CommitteePage() {
 
     return (
         <div className={style.wrapper}>
-            {/* <h2 className={style.title}>위원회 메뉴</h2> */}
+            <div className={style.header}>
+                <h1 className={style.header__title}>위원회</h1>
+                <p className={style.header__discription}>
+                    국회에 발의된 법안의 심사 진행 상황과 표결 결과를 확인해보세요.
+                </p>
+            </div>
             <h3 className={style.sectorTitle}>운영·조정</h3>
             <div className={style.buttonRail}>
                 {committeeList

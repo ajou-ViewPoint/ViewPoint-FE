@@ -21,23 +21,24 @@ function PartyPage() {
     };
     return (
         <div className={style.pageWrapper}>
-            <section className={style.wrapper}>
-                <h1 className={style.header__title}>제22대 국회 원내정당</h1>
-                <div className={style.buttonGrid}>
-                    {currentPartyList.map(({ partyName, path }) => (
-                        <button
-                            key={path}
-                            className={style.button}
-                            style={{
-                                backgroundImage: `url(/assets/partyLogo/${path}.svg)`,
-                            }}
-                            onClick={() => handleNavigateToPartyDetailPage(partyName, path)}>
-                            {partyName}
-                        </button>
-                    ))}
-                </div>
-                <div className={style.infographic}></div>
-            </section>
+            <div className={style.header}>
+                <h1 className={style.header__title}>정당</h1>
+                <p className={style.header__discription}>제22대 국회 원내정당입니다.</p>
+            </div>
+            <div className={style.buttonGrid}>
+                {currentPartyList.map(({ partyName, path }) => (
+                    <button
+                        key={path}
+                        className={style.button}
+                        style={{
+                            backgroundImage: `url(/assets/partyLogo/${path}.svg)`,
+                        }}
+                        onClick={() => handleNavigateToPartyDetailPage(partyName, path)}>
+                        {partyName}
+                    </button>
+                ))}
+            </div>
+            <div className={style.infographic}></div>
         </div>
     );
 }
