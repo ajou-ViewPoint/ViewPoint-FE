@@ -8,11 +8,13 @@ import type {
 import MOCKDATA from '../assets/MockNOMINATE.json';
 
 const partyColorMap = {
-    더불어민주당: '#1E90FF',
-    국민의힘: '#FF4C4C',
-    조국혁신당: '#3f4d99ff',
-    기본소득당: '#00CED1',
-    진보당: '#FF69B4',
+    더불어민주당: '#002bff',
+    국민의힘: '#E61E2B',
+    조국혁신당: '#06275E',
+    개혁신당: '#ff4d00',
+    사회민주당: '#43A213',
+    기본소득당: '#00D2C3',
+    진보당: '#207379',
     무소속: '#aaaaaa',
 } as const;
 

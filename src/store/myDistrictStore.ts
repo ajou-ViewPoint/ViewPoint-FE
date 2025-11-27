@@ -11,10 +11,11 @@ export const DEFAULT_DISTRICT = {
 };
 
 export const DEFAULT_DISTRICT_MEMBER = {
-    memberId: 0,
+    id: 0,
     name: '',
     party: '',
     age: 0,
+    eraco: '',
     duty: '',
     profileImage: '',
     district: '',

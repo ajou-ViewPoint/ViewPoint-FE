@@ -20,7 +20,7 @@
     &__score {
         @extend .wrapper;
         display: grid;
-        grid-template-columns: 50% 50%;
+        grid-template-columns: 33% 33% 33%;
         gap: 1rem;
         justify-content: center;
     }

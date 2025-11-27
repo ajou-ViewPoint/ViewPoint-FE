@@ -21,3 +21,22 @@ export interface CommitteeDetail {
     membersByRole: Record<string, CommitteeMember[]>;
     stats: Record<string, number>;
 }
+
+export interface WordFishData {
+    id: string;
+    data: [{ x: number; y: number; party: string }];
+}
+
+export interface RAWWordFishData {
+    id: number;
+    docId: string;
+    thetaRaw: number;
+    age: number;
+    committee: string;
+    speakerName: string;
+    memberId: number;
+    theta: number;
+    party: string;
+    displayName: string;
+    sourceTag: string;
+}

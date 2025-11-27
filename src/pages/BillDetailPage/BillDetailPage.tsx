@@ -73,7 +73,7 @@ function BillDetailPage() {
                 <VoteResultSection />
             </section>
             <section className={style.section}>
-                <h3 className={style.sectionTitle}>국회의원 이념공간</h3>
+                <h3 className={style.sectionTitle}>국회의원 이념공간 beta</h3>
                 <div className={style.wrapper__chart}>
                     <NominateScatterPlot />
                 </div>
@@ -85,7 +85,7 @@ function BillDetailPage() {
                 </div>
             </section>
             <section className={style.section}>
-                <h3 className={style.sectionTitle}>의안 투표 현황</h3>
+                <h3 className={style.sectionTitle}>의원 투표 현황</h3>
                 <VotingGroupsSection billId={bill.billId} />
             </section>
         </div>

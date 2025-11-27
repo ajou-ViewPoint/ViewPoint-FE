@@ -4,33 +4,45 @@ import style from './Schedule.module.scss';
 const mockData = [
     {
         status: '예정',
-        name: '제429회국회(정기회) 제2차 전체회의',
-        date: '2025-09-04 10:00',
-        type: '전체회의',
+        name: '제429회 09차',
+        date: '2025-11-26',
+        type: '상임위원회',
     },
     {
         status: '예정',
-        name: '제429회국회(정기회) 제1차 소의원회',
-        date: '2025-09-03 14:00',
-        type: '소의원회',
+        name: '제429회 08차',
+        date: '2025-11-14',
+        type: '상임위원회',
     },
     {
-        status: '종료',
-        name: '제428회국회(임시회) 제5차 전체회의',
-        date: '2025-08-28 09:00',
-        type: '전체회의',
+        status: '예정',
+        name: '제429회 07차',
+        date: '2025-11-11',
+        type: '상임위원회',
     },
     {
-        status: '종료',
-        name: '제428회국회(임시회) 제4차 소의원회',
-        date: '2025-08-27 15:00',
-        type: '소의원회',
+        status: '예정',
+        name: '제429회 국감 07차',
+        date: '2025-10-30',
+        type: '상임위원회',
     },
     {
-        status: '종료',
-        name: '제428회국회(임시회) 제3차 전체회의',
-        date: '2025-08-20 10:00',
-        type: '전체회의',
+        status: '예정',
+        name: '제429회 국감 06차',
+        date: '2025-10-28',
+        type: '상임위원회',
+    },
+    {
+        status: '예정',
+        name: '제429회 국감 05차_지방1반',
+        date: '2025-10-23',
+        type: '소위원회',
+    },
+    {
+        status: '예정',
+        name: '제429회 국감 05차_지방2반',
+        date: '2025-10-23',
+        type: '소위원회',
     },
 ];
 
@@ -38,7 +50,7 @@ function Schedule() {
     // const committee = useCommitteeStore((state) => state.selectedCommittee);
     return (
         <div className={style.wrapper}>
-            <h3 className={style.header}>2025년 9월 4일</h3>
+            <h3 className={style.header}>2025년 10-11월</h3>
             {mockData.map((item) => (
                 <div className={style.scheduleCard} key={item.name}>
                     <div className={style.scheduleCard__header}>

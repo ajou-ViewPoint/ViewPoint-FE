@@ -1,10 +1,10 @@
-import MOCKDATA from '../../assets/MockWordFish.json';
 import { ResponsiveScatterPlot } from '@nivo/scatterplot';
 import type {
     ScatterPlotDatum,
     ScatterPlotNodeData,
     ScatterPlotRawSerie,
 } from '../../types/nivo-scatterplot';
+import { useCommitteeStore } from '../../store/committeeStore';
 
 const partyColorMap = {
     더불어민주당: '#1E90FF',
@@ -14,7 +14,6 @@ const partyColorMap = {
     진보당: '#FF69B4',
     무소속: '#aaaaaa',
 } as const;
-const typedData = MOCKDATA as ScatterPlotRawSerie<ScatterPlotDatum>[];
 
 const CustomNode = ({ node }: { node: ScatterPlotNodeData<ScatterPlotDatum> }) => (
     <circle
@@ -26,9 +25,13 @@ const CustomNode = ({ node }: { node: ScatterPlotNodeData<ScatterPlotDatum> }) =
 );
 
 function WordFishChart() {
+    const data = useCommitteeStore(
+        (state) => state.wordFishData
+    ) as unknown as ScatterPlotRawSerie<ScatterPlotDatum>[];
+
     return (
         <ResponsiveScatterPlot
-            data={typedData}
+            data={data}
             nodeComponent={CustomNode}
             margin={{ top: 10, right: 10, bottom: 10, left: 10 }}
             xScale={{ type: 'linear', min: -5, max: 5 }}

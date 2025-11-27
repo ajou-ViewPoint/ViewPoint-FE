@@ -1,0 +1,86 @@
+.wrapper {
+    width: 100%;
+    overflow: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #111827;
+}
+
+.table thead th {
+    position: sticky;
+    top: 0;
+    background: #ffffff;
+    z-index: 2;
+    text-align: left;
+    padding: 12px;
+    border-bottom: 1px solid #e5e7eb;
+    font-weight: 600;
+}
+
+/* 열 너비 비율 */
+.table th:nth-child(1),
+.table td:nth-child(1) {
+    width: 60%;
+}
+.table th:nth-child(2),
+.table td:nth-child(2) {
+    width: 20%;
+    white-space: nowrap;
+}
+.table th:nth-child(3),
+.table td:nth-child(3) {
+    width: 20%;
+    white-space: nowrap;
+}
+.table td:nth-child(3) {
+    font-weight: 700;
+    &[data-label='찬성'] {
+        color: #2372eb;
+    }
+    &[data-label='반대'] {
+        color: #ff606d;
+    }
+    &[data-label='기권'] {
+        color: #717171;
+    }
+    &[data-label='불참'] {
+        color: #facc15;
+    }
+}
+
+.table tbody td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+/* 긴 제목 말줄임 */
+.table tbody td:nth-child(1) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+/* 줄무늬 및 호버 */
+.table tbody tr:nth-child(even) {
+    background: #fafafa;
+}
+.table tbody tr:hover {
+    background: #f5faff;
+}
+
+@media (max-width: 640px) {
+    .table {
+        font-size: 13px;
+    }
+    .table thead th,
+    .table tbody td {
+        padding: 8px;
+    }
+}

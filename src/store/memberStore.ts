@@ -32,11 +32,22 @@ export interface MemberListPagination {
     sortBy: string;
     direction: 'desc' | 'asc';
 }
+
+interface MemberVoteRecord {
+    billId: string;
+    voteDate: string;
+    billTitle: string;
+    voteOpinion: string;
+}
 interface memberStore {
     memberList: Member[];
+    memberVoteRecord: MemberVoteRecord[];
     randomMemberList: Member[];
+    voteRecordPagination: MemberListPagination;
     memberListPagination: MemberListPagination;
+    setRandomMembers: (members: Member[]) => void;
     getRandomMember: () => Promise<void>;
+    getMemberVoteRecord: (memberId: string) => Promise<void>;
     setMemberListPage: (newPageState: MemberListPagination) => void;
     getMemberList: () => Promise<void>;
     getMember: (memberId: number) => Promise<Member>;
@@ -50,8 +61,11 @@ interface memberFilterStore {
 
 export const useMemberStore = create<memberStore>((set) => ({
     memberList: [],
+    memberVoteRecord: [],
     randomMemberList: [],
     memberListPagination: DEFAULT_PAGINATION,
+    voteRecordPagination: DEFAULT_PAGINATION,
+    setRandomMembers: (members) => set({ randomMemberList: members }),
     setMemberListPage: (newPageState) => set({ memberListPagination: newPageState }),
     getRandomMember: async () => {
         try {
@@ -61,6 +75,24 @@ export const useMemberStore = create<memberStore>((set) => ({
             if (axios.isAxiosError(error)) {
                 throw new Error(
                     `의원 정보 불러오기 에러: ${error.response?.data?.message ?? error.message}`
+                );
+            }
+            throw error;
+        }
+    },
+    getMemberVoteRecord: async (memberId) => {
+        try {
+            const pageState = useMemberStore.getState().voteRecordPagination;
+            const res = await axios.get(
+                `${SERVER_IP}/v1/assemblymembers/${memberId}/votes?page=${pageState.pageNumber}&size=${pageState.pageSize}`
+            );
+            set({
+                memberVoteRecord: res.data.content,
+            });
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                throw new Error(
+                    `의원 리스트 불러오기 에러: ${error.response?.data?.message ?? error.message}`
                 );
             }
             throw error;

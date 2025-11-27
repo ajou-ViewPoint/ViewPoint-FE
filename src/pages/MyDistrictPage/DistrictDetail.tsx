@@ -26,9 +26,10 @@ function DistrictDetail() {
                     <h2 className={style.sectionTitle}>현직 의원</h2>
                     <DistrictMemberCard
                         name={districtMembers[0].name}
-                        memberId={districtMembers[0].memberId}
+                        id={districtMembers[0].id}
                         district={districtMembers[0].district}
                         age={districtMembers[0].age}
+                        eraco={districtMembers[0].eraco}
                         party={districtMembers[0].party}
                         voteRate={districtMembers[0].voteRate}
                         profileImg={districtMembers[0].profileImage}
@@ -38,17 +39,40 @@ function DistrictDetail() {
                     <h2 className={style.sectionTitle}>전직 의원</h2>
                     {districtMembers
                         .filter((member) => member.age != 22)
-                        .map((member) => (
-                            <DistrictMemberCard
-                                name={member.name}
-                                memberId={member.memberId}
-                                district={member.district}
-                                age={member.age}
-                                party={member.party}
-                                voteRate={member.voteRate}
-                                profileImg={member.profileImage}
-                            />
-                        ))}
+                        .flatMap((member) => {
+                            const eracoList = member.eraco
+                                .split(',')
+                                .map((e) => e.trim())
+                                .reverse();
+                            if (eracoList.length > 1) {
+                                return eracoList.map((eraco, idx) => (
+                                    <DistrictMemberCard
+                                        key={`${member.id}-${eraco}-${idx}`}
+                                        name={member.name}
+                                        id={member.id}
+                                        district={member.district}
+                                        eraco={eraco}
+                                        age={member.age}
+                                        party={member.party}
+                                        voteRate={member.voteRate}
+                                        profileImg={member.profileImage}
+                                    />
+                                ));
+                            }
+                            return (
+                                <DistrictMemberCard
+                                    key={member.id}
+                                    name={member.name}
+                                    id={member.id}
+                                    district={member.district}
+                                    eraco={member.eraco}
+                                    age={member.age}
+                                    party={member.party}
+                                    voteRate={member.voteRate}
+                                    profileImg={member.profileImage}
+                                />
+                            );
+                        })}
                 </section>
             </section>
             <section>

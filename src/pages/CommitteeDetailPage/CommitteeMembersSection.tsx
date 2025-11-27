@@ -4,7 +4,7 @@ import type { CommitteeDetail, CommitteeMember } from '../../types/committee';
 
 function CommitteeMembersSection(committeeDetail: CommitteeDetail) {
     return (
-        <div>
+        <div className={style.wrapper}>
             <div className={style.rowWrapper}>
                 {['위원장', '간사'].map((role) =>
                     committeeDetail.membersByRole[role] &&

@@ -6,11 +6,12 @@ export interface District {
 }
 
 export interface DistrictMember {
-    memberId: number;
+    id: number;
     name: string;
     party: string;
     age: number;
     duty: string;
+    eraco: string;
     profileImage: string;
     district: string;
     sidoName: string;

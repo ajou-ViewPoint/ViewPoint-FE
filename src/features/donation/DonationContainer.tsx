@@ -4,7 +4,7 @@ import likeImg from '../../assets/Like.png';
 function DonationContainer() {
     return (
         <div className={style.container}>
-            <p className={style.number}>05.</p>
+            <p className={style.number}>06.</p>
             <div className={style.header}>
                 <div className={style.wrapper}>
                     <h2 className={style.header__title}>후원하기</h2>

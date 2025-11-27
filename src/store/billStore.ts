@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import axios from 'axios';
 import type { bill } from '../types/bill';
 import { SERVER_IP } from '../constants/env';
+import { useMemberStore } from './memberStore';
 
 export interface billFilter {
     page: number;
@@ -81,8 +82,10 @@ export const useBillStore = create<billStore>((set) => ({
     isLoading: false,
     setPage: (newPageState) => set({ billListPagination: newPageState }),
     getRecentBillList: async () => {
+        const { setRandomMembers } = useMemberStore.getState();
         try {
             const res = await axios.get(`${SERVER_IP}/v1/main/home`);
+            setRandomMembers(res.data.members);
             set({ recentBillList: res.data.recentBills });
         } catch (error) {
             if (axios.isAxiosError(error)) {

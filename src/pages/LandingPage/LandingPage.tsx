@@ -5,6 +5,7 @@ import DonationContainer from '../../features/donation/DonationContainer';
 import MatchingContainer from '../../features/matching/MatchingContainer';
 import IdeologySection from '../../features/ideology/IdeologySection';
 import RecentBillSection from '../../features/bill/RecentBillSection';
+import RandomMembersSection from './RandomMembersSection';
 
 function LandingPage() {
     return (
@@ -13,6 +14,7 @@ function LandingPage() {
             <TopicBillSection />
             <RecentBillSection />
             <IdeologySection />
+            <RandomMembersSection />
             {/* 랜덤 의원 보여주는 컴포넌트 추가 */}
             <div className={style.bottomSection}>
                 <MatchingContainer />

@@ -8,7 +8,7 @@ import CommitteeMembersSection from './CommitteeMembersSection';
 import WordFishChart from './WordFishChart';
 
 function CommitteeDetailPage() {
-    const { getCommitteeById, getCommitteeDetail } = useCommitteeStore();
+    const { getCommitteeById, getCommitteeDetail, getWordFishData } = useCommitteeStore();
     const committee = useCommitteeStore((state) => state.selectedCommittee);
     const committeeDetail = useCommitteeStore((state) => state.selectedCommitteeDetail);
     const params = useParams();
@@ -19,8 +19,16 @@ function CommitteeDetailPage() {
         if (committee?.id !== id || committeeDetail?.committeeId !== id) {
             getCommitteeById(id);
             getCommitteeDetail(id);
+            getWordFishData(id);
         }
-    }, [committee, committeeDetail, getCommitteeById, getCommitteeDetail, params.committeeId]);
+    }, [
+        committee,
+        committeeDetail,
+        getCommitteeById,
+        getCommitteeDetail,
+        getWordFishData,
+        params.committeeId,
+    ]);
 
     return (
         <div className={style.wrapper}>

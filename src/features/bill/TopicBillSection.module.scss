@@ -62,6 +62,9 @@
 
 .contents {
     &__list {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
         gap: 1rem;
         @media (max-width: 1200px) {
             display: none;

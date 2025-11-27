@@ -1,10 +1,28 @@
 import style from './TopicBillSection.module.scss';
 import topicImage from '../../assets/yellowEnvelope.png';
+import topicImage1 from '../../assets/leaseLaw.png';
+import topicImage2 from '../../assets/steelLaw.png';
+import topicImage3 from '../../assets/image3.png';
 
 const mockTopicList = [
-    { title: '근로기준법 일부개정법률안', member: '홍길동', date: '2024-05-10' },
-    { title: '청년고용촉진특별법 일부개정법률안', member: '김영희', date: '2024-04-22' },
-    { title: '여성폭력방지 및 피해자 보호 등에 관한 법률안', member: '이철수', date: '2024-03-15' },
+    {
+        title: '주택임대차보호법 일부개정법률안(한창민의원 등 10인)',
+        member: '한창민의원 등 10인',
+        date: '2025-10-02',
+        image: topicImage1,
+    },
+    {
+        title: '철강산업 경쟁력 강화 및 탄소중립 전환을 위한 특별법안(대안)',
+        member: '산업통상자원중소벤처기업위원장',
+        date: '2025-11-19',
+        image: topicImage2,
+    },
+    {
+        title: '전자금융거래법 일부개정법률안(대안)',
+        member: '정무위원장',
+        date: '2025-07-30',
+        image: topicImage3,
+    },
 ];
 
 function TopicBillSection() {
@@ -35,7 +53,7 @@ function TopicBillSection() {
                             </div>
                             <img
                                 className={style.listTopicImage}
-                                src={topicImage}
+                                src={item.image}
                                 alt="토픽 이미지"
                             />
                         </div>

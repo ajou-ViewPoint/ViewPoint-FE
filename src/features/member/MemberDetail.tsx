@@ -8,6 +8,7 @@ import sns_facebook from '../../assets/facebook.png';
 import sns_instagram from '../../assets/insta.png';
 import sns_x from '../../assets/x.png';
 import sns_youtube from '../../assets/youtube.png';
+import MemberVoteRecord from './MemberVoteRecord';
 
 function MemberDetail() {
     const { state } = useLocation() as { state: Member };
@@ -92,32 +93,30 @@ function MemberDetail() {
             </section>
             <section className={style.wrapper__score}>
                 <div className={style.scoreBox}>
-                    <dd>99%</dd>
+                    <dd>{member.attendanceRate ? member.attendanceRate : '제공 예정'}</dd>
                     <dt>출석률</dt>
                 </div>
                 <div className={style.scoreBox}>
-                    <dd>85</dd>
-                    <dt>개인점수</dt>
-                </div>
-                <div className={style.scoreBox}>
-                    <dd>98점</dd>
+                    <dd>{member.loyaltyRate ? member.loyaltyRate : '제공 예정'}</dd>
                     <dt>정당충성도</dt>
                 </div>
                 <div className={style.scoreBox}>
-                    <dd>82</dd>
+                    <dd>제공 예정</dd>
                     <dt>소속 정당 의원 충성도 중앙값</dt>
                 </div>
             </section>
-
+            {/* 
             <section className={style.section}>
                 <h2 className={style.sectionTitle}>
                     {member.name} 의원과 이념거리가 가까운 의원들
                 </h2>
                 <div className={style.wrapper}></div>
-            </section>
+            </section> */}
             <section className={style.section}>
                 <h2 className={style.sectionTitle}>의안 투표 현황</h2>
-                <div className={style.wrapper}></div>
+                <div className={style.wrapper}>
+                    <MemberVoteRecord />
+                </div>
             </section>
         </div>
     );

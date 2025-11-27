@@ -25,7 +25,7 @@ function CommitteePage() {
     ] as const;
 
     const navigate = useNavigate();
-    const { getCommitteeById, getCommitteeDetail } = useCommitteeStore();
+    const { getCommitteeById, getCommitteeDetail, getWordFishData } = useCommitteeStore();
 
     const preFetchCommitteeDetail = async (committeeId: number) => {
         await getCommitteeById(committeeId);
@@ -34,6 +34,7 @@ function CommitteePage() {
 
     const navigateToCommitteeDetailPage = async (committeeId: number) => {
         await preFetchCommitteeDetail(committeeId);
+        await getWordFishData(committeeId);
         navigate(`/committee/${committeeId}`);
     };
 

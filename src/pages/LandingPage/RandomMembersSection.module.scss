@@ -1,0 +1,9 @@
+@use '../../style//SectionContainer.scss';
+
+.memberGrid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    row-gap: 1rem;
+    column-gap: 1rem;
+    justify-items: center;
+}
