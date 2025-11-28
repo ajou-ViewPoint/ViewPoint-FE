@@ -40,9 +40,9 @@ function BillDetailPage() {
                         </p>
                     </div>
                     <div className={style.header__buttonRail}>
-                        <BillTag text="노동" />
-                        <BillTag text="부동산" />
-                        <BillTag text="청년" />
+                        {bill.topic?.split(',').map((topic) => (
+                            <BillTag tagText={topic} />
+                        ))}
                     </div>
                     <hr className={style.divider}></hr>
 
@@ -80,9 +80,15 @@ function BillDetailPage() {
             </section>
             <section className={style.section}>
                 <h3 className={style.sectionTitle}>의안 내용 요약</h3>
-                <div className={style.wrapper}>
-                    <pre className={style.billSummaryText}>{bill.billSummary}</pre>
-                </div>
+                {bill.billSummary ? (
+                    <div className={style.wrapper}>
+                        <pre className={style.billSummaryText}>{bill.billSummary}</pre>
+                    </div>
+                ) : (
+                    <div className={style.resultCard}>
+                        <dt>의안 내용이 없습니다.</dt>
+                    </div>
+                )}
             </section>
             <section className={style.section}>
                 <h3 className={style.sectionTitle}>의원 투표 현황</h3>

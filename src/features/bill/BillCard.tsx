@@ -21,14 +21,19 @@ function BillCard(billProp: bill) {
                 <p className={style.header__date}>{billProp.proposeDt}</p>
             </div>
             <div className={style.tagRail}>
-                <BillTag text="법안 태그" />
-                <BillTag text="법안 태그" />
+                {billProp.topic?.split(',').map((topic) => (
+                    <BillTag tagText={topic} />
+                ))}
             </div>
             <div className={style.wrapper}>
                 <p className={style.summaryText}>{billProp.billSummary}</p>
-                <button className={style.moreButton}>
-                    <ChevronRight className={style.moreButton__icon} />
-                </button>
+                {billProp.billSummary ? (
+                    <button className={style.moreButton}>
+                        <ChevronRight className={style.moreButton__icon} />
+                    </button>
+                ) : (
+                    ''
+                )}
             </div>
         </div>
     );
