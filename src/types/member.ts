@@ -1,11 +1,21 @@
+interface Committee {
+    id: number;
+    committeeCode: string;
+    activitiesDescription: string;
+    scheduleInfo: string;
+    committeeName: string;
+}
+
 export interface Member {
     memberId: number;
     name: string;
-    party: string;
+    parties: string[];
+    eraco: string[];
+    committees: Committee[] | null;
     age: number;
     duty: string;
     profileImage: string;
-    district: string;
+    electionDistrict: string[];
     engName: string;
     chName: string;
     birthDate: string;

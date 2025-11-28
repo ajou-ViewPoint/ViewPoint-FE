@@ -6,7 +6,7 @@ export interface District {
 }
 
 export interface DistrictMember {
-    id: number;
+    memberId: number;
     name: string;
     party: string;
     age: number;

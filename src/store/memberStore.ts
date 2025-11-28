@@ -14,6 +14,15 @@ const DEFAULT_PAGINATION: MemberListPagination = {
     direction: 'desc',
 };
 
+const DEFAULT_VOTERECORD_PAGINATION: VoteRecordPagiantion = {
+    totalElements: 0,
+    totalPages: 0,
+    pageNumber: 0,
+    pageSize: 40,
+    first: false,
+    last: false,
+};
+
 export interface memberFilter {
     page: number;
     size: number;
@@ -33,6 +42,15 @@ export interface MemberListPagination {
     direction: 'desc' | 'asc';
 }
 
+export interface VoteRecordPagiantion {
+    totalElements: number;
+    totalPages: number;
+    pageNumber: number; // 현재 페이지 번호(0 베이스)
+    pageSize: number;
+    first: boolean;
+    last: boolean;
+}
+
 interface MemberVoteRecord {
     billId: string;
     voteDate: string;
@@ -43,8 +61,9 @@ interface memberStore {
     memberList: Member[];
     memberVoteRecord: MemberVoteRecord[];
     randomMemberList: Member[];
-    voteRecordPagination: MemberListPagination;
+    voteRecordPagination: VoteRecordPagiantion;
     memberListPagination: MemberListPagination;
+    setVoteRecordPage: (newPageState: VoteRecordPagiantion) => void;
     setRandomMembers: (members: Member[]) => void;
     getRandomMember: () => Promise<void>;
     getMemberVoteRecord: (memberId: string) => Promise<void>;
@@ -64,7 +83,8 @@ export const useMemberStore = create<memberStore>((set) => ({
     memberVoteRecord: [],
     randomMemberList: [],
     memberListPagination: DEFAULT_PAGINATION,
-    voteRecordPagination: DEFAULT_PAGINATION,
+    voteRecordPagination: DEFAULT_VOTERECORD_PAGINATION,
+    setVoteRecordPage: (newPageState) => set({ voteRecordPagination: newPageState }),
     setRandomMembers: (members) => set({ randomMemberList: members }),
     setMemberListPage: (newPageState) => set({ memberListPagination: newPageState }),
     getRandomMember: async () => {
@@ -86,9 +106,33 @@ export const useMemberStore = create<memberStore>((set) => ({
             const res = await axios.get(
                 `${SERVER_IP}/v1/assemblymembers/${memberId}/votes?page=${pageState.pageNumber}&size=${pageState.pageSize}`
             );
-            set({
-                memberVoteRecord: res.data.content,
-            });
+            const newPagination = {
+                totalElements: res.data.totalElements,
+                totalPages: res.data.totalPages,
+                pageNumber: res.data.pageable.pageNumber,
+                pageSize: res.data.pageable.pageSize,
+                first: res.data.first,
+                last: res.data.last,
+            };
+            const prevPagination = useMemberStore.getState().voteRecordPagination;
+            // 이전 페이지와 다를 때만 set
+            if (
+                prevPagination.totalElements !== newPagination.totalElements ||
+                prevPagination.totalPages !== newPagination.totalPages ||
+                prevPagination.pageNumber !== newPagination.pageNumber ||
+                prevPagination.pageSize !== newPagination.pageSize ||
+                prevPagination.first !== newPagination.first ||
+                prevPagination.last !== newPagination.last
+            ) {
+                set({
+                    memberVoteRecord: res.data.content,
+                    voteRecordPagination: newPagination,
+                });
+            } else {
+                set({
+                    memberVoteRecord: res.data.content,
+                });
+            }
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 throw new Error(

@@ -11,7 +11,7 @@ export const DEFAULT_DISTRICT = {
 };
 
 export const DEFAULT_DISTRICT_MEMBER = {
-    id: 0,
+    memberId: 0,
     name: '',
     party: '',
     age: 0,
