@@ -19,4 +19,5 @@ export interface bill {
     rgsProcDate?: string | null;
     proposeDt?: string | null;
     age?: number | null;
+    topic: string | null;
 }

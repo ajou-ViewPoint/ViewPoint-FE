@@ -55,6 +55,7 @@ export const DEFAULT_BILL: bill = {
     rgsProcDate: null,
     proposeDt: null,
     age: null,
+    topic: null,
 };
 
 interface billStore {

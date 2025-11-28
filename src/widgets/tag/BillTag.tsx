@@ -1,7 +1,11 @@
 import style from './BillTag.module.scss';
 
-function BillTag(props: { text: string }) {
-    return <button className={style.container}>#{props.text}</button>;
+interface BillTagProps {
+    tagText: string;
+}
+
+function BillTag({ tagText }: BillTagProps) {
+    return <button className={style.container}>#{tagText}</button>;
 }
 
 export default BillTag;
