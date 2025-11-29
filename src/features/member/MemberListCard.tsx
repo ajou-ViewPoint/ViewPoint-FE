@@ -1,5 +1,5 @@
 import style from './MemberListCard.module.scss';
-import type { Member, PartyMemberInfoProjection } from '../../types/member';
+import type { Member, MemberBasic, PartyMemberInfoProjection } from '../../types/member';
 import { Link } from 'react-router-dom';
 import type { CommitteeMember } from '../../types/committee';
 import type { VoteMember } from '../../store/BillVoteResultStore';
@@ -19,12 +19,19 @@ function MemberListCard({ member }: MemberListCardProps) {
     const normalizedMember: BasicMemberInfo = {
         id: 'id' in member ? member.id : member.memberId,
         name: member.name,
-        party: 'partyName' in member ? member.partyName ?? '' : (member as Member).party ?? '',
+        party:
+            'party' in member
+                ? member.party ?? ''
+                : (member as Member).parties[(member as Member).parties.length - 1] ?? '',
         profileImage: member.profileImage ?? '',
         district:
             'regionName' in member
                 ? (member as PartyMemberInfoProjection).regionName ?? ''
-                : (member as Member).district ?? '',
+                : 'electionDistrict' in member
+                ? (member as Member).electionDistrict[
+                      (member as Member).electionDistrict.length - 1
+                  ] ?? ''
+                : (member as unknown as MemberBasic).district,
     };
     return (
         <Link to={`/members/${normalizedMember.id}`} className={style.container}>
