@@ -9,6 +9,7 @@ import sns_instagram from '../../assets/insta.png';
 import sns_x from '../../assets/x.png';
 import sns_youtube from '../../assets/youtube.png';
 import MemberVoteRecord from './MemberVoteRecord';
+import MemberScore from './MemberScore';
 
 function MemberDetail() {
     const { state } = useLocation() as { state: Member };
@@ -41,7 +42,7 @@ function MemberDetail() {
                 <div className={style.columnWrapper}>
                     <img
                         className={style.infoContainer__profileImage}
-                        src={member.profileImage ?? ''}
+                        src={member.profileImage}
                         alt={`${member.name} 의원의 프로필 사진`}
                     />
                     <div className={style.snsButtonRail}>
@@ -65,46 +66,32 @@ function MemberDetail() {
                         {member.chName} {member.engName ? ' | ' : ''} {member.engName}
                     </p>
                     <div className={style.infoContainer__info}>
-                        <p className={style.label}>소속위원회</p>
+                        <p className={style.label}>
+                            {member.committees && member.committees.length > 0 ? '소속위원회' : ''}
+                        </p>
 
                         <p className={style.value}>
-                            {/* {member.committeeId ? member.committeeId : '현직의원이 아닙니다'} */}
-                            소속 위원회는 추후 추가 예정입니다.
+                            {member.committees && member.committees.length > 0
+                                ? member.committees[member.committees.length - 1].committeeName ??
+                                  ''
+                                : ''}
                         </p>
                         <p className={style.label}>나이</p>
                         <p className={style.value}>{calculateAge(member.birthDate ?? '')}</p>
                         <p className={style.label}>정당</p>
-                        <p className={style.value}>
-                            {member.party.includes('/')
-                                ? member.party.split('/').pop()
-                                : member.party}
-                        </p>
+                        <p className={style.value}>{member.parties[member.parties.length - 1]}</p>
                         <p className={style.label}>당선 횟수</p>
                         <p className={style.value}>
-                            n선
-                            {/* {member.eraco.split(',').length === 1
-                                ? '초선'
-                                : member.eraco.split(',').length + '선'} */}
+                            {member.eraco.length > 1 ? member.eraco.length + '선' : '초선'}
                         </p>
                         <p className={style.label}>선거구</p>
-                        <p className={style.value}>{member.district}</p>
+                        <p className={style.value}>
+                            {member.electionDistrict[member.electionDistrict.length - 1]}
+                        </p>
                     </div>
                 </div>
             </section>
-            <section className={style.wrapper__score}>
-                <div className={style.scoreBox}>
-                    <dd>{member.attendanceRate ? member.attendanceRate : '제공 예정'}</dd>
-                    <dt>출석률</dt>
-                </div>
-                <div className={style.scoreBox}>
-                    <dd>{member.loyaltyRate ? member.loyaltyRate : '제공 예정'}</dd>
-                    <dt>정당충성도</dt>
-                </div>
-                <div className={style.scoreBox}>
-                    <dd>제공 예정</dd>
-                    <dt>소속 정당 의원 충성도 중앙값</dt>
-                </div>
-            </section>
+            <MemberScore attendanceRate={member.attendanceRate} loyaltyRate={member.loyaltyRate} />
             {/* 
             <section className={style.section}>
                 <h2 className={style.sectionTitle}>
