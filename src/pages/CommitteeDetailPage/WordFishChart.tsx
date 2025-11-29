@@ -24,6 +24,22 @@ const CustomNode = ({ node }: { node: ScatterPlotNodeData<ScatterPlotDatum> }) =
     />
 );
 
+const CustomToolTip = ({ node }: { node: ScatterPlotNodeData<ScatterPlotDatum> }) => (
+    <div
+        style={{
+            color: partyColorMap[node.data.party as keyof typeof partyColorMap] || '#888',
+            background: 'tranparent',
+            width: '200px',
+            padding: '1rem',
+        }}>
+        <strong>{node.id.split('.')[0]}</strong>
+        <br />
+        <strong>{node.data.party}</strong>
+        <br />
+        <strong> {`이념점수: ${Number(node.formattedX).toFixed(2)}`}</strong>
+    </div>
+);
+
 function WordFishChart() {
     const data = useCommitteeStore(
         (state) => state.wordFishData
@@ -32,13 +48,14 @@ function WordFishChart() {
     return (
         <ResponsiveScatterPlot
             data={data}
+            tooltip={CustomToolTip}
             nodeComponent={CustomNode}
             margin={{ top: 10, right: 10, bottom: 10, left: 10 }}
             xScale={{ type: 'linear', min: -5, max: 5 }}
             yScale={{ type: 'linear', min: 0, max: 0 }}
-            enableGridX={false}
+            enableGridX={true}
             enableGridY={false}
-            axisBottom={null}
+            axisBottom={{ legend: '이념축', legendOffset: 3 }}
             axisLeft={null}
             nodeSize={10}
             legends={[]}
