@@ -1,14 +1,17 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useMemberStore } from '../../store/memberStore';
 import style from './MemberVoteRecord.module.scss';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useBillStore } from '../../store/billStore';
+import MemberVotePagination from './MemberVotePagination';
 
 function MemberVoteRecord() {
     const voteRecord = useMemberStore((state) => state.memberVoteRecord);
     const { getMemberVoteRecord } = useMemberStore();
     const { getSelectedBill } = useBillStore();
     const param = useParams();
+    const pageState = useMemberStore((state) => state.voteRecordPagination.pageNumber);
+    const scrollPointRef = useRef<HTMLDivElement>(null);
     const navigate = useNavigate();
 
     const naviagteToBillPage = async (billId: string) => {
@@ -18,10 +21,10 @@ function MemberVoteRecord() {
 
     useEffect(() => {
         getMemberVoteRecord(param.memberId ?? '');
-    }, [getMemberVoteRecord, param.memberId]);
+    }, [getMemberVoteRecord, param.memberId, pageState]);
 
     return (
-        <div className={style.wrapper}>
+        <div className={style.wrapper} ref={scrollPointRef}>
             <table aria-label="의원 투표 기록" className={style.table}>
                 <thead>
                     <tr>
@@ -44,6 +47,9 @@ function MemberVoteRecord() {
                     ))}
                 </tbody>
             </table>
+            <MemberVotePagination
+                setScrollUp={() => scrollPointRef.current?.scrollIntoView({ behavior: 'smooth' })}
+            />
         </div>
     );
 }
