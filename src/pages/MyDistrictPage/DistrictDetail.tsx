@@ -26,7 +26,7 @@ function DistrictDetail() {
                     <h2 className={style.sectionTitle}>현직 의원</h2>
                     <DistrictMemberCard
                         name={districtMembers[0].name}
-                        id={districtMembers[0].id}
+                        memberId={districtMembers[0].memberId}
                         district={districtMembers[0].district}
                         age={districtMembers[0].age}
                         eraco={districtMembers[0].eraco}
@@ -39,31 +39,12 @@ function DistrictDetail() {
                     <h2 className={style.sectionTitle}>전직 의원</h2>
                     {districtMembers
                         .filter((member) => member.age != 22)
-                        .flatMap((member) => {
-                            const eracoList = member.eraco
-                                .split(',')
-                                .map((e) => e.trim())
-                                .reverse();
-                            if (eracoList.length > 1) {
-                                return eracoList.map((eraco, idx) => (
-                                    <DistrictMemberCard
-                                        key={`${member.id}-${eraco}-${idx}`}
-                                        name={member.name}
-                                        id={member.id}
-                                        district={member.district}
-                                        eraco={eraco}
-                                        age={member.age}
-                                        party={member.party}
-                                        voteRate={member.voteRate}
-                                        profileImg={member.profileImage}
-                                    />
-                                ));
-                            }
+                        .map((member) => {
                             return (
                                 <DistrictMemberCard
-                                    key={member.id}
+                                    key={member.memberId}
                                     name={member.name}
-                                    id={member.id}
+                                    memberId={member.memberId}
                                     district={member.district}
                                     eraco={member.eraco}
                                     age={member.age}

@@ -3,7 +3,7 @@ import style from './DistrictMemberCard.module.scss';
 
 interface DistrictMemberCardProps {
     name: string;
-    id: number;
+    memberId: number;
     district: string;
     party: string;
     age: number;
@@ -30,7 +30,7 @@ function DistrictMemberCard(prop: DistrictMemberCardProps) {
     };
 
     return (
-        <Link to={`/members/${prop.id}`} className={style.container}>
+        <Link to={`/members/${prop.memberId}`} className={style.container}>
             <div className={style.infoSection}>
                 <div className={style.rowWrapper}>
                     <h1 className={style.name}>{prop.name}</h1>
@@ -38,7 +38,7 @@ function DistrictMemberCard(prop: DistrictMemberCardProps) {
                 </div>
                 <div className={style.rowWrapper}>
                     <p className={style.district}>{prop.district}</p>
-                    <h2 className={style.eraco}>{prop.eraco}</h2>
+                    <h2 className={style.eraco}>{prop.age}대</h2>
                 </div>
                 <p className={`${style.voteRate} ${voteRateStyler(prop.voteRate)}`}>
                     득표율: {prop.voteRate}%
