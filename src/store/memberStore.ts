@@ -143,6 +143,7 @@ export const useMemberStore = create<memberStore>((set) => ({
         }
     },
     getMemberList: async () => {
+        const startTime = performance.now();
         try {
             const pageState = useMemberStore.getState().memberListPagination;
             const res = await axios.get(
@@ -161,6 +162,10 @@ export const useMemberStore = create<memberStore>((set) => ({
                     direction: pageState.direction,
                 },
             });
+            const endTime = performance.now();
+            console.log(
+                `getMemberList API 호출 및 데이터 수신 시간: ${(endTime - startTime).toFixed(2)}ms`
+            );
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 throw new Error(

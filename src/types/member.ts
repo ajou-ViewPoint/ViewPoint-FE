@@ -27,6 +27,16 @@ export interface Member {
     loyaltyRate: number;
 }
 
+export interface MemberBasic {
+    memberId: number;
+    name: string;
+    party: string;
+    age: number;
+    duty: string;
+    profileImage: string;
+    district: string;
+}
+
 export interface PartyMemberInfoProjection {
     memberId: number;
     name: string;
