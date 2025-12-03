@@ -1,6 +1,5 @@
 import BillDetailPage from '../pages/BillDetailPage/BillDetailPage';
 import MemberDetail from '../features/member/MemberDetail';
-import About from '../pages/About';
 import BillListPage from '../pages/BillListPage';
 import CommitteePage from '../pages/CommitteePage';
 import LandingPage from '../pages/LandingPage/LandingPage';
@@ -13,6 +12,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import CommitteeDetailPage from '../pages/CommitteeDetailPage/CommitteeDetailPage';
 import PartyDetailPage from '../pages/PartyDetailPage/PartyDetailPage';
 import DistrictDetailPage from '../pages/MyDistrictPage/DistrictDetail';
+import AboutPage from '../pages/AboutPage';
 
 function App() {
     return (
@@ -31,7 +31,7 @@ function App() {
                         <Route path="/committee/:committeeId" element={<CommitteeDetailPage />} />
                         <Route path="/mydistrict" element={<MyDistrict />} />
                         <Route path="/mydistrict/:regionCd" element={<DistrictDetailPage />} />
-                        <Route path="/about" element={<About />} />
+                        <Route path="/about" element={<AboutPage />} />
                     </Route>
                 </Routes>
             </BrowserRouter>
