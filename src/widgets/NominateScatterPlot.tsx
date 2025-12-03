@@ -5,7 +5,8 @@ import type {
     ScatterPlotNodeData,
     ScatterPlotRawSerie,
 } from '../types/nivo-scatterplot';
-import MOCKDATA from '../assets/MockNOMINATE.json';
+import { useEffect } from 'react';
+import { useNominateStore } from '../store/nominateStore';
 
 const partyColorMap = {
     더불어민주당: '#002bff',
@@ -18,8 +19,6 @@ const partyColorMap = {
     무소속: '#aaaaaa',
 } as const;
 
-const typedData = MOCKDATA as ScatterPlotRawSerie<ScatterPlotDatum>[];
-
 const CustomNode = ({ node }: { node: ScatterPlotNodeData<ScatterPlotDatum> }) => (
     <circle
         cx={node.x}
@@ -29,7 +28,27 @@ const CustomNode = ({ node }: { node: ScatterPlotNodeData<ScatterPlotDatum> }) =
     />
 );
 
+const CustomToolTip = ({ node }: { node: ScatterPlotNodeData<ScatterPlotDatum> }) => (
+    <div
+        style={{
+            color: partyColorMap[node.data.party as keyof typeof partyColorMap] || '#888',
+            background: 'tranparent',
+            width: '200px',
+            padding: '1rem',
+        }}>
+        <strong style={{ color: 'black' }}>{node.id.split('.')[0]}</strong>
+        <br />
+        <strong>{node.data.party}</strong>
+    </div>
+);
+
 function NominateScatterPlot() {
+    const { getNominateDataByAge } = useNominateStore();
+    const nominateData = useNominateStore((state) => state.nominateData);
+    const typedData = nominateData as ScatterPlotRawSerie<ScatterPlotDatum>[];
+    useEffect(() => {
+        getNominateDataByAge(22); // 현재는 22대로 설정
+    }, []);
     return (
         <ResponsiveScatterPlot<ScatterPlotDatum>
             data={typedData}
@@ -37,13 +56,7 @@ function NominateScatterPlot() {
             xScale={{ type: 'linear', min: -1, max: 1 }}
             yScale={{ type: 'linear', min: -1, max: 1 }}
             nodeComponent={CustomNode}
-            tooltip={({ node }) => (
-                <div>
-                    <strong>{node.id}</strong>
-                    <br />
-                    {node.serieIndex}
-                </div>
-            )}
+            tooltip={CustomToolTip}
             enableGridX={false}
             enableGridY={false}
             axisBottom={null}
@@ -55,3 +68,41 @@ function NominateScatterPlot() {
 }
 
 export default NominateScatterPlot;
+
+// TODO: OC 활용은 아마 이렇게
+// const CuttingLineLayer = ({ xScale, yScale }) => {
+//     const n1 = normVector2D[q][0];
+//     const n2 = normVector2D[q][1];
+//     const c = midpoints[q];
+
+//     const x1 = xMin;
+//     const x2 = xMax;
+
+//     const y1 = (c - n1 * x1) / n2;
+//     const y2 = (c - n1 * x2) / n2;
+
+//     return (
+//         <line
+//             x1={xScale(x1)}
+//             y1={yScale(y1)}
+//             x2={xScale(x2)}
+//             y2={yScale(y2)}
+//             stroke="#FF0000"
+//             strokeWidth={2}
+//         />
+//     );
+// };
+
+// <ScatterPlot
+//     data={scatterData}
+//     xScale={{ type: 'linear', min: xMin, max: xMax }}
+//     yScale={{ type: 'linear', min: yMin, max: yMax }}
+//     layers={[
+//         'grid',
+//         'axes',
+//         'points',
+//         CuttingLineLayer,
+//         'mesh',
+//         'legends',
+//     ]}
+// />

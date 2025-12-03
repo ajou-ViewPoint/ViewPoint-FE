@@ -48,8 +48,16 @@ function VotingGroupsSection(props: VotingGroupsSectionProps) {
     };
     return (
         <div className={style.wrapper}>
-            <VoteGroupSelector />
-            <MembersGrid />
+            {voteResultMember[memberVoteState].length > 0 ? (
+                <>
+                    <VoteGroupSelector />
+                    <MembersGrid />
+                </>
+            ) : (
+                <div className={style.resultCard}>
+                    <dt>본회의 표결이 진행되지 않았습니다.</dt>
+                </div>
+            )}
         </div>
     );
 }

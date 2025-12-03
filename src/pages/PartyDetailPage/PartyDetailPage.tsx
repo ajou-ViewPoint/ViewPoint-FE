@@ -9,7 +9,7 @@ function PartyDetailPage() {
     const param = useParams();
     const party = usePartyStore((state) => state.selectedParty);
     const members = usePartyStore((state) => state.selectedPartyMembers);
-    // const seatStatus = usePartyStore((state) => state.selectedPartySeatStatus);
+    const seatStatus = usePartyStore((state) => state.selectedPartySeatStatus);
 
     const {
         getPartyByID,
@@ -51,8 +51,7 @@ function PartyDetailPage() {
 
                 <dl className={style.wrapper__grid4}>
                     <div className={style.resultCard} data-label="전체 의석수">
-                        <dd>166</dd>
-                        {/* <dd>{seatStatus.totalSeats ? seatStatus.totalSeats : '-'}</dd> */}
+                        <dd>{seatStatus.totalSeats ? seatStatus.totalSeats : '-'}</dd>
                         <dt>전체 의석수</dt>
                     </div>
                     <div className={style.resultCard} data-label="원내 의석수 비율">
@@ -61,15 +60,15 @@ function PartyDetailPage() {
                                 ? ((seatStatus.totalSeats / 300) * 100).toFixed(1) + '%'
                                 : '-'}
                         </dd> */}
-                        <dd>{((166 / 298) * 100).toFixed(1) + '%'}</dd>
+                        <dd>{((166 / 296) * 100).toFixed(1) + '%'}</dd>
                         <dt>원내 의석 비율</dt>
                     </div>
                     <div className={style.resultCard} data-label="지역구 의석수">
-                        <dd>158</dd>
+                        <dd>-</dd>
                         <dt>지역구 의석수</dt>
                     </div>
                     <div className={style.resultCard} data-label="비례대표 의석수">
-                        <dd>8</dd>
+                        <dd>-</dd>
                         <dt>비례대표 의석수</dt>
                     </div>
                 </dl>
