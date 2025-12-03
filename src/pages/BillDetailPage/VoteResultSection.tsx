@@ -27,7 +27,7 @@ function VoteResultSection() {
                 </dl>
             ) : (
                 <div className={style.resultCard}>
-                    <dt>아직 본회의 표결이 진행되지 않았습니다.</dt>
+                    <dt>본회의 표결이 진행되지 않았습니다.</dt>
                 </div>
             )}
         </>
