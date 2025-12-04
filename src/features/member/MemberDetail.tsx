@@ -1,13 +1,8 @@
 import { useLocation, useParams } from 'react-router-dom';
 import type { Member } from '../../types/member';
 import style from './MemberDetail.module.scss';
-import dayjs from 'dayjs';
 import { useMemberStore } from '../../store/memberStore';
 import { useEffect, useState } from 'react';
-import sns_facebook from '../../assets/facebook.png';
-import sns_instagram from '../../assets/insta.png';
-import sns_x from '../../assets/x.png';
-import sns_youtube from '../../assets/youtube.png';
 import MemberVoteRecord from './MemberVoteRecord';
 import MemberScore from './MemberScore';
 
@@ -16,12 +11,6 @@ function MemberDetail() {
     const params = useParams();
     const { getMember } = useMemberStore();
     const [member, setMember] = useState<Member | null>(state ?? null);
-
-    const calculateAge = (birthDayString: string) => {
-        const birthDate = dayjs(birthDayString);
-        const today = dayjs();
-        return today.diff(birthDate, 'year');
-    };
 
     useEffect(() => {
         if (!member && params.memberId) {
@@ -45,20 +34,6 @@ function MemberDetail() {
                         src={member.profileImage}
                         alt={`${member.name} 의원의 프로필 사진`}
                     />
-                    <div className={style.snsButtonRail}>
-                        <button className={style.snsButton}>
-                            <img src={sns_instagram} />
-                        </button>
-                        <button className={style.snsButton}>
-                            <img src={sns_youtube} />
-                        </button>
-                        <button className={style.snsButton}>
-                            <img src={sns_x} />
-                        </button>
-                        <button className={style.snsButton}>
-                            <img src={sns_facebook} />
-                        </button>
-                    </div>
                 </div>
                 <div className={style.wrapper__info}>
                     <p className={style.value__name}>{member.name}</p>
@@ -76,8 +51,14 @@ function MemberDetail() {
                                   ''
                                 : ''}
                         </p>
-                        <p className={style.label}>나이</p>
-                        <p className={style.value}>{calculateAge(member.birthDate ?? '')}</p>
+                        <p className={style.label}>생년월일</p>
+                        <p className={style.value}>
+                            {member.birthDate
+                                ? `${member.birthDate.split('-')[0]}년 ${
+                                      member.birthDate.split('-')[1]
+                                  }월 ${member.birthDate.split('-')[2]}일`
+                                : ''}
+                        </p>
                         <p className={style.label}>정당</p>
                         <p className={style.value}>{member.parties[member.parties.length - 1]}</p>
                         <p className={style.label}>당선 횟수</p>
