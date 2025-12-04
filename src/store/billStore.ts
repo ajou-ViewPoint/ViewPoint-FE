@@ -19,11 +19,11 @@ export interface BillListPagination {
     first: boolean;
     last: boolean;
     // 필터링 기준
-    keyword?: string;
-    start?: string;
-    end?: string;
-    age?: number;
-    party?: string;
+    keyword?: string | null;
+    start?: string | null;
+    end?: string | null;
+    age?: number | null;
+    party?: string | null;
     procResultCd?:
         | '대안반영폐기'
         | '부결'
@@ -32,7 +32,8 @@ export interface BillListPagination {
         | '수정안반영폐기'
         | '원안가결'
         | '임기만료폐기'
-        | '철회';
+        | '철회'
+        | null;
     // 정렬 기준
     sortBy: string;
     direction: 'desc' | 'asc';
@@ -45,6 +46,12 @@ const DEFAULT_PAGINATION: BillListPagination = {
     pageSize: 15,
     first: false,
     last: false,
+    keyword: null,
+    start: null,
+    end: null,
+    age: null,
+    party: null,
+    procResultCd: null,
     sortBy: 'proposeDt',
     direction: 'desc',
 };
@@ -146,36 +153,96 @@ export const useBillStore = create<billStore>((set) => ({
     getBillList: async () => {
         const paginationState = useBillStore.getState().billListPagination;
         try {
-            const res = await axios.get(
-                `${SERVER_IP}/v1/bills?page=${paginationState?.pageNumber}&size=${paginationState.pageSize}&sortBy=${paginationState.sortBy}&direction=${paginationState.direction}`
-            );
+            // 쿼리 생성
+            const params: string[] = [];
+
+            // 선택 필터
+            if (paginationState.keyword) {
+                params.push(`keyword=${encodeURIComponent(paginationState.keyword)}`);
+            }
+            if (paginationState.start) {
+                params.push(`start=${encodeURIComponent(paginationState.start)}`);
+            }
+            if (paginationState.end) {
+                params.push(`end=${encodeURIComponent(paginationState.end)}`);
+            }
+            if (paginationState.age !== undefined && paginationState.age !== null) {
+                params.push(`age=${encodeURIComponent(paginationState.age)}`);
+            }
+            if (paginationState.party) {
+                params.push(`party=${encodeURIComponent(paginationState.party)}`);
+            }
+            if (paginationState.procResultCd) {
+                params.push(`procResultCd=${encodeURIComponent(paginationState.procResultCd)}`);
+            }
+
+            // 페이지네이션 (항상 포함)
+            params.push(`page=${encodeURIComponent(paginationState.pageNumber)}`);
+            params.push(`size=${encodeURIComponent(paginationState.pageSize)}`);
+            params.push(`sortBy=${encodeURIComponent(paginationState.sortBy)}`);
+            params.push(`direction=${encodeURIComponent(paginationState.direction)}`);
+
+            const query = params.join('&');
+            const res = await axios.get(`${SERVER_IP}/v1/bills/filter?${query}`);
+
+            // 에러 처리
+            const list: bill[] = Array.isArray(res.data)
+                ? res.data
+                : Array.isArray(res.data?.content)
+                ? res.data.content
+                : [];
+
             const newPagination = {
-                totalElements: res.data.totalElements,
-                totalPages: res.data.totalPages,
-                pageNumber: res.data.pageable.pageNumber,
-                pageSize: res.data.pageable.pageSize,
-                first: res.data.first,
-                last: res.data.last,
+                totalElements: res.data?.totalElements ?? list.length,
+                totalPages: res.data?.totalPages ?? 1,
+                pageNumber: res.data?.pageable?.pageNumber ?? paginationState.pageNumber,
+                pageSize: res.data?.pageable?.pageSize ?? paginationState.pageSize,
+                first: res.data?.first ?? true,
+                last: res.data?.last ?? true,
                 sortBy: paginationState.sortBy,
                 direction: paginationState.direction,
+                // 선택 필터 반영
+                keyword: paginationState.keyword,
+                start: paginationState.start,
+                end: paginationState.end,
+                age: paginationState.age,
+                party: paginationState.party,
+                procResultCd: paginationState.procResultCd,
             };
             const prevPagination = useBillStore.getState().billListPagination;
-            // 이전 페이지와 다를 때만 set
-            if (
-                prevPagination.totalElements !== newPagination.totalElements ||
-                prevPagination.totalPages !== newPagination.totalPages ||
-                prevPagination.pageNumber !== newPagination.pageNumber ||
-                prevPagination.pageSize !== newPagination.pageSize ||
-                prevPagination.first !== newPagination.first ||
-                prevPagination.last !== newPagination.last
-            ) {
+
+            const keysToCompare: (keyof typeof newPagination)[] = [
+                'totalElements',
+                'totalPages',
+                'pageNumber',
+                'pageSize',
+                'first',
+                'last',
+                'sortBy',
+                'direction',
+                'keyword',
+                'start',
+                'end',
+                'age',
+                'party',
+                'procResultCd',
+            ];
+            const isChanged = keysToCompare.some(
+                (k) =>
+                    (prevPagination as BillListPagination)[k] !==
+                    (newPagination as BillListPagination)[k]
+            );
+
+            if (isChanged) {
                 set({
-                    billList: res.data.content,
+                    billList: list,
                     billListPagination: newPagination,
+                    totalBillNumber: newPagination.totalElements,
                 });
             } else {
                 set({
-                    billList: res.data.content,
+                    billList: list,
+                    totalBillNumber: newPagination.totalElements,
                 });
             }
         } catch (error) {

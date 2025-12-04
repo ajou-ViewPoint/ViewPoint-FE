@@ -11,15 +11,31 @@ function BillListPage() {
     const filterRef = useRef<HTMLDivElement>(null);
     const billListRef = useRef<HTMLDivElement>(null);
     const getBillList = useBillStore((state) => state.getBillList);
-
     const totalBillElements = useBillStore((state) => state.billListPagination.totalElements);
     const pageNumberState = useBillStore((state) => state.billListPagination.pageNumber);
     const sortDirectionState = useBillStore((state) => state.billListPagination.direction);
     const sortByState = useBillStore((state) => state.billListPagination.sortBy);
+    const keywordState = useBillStore((state) => state.billListPagination.keyword);
+    const startState = useBillStore((state) => state.billListPagination.start);
+    const endState = useBillStore((state) => state.billListPagination.end);
+    const ageState = useBillStore((state) => state.billListPagination.age);
+    const partyState = useBillStore((state) => state.billListPagination.party);
+    const procResultCdState = useBillStore((state) => state.billListPagination.procResultCd);
 
     useEffect(() => {
         getBillList();
-    }, [getBillList, pageNumberState, sortDirectionState, sortByState]);
+    }, [
+        getBillList,
+        pageNumberState,
+        sortDirectionState,
+        sortByState,
+        keywordState,
+        startState,
+        endState,
+        ageState,
+        partyState,
+        procResultCdState,
+    ]);
 
     return (
         <div className={style.wrapper}>
@@ -30,7 +46,7 @@ function BillListPage() {
                 </p>
             </div>
             <div ref={filterRef}>
-                <Filter selector="BILL" />
+                <Filter selector={'BILL'} />
             </div>
 
             <div className={style.resultHeader} ref={billListRef}>

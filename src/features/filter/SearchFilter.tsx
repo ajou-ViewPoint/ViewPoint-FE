@@ -13,8 +13,8 @@ function SearchFilter({ selector }: FilterProps) {
 
     const handleKeywordSearch = () => {
         if (selector === 'BILL') {
-            const newKeyword = searchInput;
-            setPage({ ...pageState, keyword: newKeyword });
+            const newKeyword = searchInput.trim();
+            setPage({ ...pageState, pageNumber: 0, keyword: newKeyword });
         }
         if (selector === 'MEMBER') {
             return;
