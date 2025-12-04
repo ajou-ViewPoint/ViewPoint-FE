@@ -30,7 +30,7 @@ function BillListPage() {
                 </p>
             </div>
             <div ref={filterRef}>
-                <Filter />
+                <Filter selector="BILL" />
             </div>
 
             <div className={style.resultHeader} ref={billListRef}>

@@ -18,6 +18,21 @@ export interface BillListPagination {
     pageSize: number;
     first: boolean;
     last: boolean;
+    // 필터링 기준
+    keyword?: string;
+    start?: string;
+    end?: string;
+    age?: number;
+    party?: string;
+    procResultCd?:
+        | '대안반영폐기'
+        | '부결'
+        | '불성립'
+        | '수정가결'
+        | '수정안반영폐기'
+        | '원안가결'
+        | '임기만료폐기'
+        | '철회';
     // 정렬 기준
     sortBy: string;
     direction: 'desc' | 'asc';

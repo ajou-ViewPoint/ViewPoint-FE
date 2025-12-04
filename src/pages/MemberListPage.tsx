@@ -27,7 +27,7 @@ function MemberListPage() {
                     제22대 국회부터 제헌국회까지의 모든 국회의원 정보를 확인해보세요.
                 </p>
             </div>
-            <Filter />
+            <Filter selector="MEMBER" />
             <div className={style.resultHeader} ref={memberListRef}>
                 <p className={style.resultHeader__count}>총 {totalMemberElements}명</p>
                 <MemberSortButtons />
