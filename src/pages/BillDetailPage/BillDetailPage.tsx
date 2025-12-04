@@ -32,12 +32,16 @@ function BillDetailPage() {
                 <div className={style.wrapper}>
                     <div className={style.header}>
                         <h3 className={style.header__title}>{bill.billTitle}</h3>
-                        <p
-                            className={`${style.header__result} ${
-                                bill.procResultCd?.includes('가결') ? style.pass : style.failed
-                            }`}>
-                            {bill.procResultCd}
-                        </p>
+                        {bill.procResultCd ? (
+                            <p
+                                className={`${style.header__result} ${
+                                    bill.procResultCd?.includes('가결') ? style.pass : style.failed
+                                }`}>
+                                {bill.procResultCd}
+                            </p>
+                        ) : (
+                            ''
+                        )}
                     </div>
                     <div className={style.header__buttonRail}>
                         {bill.topic?.split(',').map((topic) => (
