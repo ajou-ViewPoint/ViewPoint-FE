@@ -48,7 +48,9 @@ function MemberListCard({ member }: MemberListCardProps) {
                     <h2 className={style.name}>{normalizedMember.name}</h2>
                     <h3 className={style.party}>{normalizedMember.party.split('/').pop()}</h3>
                 </div>
-                <h3 className={style.district}>{normalizedMember.district.split('/').pop()}</h3>
+                <h3 className={style.district}>
+                    {normalizedMember.district ? normalizedMember.district.split('/').pop() : ''}
+                </h3>
             </div>
         </Link>
     );
