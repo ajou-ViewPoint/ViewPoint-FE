@@ -27,7 +27,9 @@ const mockTopicList = [
 
 function TopicBillSection() {
     return (
-        <div className={style.container}>
+        <div
+            className={style.container}
+            onClick={() => alert('토픽 의안 기능은 곧 제공될 예정입니다.')}>
             <div className={style.header}>
                 <p className={style.header__number}>01.</p>
                 <h2 className={style.header__title}>주목받고 있는 의안 소식</h2>

@@ -3,7 +3,9 @@ import clipboardImg from '../../assets/Clipboard.png';
 
 function MatchingContainer() {
     return (
-        <div className={style.container}>
+        <div
+            className={style.container}
+            onClick={() => alert('의원 매칭 기능은 곧 제공될 예정입니다.')}>
             <p className={style.number}>05.</p>
             <div className={style.header}>
                 <div className={style.wrapper}>

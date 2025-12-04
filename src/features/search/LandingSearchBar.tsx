@@ -12,7 +12,7 @@ const handleSearch = () => {};
 
 function LandingSearchBar() {
     return (
-        <div className={style.container}>
+        <div className={style.container} onClick={() => alert('검색 기능은 곧 제공될 예정입니다.')}>
             <form className={style.searchBar}>
                 <input
                     className={style.searchBar__inputArea}

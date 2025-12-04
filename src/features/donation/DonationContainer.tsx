@@ -3,7 +3,7 @@ import likeImg from '../../assets/Like.png';
 
 function DonationContainer() {
     return (
-        <div className={style.container}>
+        <div className={style.container} onClick={() => alert('후원 기능은 곧 제공될 예정입니다.')}>
             <p className={style.number}>06.</p>
             <div className={style.header}>
                 <div className={style.wrapper}>
