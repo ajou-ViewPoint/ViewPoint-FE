@@ -3,7 +3,7 @@ import style from './PartyDetailPage.module.scss';
 import { useParams } from 'react-router-dom';
 import { usePartyStore } from '../../store/partyStore';
 import MemberListCard from '../../features/member/MemberListCard';
-import NominateScatterPlot from '../../widgets/NominateScatterPlot';
+import NominateScatterPlot from '../../widgets/nominate/NominateScatterPlot';
 
 function PartyDetailPage() {
     const param = useParams();

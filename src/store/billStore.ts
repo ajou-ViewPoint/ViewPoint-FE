@@ -49,7 +49,7 @@ const DEFAULT_PAGINATION: BillListPagination = {
     keyword: null,
     start: null,
     end: null,
-    age: null,
+    age: 22,
     party: null,
     procResultCd: null,
     sortBy: 'proposeDt',
@@ -153,7 +153,7 @@ export const useBillStore = create<billStore>((set) => ({
     getBillList: async () => {
         const paginationState = useBillStore.getState().billListPagination;
         try {
-            // 쿼리 생성
+            // 쿼리
             const params: string[] = [];
 
             // 선택 필터

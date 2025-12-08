@@ -27,6 +27,13 @@ function MemberListPage() {
                     제22대 국회부터 제헌국회까지의 모든 국회의원 정보를 확인해보세요.
                 </p>
             </div>
+            <div className={style.tagGrid}>
+                {Array.from({ length: 22 }, (_, i) => 22 - i).map((age) => (
+                    <button className={style.tag} key={age} value={age} onClick={() => {}}>
+                        {age === 1 ? '제헌' : age + '대'}
+                    </button>
+                ))}
+            </div>
             <Filter selector="MEMBER" />
             <div className={style.resultHeader} ref={memberListRef}>
                 <p className={style.resultHeader__count}>총 {totalMemberElements}명</p>

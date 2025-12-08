@@ -45,6 +45,15 @@ function BillListPage() {
                     국회에 발의된 법안의 심사 진행 상황과 표결 결과를 확인해보세요.
                 </p>
             </div>
+
+            <div className={style.tagGrid}>
+                {Array.from({ length: 22 }, (_, i) => 22 - i).map((age) => (
+                    <button className={style.tag} key={age} value={age} onClick={() => {}}>
+                        {age === 1 ? '제헌' : age + '대'}
+                    </button>
+                ))}
+            </div>
+
             <div ref={filterRef}>
                 <Filter selector={'BILL'} />
             </div>
