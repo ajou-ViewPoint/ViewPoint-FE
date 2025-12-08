@@ -21,7 +21,7 @@ function BillCard(billProp: bill) {
                 <p className={style.header__date}>{billProp.proposeDt}</p>
             </div>
             <div className={style.tagRail}>
-                {billProp.topic?.split(',').map((topic) => (
+                {billProp.topics?.map((topic) => (
                     <BillTag tagText={topic} />
                 ))}
             </div>

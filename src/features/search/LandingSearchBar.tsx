@@ -1,5 +1,8 @@
 import { Search } from 'lucide-react';
 import style from './LandingSearchBar.module.scss';
+import { useState } from 'react';
+import { useMainSearchStore } from '../../store/mainSearchStore';
+import { useNavigate } from 'react-router-dom';
 
 const mockTagsBills: { id: string; name: string }[] = [
     { id: 'bill-1', name: '조세특례제한법 개정안' },
@@ -8,14 +11,25 @@ const mockTagsBills: { id: string; name: string }[] = [
     { id: 'bill-4', name: '근로기준법 개정안' },
 ];
 
-const handleSearch = () => {};
-
 function LandingSearchBar() {
+    const [query, setQuery] = useState('');
+    const { getSearchResult, setSearchQuery } = useMainSearchStore();
+    const navigate = useNavigate();
+
+    const handleSearch = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setSearchQuery(query);
+        await getSearchResult(query);
+        navigate(`/search/${query}`);
+    };
+
     return (
-        <div className={style.container} onClick={() => alert('검색 기능은 곧 제공될 예정입니다.')}>
+        <div className={style.container}>
             <form className={style.searchBar}>
                 <input
                     className={style.searchBar__inputArea}
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
                     type="text"
                     aria-label="검색"
                     placeholder="의안, 국회의원 등을 검색해보세요"></input>

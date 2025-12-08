@@ -15,7 +15,6 @@ function LandingPage() {
             <RecentBillSection />
             <IdeologySection />
             <RandomMembersSection />
-            {/* 랜덤 의원 보여주는 컴포넌트 추가 */}
             <div className={style.bottomSection}>
                 <MatchingContainer />
                 <DonationContainer />

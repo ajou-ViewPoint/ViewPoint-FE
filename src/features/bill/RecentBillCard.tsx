@@ -15,7 +15,7 @@ function RecentBillCard({
     rgsProcDate,
     billSummary,
     billId,
-    topic,
+    topics,
 }: bill) {
     const navigate = useNavigate();
     const { getSelectedBill } = useBillStore();
@@ -50,7 +50,7 @@ function RecentBillCard({
                 </p>
             </div>
             <div className={style.tagRail}>
-                {topic?.split(',').map((text) => (
+                {topics?.map((text) => (
                     <BillTag tagText={text} />
                 ))}
             </div>

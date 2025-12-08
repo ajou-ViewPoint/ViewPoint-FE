@@ -44,7 +44,7 @@ function BillDetailPage() {
                         )}
                     </div>
                     <div className={style.header__buttonRail}>
-                        {bill.topic?.split(',').map((topic) => (
+                        {bill.topics?.map((topic) => (
                             <BillTag tagText={topic} />
                         ))}
                     </div>

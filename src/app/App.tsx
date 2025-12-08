@@ -13,6 +13,7 @@ import CommitteeDetailPage from '../pages/CommitteeDetailPage/CommitteeDetailPag
 import PartyDetailPage from '../pages/PartyDetailPage/PartyDetailPage';
 import DistrictDetailPage from '../pages/MyDistrictPage/DistrictDetail';
 import AboutPage from '../pages/AboutPage';
+import SearchResultPage from '../pages/SearchResultPage';
 
 function App() {
     return (
@@ -21,6 +22,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<MainPage />}>
                         <Route path="/" element={<LandingPage />} />
+                        <Route path="/search/:query" element={<SearchResultPage />} />
                         <Route path="/party" element={<PartyPage />} />
                         <Route path="/party/:partyId" element={<PartyDetailPage />} />
                         <Route path="/billlist" element={<BillListPage />} />
