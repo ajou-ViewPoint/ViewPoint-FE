@@ -35,6 +35,7 @@ function AboutPage() {
             school: '아주대학교 디지털미디어학과',
             name: '유경진',
             role: 'UX/UI',
+            link: 'https://rogue-baritone-ed.notion.site/UXUI-17104122dca5809b88ccfffaf74faa52',
         },
         {
             school: '국민대학교 AI디자인학과',
