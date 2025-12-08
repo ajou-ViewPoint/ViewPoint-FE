@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import DateFilter from './DateFilter';
+// import DateFilter from './DateFilter';
 import PartyFilter from './PartyFilter';
 import SearchFilter from './SearchFilter';
 import StageFilter from './StageFilter';
 import style from './styles/Filter.module.scss';
-import TermFilter from './TermFilter';
+// import TermFilter from './TermFilter';
 import { ChevronUp, ChevronDown } from 'lucide-react';
 
 interface FilterProps {
@@ -32,9 +32,9 @@ function Filter({ selector }: FilterProps) {
             </div>
             <div className={style.detailSection}>
                 <hr className={style.divider}></hr>
-                <DateFilter />
-                <TermFilter />
-                <PartyFilter />
+                {/* <DateFilter /> */}
+                {/* <TermFilter /> */}
+                {/* <PartyFilter /> */}
                 <StageFilter />
             </div>
         </div>
@@ -42,18 +42,19 @@ function Filter({ selector }: FilterProps) {
         <div className={`${style.container} ${detailFilter ? style.expanded : ''}`}>
             <div className={style.close}>
                 <SearchFilter selector={selector} />
-                <button className={style.moreFilterButton} onClick={toggleDetailFilter}>
+                {/* 의원 상세 필터 구현 예정 */}
+                {/* <button className={style.moreFilterButton} onClick={toggleDetailFilter}>
                     상세 필터
                     {detailFilter ? (
                         <ChevronUp style={{ color: '#CCCCCC' }} />
                     ) : (
                         <ChevronDown style={{ color: '#CCCCCC' }} />
                     )}
-                </button>
+                </button> */}
             </div>
             <div className={style.detailSection}>
                 <hr className={style.divider}></hr>
-                <TermFilter />
+                {/* <TermFilter /> */}
                 <PartyFilter />
             </div>
         </div>

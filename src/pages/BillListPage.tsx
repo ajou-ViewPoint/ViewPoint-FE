@@ -11,6 +11,7 @@ function BillListPage() {
     const filterRef = useRef<HTMLDivElement>(null);
     const billListRef = useRef<HTMLDivElement>(null);
     const getBillList = useBillStore((state) => state.getBillList);
+    const selectedAge = useBillStore((state) => state.billListPagination.age);
     const totalBillElements = useBillStore((state) => state.billListPagination.totalElements);
     const pageNumberState = useBillStore((state) => state.billListPagination.pageNumber);
     const sortDirectionState = useBillStore((state) => state.billListPagination.direction);
@@ -21,6 +22,8 @@ function BillListPage() {
     const ageState = useBillStore((state) => state.billListPagination.age);
     const partyState = useBillStore((state) => state.billListPagination.party);
     const procResultCdState = useBillStore((state) => state.billListPagination.procResultCd);
+    const pageState = useBillStore((state) => state.billListPagination);
+    const { setPage } = useBillStore();
 
     useEffect(() => {
         getBillList();
@@ -37,18 +40,26 @@ function BillListPage() {
         procResultCdState,
     ]);
 
+    const handleAgeChange = (selectedAge: number) => {
+        setPage({ ...pageState, pageNumber: 0, age: selectedAge });
+    };
+
     return (
         <div className={style.wrapper}>
             <div className={style.header}>
-                <h1 className={style.header__title}>법안 정보</h1>
+                <h1 className={style.header__title}>{selectedAge}대 의안 모음</h1>
                 <p className={style.header__discription}>
-                    국회에 발의된 법안의 심사 진행 상황과 표결 결과를 확인해보세요.
+                    {selectedAge}대 국회에서 발의된 의안의 상세 정보를 확인해보세요.
                 </p>
             </div>
 
             <div className={style.tagGrid}>
-                {Array.from({ length: 22 }, (_, i) => 22 - i).map((age) => (
-                    <button className={style.tag} key={age} value={age} onClick={() => {}}>
+                {Array.from({ length: 9 }, (_, i) => 22 - i).map((age) => (
+                    <button
+                        className={`${style.tag} ${selectedAge === age ? style.active : ''}`}
+                        key={age}
+                        value={age}
+                        onClick={() => handleAgeChange(age)}>
                         {age === 1 ? '제헌' : age + '대'}
                     </button>
                 ))}

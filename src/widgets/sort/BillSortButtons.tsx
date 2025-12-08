@@ -23,11 +23,11 @@ function BillSortButtons() {
         // 정렬 방향을 바꾸는 경우
         if (pageState.sortBy === item.sortBy) {
             const newDirection = pageState.direction === 'asc' ? 'desc' : 'asc';
-            setPage({ ...pageState, direction: newDirection });
+            setPage({ ...pageState, pageNumber: 0, direction: newDirection });
             return;
         }
         // 정렬 기준을 바꾸는 경우
-        setPage({ ...pageState, sortBy: item.sortBy });
+        setPage({ ...pageState, pageNumber: 0, sortBy: item.sortBy });
     };
     return (
         <div className={style.buttonRail}>
