@@ -8,6 +8,12 @@
     letter-spacing: -1%;
 }
 
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 .container {
     display: flex;
     flex-direction: column;
@@ -21,6 +27,14 @@
     border-radius: 32px;
     height: auto;
     max-height: 300px;
+    position: relative; // 오버레이 위치 기준
+
+    &.loading {
+        position: relative;
+        pointer-events: none;
+        opacity: 0.95;
+        transition: opacity 0.2s ease;
+    }
 }
 
 .searchBar {
@@ -58,11 +72,43 @@
         border-bottom: 2px solid #89ceff;
         background-color: transparent;
         color: white;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 0.25rem 0.5rem;
+
+        &.isLoading {
+            cursor: wait;
+            color: #dbeafe;
+            border-bottom-color: #dbeafe;
+        }
     }
 
     &__searchButtonIcon {
         cursor: pointer;
         transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    &__searchButton.isLoading .searchBar__searchButtonIcon {
+        animation: spin 0.9s linear infinite;
+        filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.25));
+    }
+}
+
+.loadingText {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #ffffff;
+    opacity: 0.9;
+}
+
+.loadingInput {
+    cursor: not-allowed;
+    color: #e6f2ff;
+    border-bottom-color: #dbeafe !important;
+
+    &::placeholder {
+        color: #cfe8ff !important;
     }
 }
 
@@ -91,10 +137,6 @@
         overflow: visible;
         display: inline-flex;
         justify-content: center;
-
-        // & > .searchTag:nth-child(n + 4) {
-        //     display: none;
-        // }
     }
 }
 

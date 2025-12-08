@@ -15,7 +15,7 @@ export interface Member {
     age: number;
     duty: string;
     profileImage: string;
-    electionDistrict: string[];
+    electionDistrict: string[] | null;
     engName: string;
     chName: string;
     birthDate: string;

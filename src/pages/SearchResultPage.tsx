@@ -13,6 +13,10 @@ function SearchResultPage() {
     const param = useParams();
 
     useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
+    useEffect(() => {
         if (searchResult) return;
         const fetch = async () => {
             setLoading(true);
@@ -28,49 +32,55 @@ function SearchResultPage() {
     return (
         <div className={style.pageWrapper}>
             <header className={style.header}>
-                <h1 className={style.header__title}>"{searchQuery}" 검색 결과</h1>
+                <h1 className={style.header__title}>"{param.query}"에 대한 검색 결과입니다.</h1>
                 {loading && <span className={style.header__discription}>불러오는 중...</span>}
                 {!loading && (
-                    <span className={style.sub}>
+                    <span className={style.header__discription}>
                         법안 {searchResult?.bills?.length ?? 0}개 · 의원{' '}
                         {searchResult?.members?.length ?? 0}명
                     </span>
                 )}
             </header>
             <div className={style.contents}>
-                {!loading &&
-                    searchResult &&
-                    !searchResult.bills?.length &&
-                    !searchResult.members?.length && (
-                        <div className={style.empty}>
-                            <span>검색 결과가 없습니다.</span>
-                        </div>
-                    )}
-
                 {!loading && searchResult && (
-                    <div className={style.contents}>
-                        {searchResult.bills?.length && (
-                            <section className={style.header}>
+                    <>
+                        <div className={style.contents}>
+                            <div className={style.header}>
                                 <h2 className={style.header__title}>법안</h2>
-                                <div className={style.grid}>
-                                    {searchResult.bills.map((bill) => (
-                                        <RecentBillCard key={bill.billId} {...bill} />
-                                    ))}
+                            </div>
+                            {searchResult.bills?.length ? (
+                                <section className={style.header}>
+                                    <div className={style.grid}>
+                                        {searchResult.bills.slice(0, 10).map((bill) => (
+                                            <RecentBillCard key={bill.billId} {...bill} />
+                                        ))}
+                                    </div>
+                                </section>
+                            ) : (
+                                <div className={style.empty}>
+                                    <span>검색 결과가 없습니다.</span>
                                 </div>
-                            </section>
-                        )}
-
-                        {searchResult.members?.length && (
-                            <section className={style.header}>
+                            )}
+                        </div>
+                        <div className={style.contents}>
+                            <div className={style.header}>
                                 <h2 className={style.header__title}>의원</h2>
-                                <div className={style.grid}>
-                                    {searchResult.members.map((member) => (
-                                        <MemberListCard key={member.memberId} member={member} />
-                                    ))}
+                            </div>
+                            {searchResult.members?.length ? (
+                                <section className={style.header}>
+                                    <div className={style.grid__member}>
+                                        {searchResult.members.map((member) => (
+                                            <MemberListCard key={member.memberId} member={member} />
+                                        ))}
+                                    </div>
+                                </section>
+                            ) : (
+                                <div className={style.empty}>
+                                    <span>검색 결과가 없습니다.</span>
                                 </div>
-                            </section>
-                        )}
-                    </div>
+                            )}
+                        </div>
+                    </>
                 )}
             </div>
         </div>

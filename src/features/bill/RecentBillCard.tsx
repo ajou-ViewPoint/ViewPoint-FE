@@ -12,7 +12,7 @@ function RecentBillCard({
     noTcnt,
     blankTcnt,
     procResultCd,
-    rgsProcDate,
+    proposeDt,
     billSummary,
     billId,
     topics,
@@ -30,26 +30,37 @@ function RecentBillCard({
                 <h3 className={style.header__title}>{billTitle}</h3>
             </div>
             <div className={style.header__info}>
-                <p
-                    className={`${style.header__status} ${
-                        procResultCd?.includes('가결') ? style.pass : style.failed
-                    }`}>
-                    {procResultCd}
-                </p>
+                {/* 진행되지 않은 경우 비워야 함 */}
+                {procResultCd !== '' ? (
+                    <p
+                        className={`${style.header__status} ${
+                            procResultCd?.includes('가결') ? style.pass : style.failed
+                        }`}>
+                        {procResultCd}
+                    </p>
+                ) : (
+                    ''
+                )}
+
                 <p className={style.header__proposer}>
                     <User />
                     {proposer}
                 </p>
                 <p className={style.header__date}>
                     <Calendar />
-                    {rgsProcDate}
+                    {proposeDt}
                 </p>
                 <p className={style.header__voteResult}>
                     <Landmark />
                     {yesTcnt ? yesTcnt : 0}/{noTcnt ? noTcnt : 0}/{blankTcnt ? blankTcnt : 0}
                 </p>
             </div>
-            <div className={style.tagRail}>
+            <div
+                className={style.tagRail}
+                onClick={(e) => {
+                    // BillTag 클릭 시 카드 onClick으로 전파되지 않도록 방어
+                    e.stopPropagation();
+                }}>
                 {topics?.map((text) => (
                     <BillTag tagText={text} />
                 ))}
