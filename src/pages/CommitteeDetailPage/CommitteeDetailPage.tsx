@@ -57,7 +57,7 @@ function CommitteeDetailPage() {
                 </dl>
             </section>
             <section className={style.section}>
-                <h2 className={style.section__title}>위원회 내 이념거리</h2>
+                <h2 className={style.section__title}>위원회 내 이념거리 beta</h2>
                 <div className={style.wrapper__chart}>
                     <WordFishChart />
                 </div>

@@ -4,16 +4,13 @@ import MemberListCard from '../../features/member/MemberListCard';
 
 function RandomMembersSection() {
     const members = useMemberStore((state) => state.randomMemberList);
-
-    // 두번 깜빡이는 현상
-
     return (
         <div className={style.container}>
             <div className={style.header}>
                 <p className={style.header__number}>04.</p>
-                <h2 className={style.header__title}>무작위 국회의원 소개</h2>
+                <h2 className={style.header__title}>무작위 국회의원 소개!</h2>
                 <p className={style.header__discription}>
-                    무작위로 국회의원 정보를 확인하며 더 알아가세요.
+                    그동안 잘 몰랐던 의원들도 함께 발견해보면 어떨까요?
                 </p>
             </div>
             <div className={style.memberGrid}>
