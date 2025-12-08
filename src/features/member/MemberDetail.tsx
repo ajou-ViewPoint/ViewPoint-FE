@@ -67,7 +67,9 @@ function MemberDetail() {
                         </p>
                         <p className={style.label}>선거구</p>
                         <p className={style.value}>
-                            {member.electionDistrict[member.electionDistrict.length - 1]}
+                            {member.electionDistrict && member.electionDistrict.length > 0
+                                ? member.electionDistrict[member.electionDistrict.length - 1]
+                                : ''}
                         </p>
                     </div>
                 </div>
