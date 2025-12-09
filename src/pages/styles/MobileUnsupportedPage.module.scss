@@ -10,7 +10,7 @@
     width: min(640px, calc(100% - 2rem));
     background: #ffffff;
     border-radius: 16px;
-    padding: 2rem;
+    padding: clamp(1.25rem, 4vw, 2rem);
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
     text-align: center;
     color: #0f172a;
@@ -18,15 +18,22 @@
 
 .title {
     margin: 0 0 0.75rem 0;
-    font-size: 1.75rem;
+    font-size: clamp(1.25rem, 4.5vw, 1.75rem);
     font-weight: 800;
     color: #0ea5e9;
 }
 
 .desc {
     margin: 0 0 1.25rem 0;
-    font-size: 1rem;
+    font-size: clamp(0.95rem, 3.8vw, 1rem);
     line-height: 1.7;
+    // 한국어 자연 줄바꿈
+    word-break: keep-all;
+    text-wrap: balance;
+    // 긴 단어/URL 등의 예외 처리
+    overflow-wrap: anywhere;
+    letter-spacing: 0.01em;
+    margin-bottom: clamp(1rem, 3.5vw, 1.25rem);
     color: #374151;
 }
 
@@ -35,7 +42,7 @@
     background: #2ba6ff;
     color: #ffffff;
     font-weight: 700;
-    padding: 0.6rem 1.2rem;
+    padding: clamp(0.5rem, 2.8vw, 0.6rem) clamp(1rem, 4vw, 1.2rem);
     border-radius: 10px;
     cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
