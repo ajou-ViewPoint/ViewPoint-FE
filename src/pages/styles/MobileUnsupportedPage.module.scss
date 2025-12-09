@@ -1,0 +1,47 @@
+.container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f0f9ff;
+}
+
+.card {
+    width: min(640px, calc(100% - 2rem));
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+    text-align: center;
+    color: #0f172a;
+}
+
+.title {
+    margin: 0 0 0.75rem 0;
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #0ea5e9;
+}
+
+.desc {
+    margin: 0 0 1.25rem 0;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #374151;
+}
+
+.action {
+    border: none;
+    background: #2ba6ff;
+    color: #ffffff;
+    font-weight: 700;
+    padding: 0.6rem 1.2rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 6px 18px rgba(43, 166, 255, 0.35);
+    }
+}
