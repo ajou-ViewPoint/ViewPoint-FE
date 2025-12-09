@@ -12,6 +12,9 @@ const DEFAULT_PAGINATION: MemberListPagination = {
     last: false,
     sortBy: 'age',
     direction: 'desc',
+    keyword: '',
+    eraco: '',
+    party: '',
 };
 
 const DEFAULT_VOTERECORD_PAGINATION: VoteRecordPagiantion = {
@@ -40,6 +43,10 @@ export interface MemberListPagination {
     // 정렬 기준
     sortBy: string;
     direction: 'desc' | 'asc';
+    // 선택 필터
+    keyword?: string;
+    eraco?: string;
+    party?: string;
 }
 
 export interface VoteRecordPagiantion {
@@ -144,23 +151,79 @@ export const useMemberStore = create<memberStore>((set) => ({
     },
     getMemberList: async () => {
         try {
-            const pageState = useMemberStore.getState().memberListPagination;
-            const res = await axios.get(
-                `${SERVER_IP}/v1/assemblymembers?page=${pageState.pageNumber}&size=${pageState.pageSize}&sortBy=${pageState.sortBy}&direction=${pageState.direction}`
+            const paginationState = useMemberStore.getState().memberListPagination;
+            // 쿼리
+            const params: string[] = [];
+
+            // 필터 (선택)
+            if (paginationState.keyword) {
+                params.push(`keyword=${encodeURIComponent(paginationState.keyword)}`);
+            }
+            if (
+                paginationState.eraco !== '' &&
+                paginationState.eraco !== 'undefined' &&
+                paginationState.eraco !== null &&
+                paginationState.eraco !== undefined
+            ) {
+                params.push(`eraco=${encodeURIComponent(paginationState.eraco)}`);
+            }
+            if (paginationState.party) {
+                params.push(`party=${encodeURIComponent(paginationState.party)}`);
+            }
+
+            // 페이지네이션 (항상 포함)
+            params.push(`page=${encodeURIComponent(paginationState.pageNumber)}`);
+            params.push(`size=${encodeURIComponent(paginationState.pageSize)}`);
+            params.push(`sortBy=${encodeURIComponent(paginationState.sortBy)}`);
+            params.push(`direction=${encodeURIComponent(paginationState.direction)}`);
+
+            const query = params.join('&');
+            const res = await axios.get(`${SERVER_IP}/v1/assemblymembers/filter?${query}`);
+
+            const newPagination = {
+                totalElements: res.data?.totalElements ?? paginationState.totalElements,
+                totalPages: res.data?.totalPages ?? paginationState.totalPages,
+                pageNumber: res.data?.pageable?.pageNumber ?? paginationState.pageNumber,
+                pageSize: res.data?.pageable?.pageSize ?? paginationState.pageSize,
+                first: res.data?.first ?? paginationState.first,
+                last: res.data?.last ?? paginationState.last,
+                sortBy: paginationState.sortBy,
+                direction: paginationState.direction,
+                keyword: paginationState.keyword,
+                eraco: paginationState.eraco,
+                party: paginationState.party,
+            };
+            const prevPagination = useMemberStore.getState().memberListPagination;
+
+            const keysToCompare: (keyof typeof newPagination)[] = [
+                'totalElements',
+                'totalPages',
+                'pageNumber',
+                'pageSize',
+                'first',
+                'last',
+                'sortBy',
+                'direction',
+                'keyword',
+                'eraco',
+                'party',
+            ];
+            const isChanged = keysToCompare.some(
+                (k) =>
+                    (prevPagination as MemberListPagination)[k] !==
+                    (newPagination as MemberListPagination)[k]
             );
-            set({
-                memberList: res.data.content,
-                memberListPagination: {
-                    totalElements: res.data.totalElements,
-                    totalPages: res.data.totalPages,
-                    pageNumber: res.data.pageable.pageNumber,
-                    pageSize: res.data.pageable.pageSize,
-                    first: res.data.first,
-                    last: res.data.last,
-                    sortBy: pageState.sortBy,
-                    direction: pageState.direction,
-                },
-            });
+
+            if (isChanged) {
+                set({
+                    memberList: res.data?.content ?? [],
+                    memberListPagination: newPagination,
+                });
+            } else {
+                set({
+                    memberList: res.data?.content ?? [],
+                });
+            }
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 throw new Error(

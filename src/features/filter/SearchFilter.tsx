@@ -2,6 +2,7 @@ import { useState } from 'react';
 import style from './styles/SearchFilter.module.scss';
 import { Search } from 'lucide-react';
 import { useBillStore } from '../../store/billStore';
+import { useMemberStore } from '../../store/memberStore';
 
 interface FilterProps {
     selector: 'BILL' | 'MEMBER';
@@ -9,14 +10,18 @@ interface FilterProps {
 function SearchFilter({ selector }: FilterProps) {
     const [searchInput, setSearchInput] = useState('');
     const pageState = useBillStore((state) => state.billListPagination);
+    const memberPageState = useMemberStore((state) => state.memberListPagination);
     const { setPage } = useBillStore();
+    const { setMemberListPage } = useMemberStore();
 
     const handleKeywordSearch = () => {
+        const newKeyword = searchInput.trim();
         if (selector === 'BILL') {
-            const newKeyword = searchInput.trim();
             setPage({ ...pageState, pageNumber: 0, keyword: newKeyword });
+            return;
         }
         if (selector === 'MEMBER') {
+            setMemberListPage({ ...memberPageState, pageNumber: 0, keyword: newKeyword });
             return;
         }
     };
@@ -33,7 +38,6 @@ function SearchFilter({ selector }: FilterProps) {
                     ) : (
                         <>
                             <option value="billTitle">의원 이름</option>
-                            <option value="proposer">발의 의원</option>
                         </>
                     )}
                 </select>
