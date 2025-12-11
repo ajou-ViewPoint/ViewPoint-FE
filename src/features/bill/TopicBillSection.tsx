@@ -69,9 +69,7 @@ function TopicBillSection() {
                             onClick={() => handleNavigateToBillDetailPage(item.billId)}>
                             <div className={style.contents__wrapper}>
                                 <h3 className={style.contents__item__title}>{item.title}</h3>
-                                <p className={style.contents__item__discription}>
-                                    {item.member} | {item.date}
-                                </p>
+                                <p className={style.contents__item__discription}>{item.member}</p>
                             </div>
                             <img
                                 className={style.listTopicImage}
